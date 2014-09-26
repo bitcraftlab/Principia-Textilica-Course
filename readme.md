@@ -2,7 +2,7 @@ Principia Textilica Course
 ==========================
 
 
-*This is the Github repository for the [Principia Textilica Course]((http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica) at Bauhaus-Uni Weimar.*
+*This is the Github repository for the [Principia Textilica Course](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica) at Bauhaus-Uni Weimar.*
 
 
 ### Themes and Topics ###
@@ -25,9 +25,8 @@ Please fork it to your repo.
 
 ## Content ##
 
-|                                                     |                                   |
-|:----------------------------------------------------|:----------------------------------|
-|  **Programming**                                    |***[Assignment I][assignment1]***  |                         
+|  **Programming**                                    |***[Assignment I][assignment1]***  |  
+|:----------------------------------------------------|:----------------------------------|                 
 |  [Crafty Turtles][week1]                            |                                   |
 |  [Programming I][week2]                             |                                   |
 |  [Programming II][week3]                            |                                   |
