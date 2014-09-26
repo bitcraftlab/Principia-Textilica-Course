@@ -25,22 +25,28 @@ Please fork it to your repo.
 
 ## Content ##
 
-|  **Programming**                                    |***[Assignment I][assignment1]***  |  
-|:----------------------------------------------------|:----------------------------------|                 
+|  **Programming**                                    |***[Assignment I][assignment1]***  |
+|:----------------------------------------------------|:----------------------------------|             
 |  [Crafty Turtles][week1]                            |                                   |
 |  [Programming I][week2]                             |                                   |
 |  [Programming II][week3]                            |                                   |
-|  **Craft and Code**                                 |***[Assignment II][assignment2]*** |                       
+
+|  **Craft and Code**                                 |***[Assignment II][assignment2]*** |
+|:----------------------------------------------------|:----------------------------------|                       
 |  [Notation Systems][week4]                          |                                   |
 |  [Exchange Formats][week5]                          |                                   |
 |  [Notations I][week6]                               |                                   |
 |  [Notations II][week7]                              |                                   |
-|  **Craft Computing**                                |***[Assignment III][assignment3]***| 
+
+|  **Craft Computing**                                |***[Assignment III][assignment3]***|
+|:----------------------------------------------------|:----------------------------------|  
 |  [Mathematical Craft][week8]                        |                                   |
 |  [Computational Craft][week9]                       |                                   |   
 |  [Textile Automata I][week10]                       |                                   |
-|  [Textile Automata II][week11]                      |                                   |                     
-|  **Tools and Machines**                             |***[Assignment IV][assignment4]*** |                                                     
+|  [Textile Automata II][week11]                      |                                   |
+                   
+|  **Tools and Machines**                             |***[Assignment IV][assignment4]*** |
+|:----------------------------------------------------|:----------------------------------|                                                  
 |  [Embroidery Machine][week12]                       |                                   |
 |  [Knitting Machine][week13]                         |                                   |
 |  [Tools for Craft I][week14]                        |                                   |
