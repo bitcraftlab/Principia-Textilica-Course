@@ -32,11 +32,16 @@ strokeWeight(d_stroke);
 	int d = d_circle + 4 * i * d_stroke;
 	ellipse(width/2, height/2, d, d);
 }*/
-/*for(int i = 15, int r = 0, int w = 10; 
-    i>0; 
-    --i, ++r, w+=10){*/
-    rect(0,0,10,10,0);
-//}
+int distance = 20;
+int colorStep = 15;
+int maxWidth = 800;
+int maxHeight = 800;
+for(int i = 0, r = 0;
+    i<18; 
+    ++i, r+=4){
+      stroke(i*colorStep,i*colorStep,i*colorStep);
+    rect(i*distance, i*distance, maxWidth-2*i*distance, maxHeight-2*i*distance,r);
+}
 
 
 ///////// Hello World /////////
