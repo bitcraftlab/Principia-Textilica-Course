@@ -28,14 +28,19 @@ fill(#ffffff);
 stroke(#000000);
 strokeWeight(d_stroke);
 
-for(int i = n_stroke; i > 0; --i) {
+/*for(int i = n_stroke; i > 0; --i) {
 	int d = d_circle + 4 * i * d_stroke;
 	ellipse(width/2, height/2, d, d);
-}
+}*/
+/*for(int i = 15, int r = 0, int w = 10; 
+    i>0; 
+    --i, ++r, w+=10){*/
+    rect(0,0,10,10,0);
+//}
 
 
 ///////// Hello World /////////
 
 fill(#000000);
 textAlign(CENTER);
-text("Hello World", cx, cy + ty);
+text("Feli", cx, cy + ty);
