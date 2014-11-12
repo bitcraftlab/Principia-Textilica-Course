@@ -25,6 +25,14 @@ In the 3rd part of this lecture we will learn to use *Processing* & *Fontastic* 
 - generate fonts
 - use the fonts to create custom notations
 
+# Exercises
+
+The exercises can be found [here](exercises).
+
+# Demos
+
+The demos can be found [here](demos).
+
 # Links
 
 * [Animation of Elementary Mathematica Functions](http://reference.wolfram.com/legacy/flash/) (Yay, Flash!)
