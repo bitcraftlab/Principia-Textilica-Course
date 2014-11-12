@@ -22,7 +22,7 @@ If you need help try [Google image search](https://www.google.de/search?q=5+ply+
 
 *This is a Processing Exercise:*
 
-1. Check out the [10Print Demo](../demo/TenPrintFont)
+1. Check out the [10PRINT Demo](../demo/10PRINT)
 2. Create your own font, with other or additional glyphs
 3. Use the font to print something out
 
