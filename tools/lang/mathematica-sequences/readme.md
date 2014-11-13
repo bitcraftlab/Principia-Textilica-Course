@@ -47,12 +47,12 @@ This is a very nice example how you can use the power of lementary functions lik
 ### Splitting and Splicing Sequences ###
 
 `Partition` is a very powerfull operator that lets you split sequences into smaller sequences:
-`Partition[{1, 2, 3, 4, 5, 6}, 2]` → `{{1, 2}, {4, 6}, {9, 12}}`
+`Partition[{1, 2, 3, 4, 5, 6}, 2]` → `{{1, 2}, {3, 4}, {5, 6}}`
 
 You can also use it to create overlapping subsequences:
 `Partition[{1, 2, 3, 4, 5, 6}, 2, 1]`  → `{{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}}`
 
-To put the sequence back together use `Join`: `Join[{{1, 2}, {4, 6}, {9, 12}}]`  → `{1, 2, 3, 4, 5, 6}`
+To put the sequence back together use `Join`: `Join[{{1, 2}, {3, 4}, {5, 6}}]`  → `{1, 2, 3, 4, 5, 6}`
 
 If you want to zip two sequences `{1, 2, 3}` and `{a, b, c}` taking elements in alternation, you can change their oder using `Transpose`: `Transpose[{{1, 2, 3}, {a, b, c}}]` → `{{1, a}, {2, b}, {3, c}}`.
 Now zipping them together is as easy as this:

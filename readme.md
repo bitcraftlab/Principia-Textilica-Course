@@ -27,7 +27,7 @@ Please fork it to your repo.
 
 |  **Programming**                                    |***[Assignment I][assignment1]***  |
 |:----------------------------------------------------|:----------------------------------|             
-|  [Crafty Turtles][week1]                            |                                   |
+|  [Introduction][week1]                              |                                   |
 |  [Programming I][week2]                             |                                   |
 |  [Programming II][week3]                            |                                   |
 
@@ -81,7 +81,7 @@ Please fork it to your repo.
 [part3]: http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Part3
 [part4]: http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Part4
 
-[week1]: 01-crafty-turtles
+[week1]: 01-introduction
 [week2]: 02-programming-1
 [week3]: 03-programming-2
 

@@ -1,0 +1,226 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      5397,        216]
+NotebookOptionsPosition[      4006,        162]
+NotebookOutlinePosition[      4364,        178]
+CellTagsIndexPosition[      4321,        175]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Create a Sequence of 30 zeros", "Subsubsection"],
+
+Cell[BoxData[
+ RowBox[{"list", " ", "=", " ", 
+  RowBox[{"Table", "[", 
+   RowBox[{"0", ",", " ", 
+    RowBox[{"{", "30", "}"}]}], "]"}]}]], "Code"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Add a one right in the middle", "Subsubsection"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"list", "[", 
+    RowBox[{"[", "15", "]"}], "]"}], " ", "=", " ", "1"}], ";"}]], "Code"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Now show the first line", "Subsubsection"],
+
+Cell[BoxData[
+ RowBox[{"ArrayPlot", "[", 
+  RowBox[{"{", "list", "}"}], "]"}]], "Code"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Define our rule table for Rule 110 (1101110)", "Subsubsection"],
+
+Cell[BoxData[
+ RowBox[{"rules", " ", "=", " ", 
+  RowBox[{"{", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", "0"}], "}"}], " ", "->", " ", "0"}], ",", 
+    "\n", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", "1"}], "}"}], " ", "->", " ", "1"}], ",", 
+    " ", "\n", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1", ",", "0"}], "}"}], " ", "->", " ", "1"}], ",", 
+    " ", "\n", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1", ",", "1"}], "}"}], " ", "->", " ", "1"}], ",", 
+    " ", "\n", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "0", ",", "0"}], "}"}], " ", "->", 
+     "\[NonBreakingSpace]", "0"}], ",", " ", "\n", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "0", ",", "1"}], "}"}], " ", "->", " ", "1"}], ",", 
+    "\n", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1", ",", "0"}], "}"}], " ", "->", " ", "1"}], ",", 
+    "\n", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1", ",", "1"}], "}"}], " ", "->", " ", "0"}]}], "\n",
+    "}"}]}]], "Code"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Chop up the list and apply the rules", "Subsubsection"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Partition", "[", 
+   RowBox[{"list", ",", " ", "3", ",", " ", "1"}], "]"}], " ", "/.", " ", 
+  "rules"}]], "Code"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Pad the list with zeros on both sides", "Subsubsection"],
+
+Cell[BoxData[
+ RowBox[{"Join", "[", 
+  RowBox[{
+   RowBox[{"{", "0", "}"}], ",", " ", "%", ",", " ", 
+   RowBox[{"{", "0", "}"}]}], "]"}]], "Code"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Create a function to do this", "Subsubsection"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"step", "[", "seq_", "]"}], " ", ":=", " ", 
+  RowBox[{"Join", "[", 
+   RowBox[{
+    RowBox[{"{", "0", "}"}], ",", " ", 
+    RowBox[{
+     RowBox[{"Partition", "[", 
+      RowBox[{"seq", ",", " ", "3", ",", " ", "1"}], "]"}], " ", "/.", " ", 
+     "rules"}], ",", " ", 
+    RowBox[{"{", "0", "}"}]}], "]"}]}]], "Code"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Apply the function twice ", "Subsubsection"],
+
+Cell[BoxData[
+ RowBox[{"step", "[", 
+  RowBox[{"step", "[", "list", "]"}], "]"}]], "Code"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Apply the function 30 times", "Subsubsection"],
+
+Cell[BoxData[
+ RowBox[{"Nest", "[", 
+  RowBox[{"step", ",", " ", "list", ",", " ", "30"}], "]"}]], "Code"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Show the evolution of the sequence", "Subsubsection"],
+
+Cell[BoxData[
+ RowBox[{"NestList", "[", 
+  RowBox[{"step", ",", " ", "list", ",", " ", "30"}], "]"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{"ArrayPlot", " ", "[", "%", "]"}]], "Code"]
+}, Open  ]]
+},
+WindowSize->{808, 719},
+WindowMargins->{{12, Automatic}, {Automatic, 24}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 54, 0, 35, "Subsubsection"],
+Cell[637, 24, 148, 4, 49, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[822, 33, 54, 0, 35, "Subsubsection"],
+Cell[879, 35, 134, 4, 49, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1050, 44, 48, 0, 35, "Subsubsection"],
+Cell[1101, 46, 87, 2, 50, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1225, 53, 69, 0, 35, "Subsubsection"],
+Cell[1297, 55, 1093, 35, 185, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2427, 95, 61, 0, 35, "Subsubsection"],
+Cell[2491, 97, 149, 4, 49, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2677, 106, 62, 0, 35, "Subsubsection"],
+Cell[2742, 108, 147, 4, 49, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2926, 117, 53, 0, 35, "Subsubsection"],
+Cell[2982, 119, 352, 10, 50, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3371, 134, 50, 0, 29, "Subsubsection"],
+Cell[3424, 136, 90, 2, 50, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3551, 143, 52, 0, 29, "Subsubsection"],
+Cell[3606, 145, 106, 2, 50, "Code"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3749, 152, 59, 0, 29, "Subsubsection"],
+Cell[3811, 154, 110, 2, 50, "Code"],
+Cell[3924, 158, 66, 1, 50, "Code"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
