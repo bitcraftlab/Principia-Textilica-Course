@@ -10,268 +10,144 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     22299,        603]
-NotebookOptionsPosition[     20264,        523]
-NotebookOutlinePosition[     20606,        538]
-CellTagsIndexPosition[     20563,        535]
+NotebookDataLength[     18217,        417]
+NotebookOptionsPosition[     17858,        400]
+NotebookOutlinePosition[     18200,        415]
+CellTagsIndexPosition[     18157,        412]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 
 Cell[CellGroupData[{
-Cell["Create a Sequence of 30 zeros", "Subsubsection"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"list", " ", "=", " ", 
-  RowBox[{"Table", "[", 
-   RowBox[{"0", ",", " ", 
-    RowBox[{"{", "30", "}"}]}], "]"}]}]], "Code"],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
-   ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
-   "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
-   ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
-  "}"}]], "Output",
- CellChangeTimes->{{3.6248617397234845`*^9, 3.6248617399734945`*^9}}]
-}, Open  ]]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Add a one right in the middle", "Subsubsection"],
-
 Cell[BoxData[
  RowBox[{
-  RowBox[{
-   RowBox[{"list", "[", 
-    RowBox[{"[", "15", "]"}], "]"}], " ", "=", " ", "1"}], ";"}]], "Code"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Now show the first line", "Subsubsection"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"ArrayPlot", "[", 
-  RowBox[{"{", "list", "}"}], "]"}]], "Code"],
-
-Cell[BoxData[
- GraphicsBox[
-  RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 
-   1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {30, 1}}, {0, 1}],
-  Frame->Automatic,
-  FrameLabel->{None, None},
-  FrameTicks->{{None, None}, {None, None}},
-  GridLinesStyle->Directive[
-    GrayLevel[0.5, 0.4]],
-  Method->{
-   "AxisPadding" -> Scaled[0.02], "DefaultBoundaryStyle" -> Automatic, 
-    "DefaultPlotStyle" -> Automatic, "DomainPadding" -> Scaled[0.02], 
-    "RangePadding" -> Scaled[0.05]}]], "Output",
- CellChangeTimes->{{3.624861739823488*^9, 3.6248617400034957`*^9}}]
-}, Open  ]]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Define our rule table for Rule 110 (1101110)", "Subsubsection"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"rules", " ", "=", " ", 
-  RowBox[{"{", "\n", 
+  RowBox[{"(*", " ", 
    RowBox[{
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"0", ",", "0", ",", "0"}], "}"}], " ", "->", " ", "0"}], ",", 
-    "\n", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"0", ",", "0", ",", "1"}], "}"}], " ", "->", " ", "1"}], ",", 
-    " ", "\n", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"0", ",", "1", ",", "0"}], "}"}], " ", "->", " ", "1"}], ",", 
-    " ", "\n", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"0", ",", "1", ",", "1"}], "}"}], " ", "->", " ", "1"}], ",", 
-    " ", "\n", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"1", ",", "0", ",", "0"}], "}"}], " ", "->", 
-     "\[NonBreakingSpace]", "0"}], ",", " ", "\n", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"1", ",", "0", ",", "1"}], "}"}], " ", "->", " ", "1"}], ",", 
-    "\n", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"1", ",", "1", ",", "0"}], "}"}], " ", "->", " ", "1"}], ",", 
-    "\n", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"1", ",", "1", ",", "1"}], "}"}], " ", "->", " ", "0"}]}], "\n",
-    "}"}]}]], "Code"],
-
-Cell[BoxData[
- RowBox[{"{", 
+   "Create", " ", "a", " ", "Sequence", " ", "of", " ", "30", " ", "zeros"}], 
+   " ", "*)"}], "\n", 
   RowBox[{
    RowBox[{
-    RowBox[{"{", 
-     RowBox[{"0", ",", "0", ",", "0"}], "}"}], "\[Rule]", "0"}], ",", 
+    RowBox[{"list", " ", "=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{"0", ",", " ", 
+       RowBox[{"{", "30", "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Add", " ", "a", " ", "one", " ", "right", " ", "in", " ", "the", " ", 
+     "middle"}], "*)"}], "\n", 
    RowBox[{
-    RowBox[{"{", 
-     RowBox[{"0", ",", "0", ",", "1"}], "}"}], "\[Rule]", "1"}], ",", 
+    RowBox[{
+     RowBox[{"list", "[", 
+      RowBox[{"[", "15", "]"}], "]"}], " ", "=", " ", "1"}], ";"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Define", " ", "our", " ", "rule", " ", "table", " ", "for", " ", "Rule", 
+     " ", "110", " ", 
+     RowBox[{"(", "1101110", ")"}]}], "*)"}], "\n", 
    RowBox[{
-    RowBox[{"{", 
-     RowBox[{"0", ",", "1", ",", "0"}], "}"}], "\[Rule]", "1"}], ",", 
+    RowBox[{"rules", " ", "=", " ", 
+     RowBox[{"{", "\n", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0"}], "}"}], " ", "->", " ", "0"}], ",",
+        "\n", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "1"}], "}"}], " ", "->", " ", "1"}], ",",
+        " ", "\n", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "1", ",", "0"}], "}"}], " ", "->", " ", "1"}], ",",
+        " ", "\n", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "1", ",", "1"}], "}"}], " ", "->", " ", "1"}], ",",
+        " ", "\n", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"1", ",", "0", ",", "0"}], "}"}], " ", "->", 
+        "\[NonBreakingSpace]", "0"}], ",", " ", "\n", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"1", ",", "0", ",", "1"}], "}"}], " ", "->", " ", "1"}], ",",
+        "\n", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"1", ",", "1", ",", "0"}], "}"}], " ", "->", " ", "1"}], ",",
+        "\n", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"1", ",", "1", ",", "1"}], "}"}], " ", "->", " ", "0"}]}], 
+      "\n", "}"}]}], ";"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Chop", " ", "up", " ", "the", " ", "list", " ", "and", " ", "apply", " ",
+      "the", " ", "rules"}], "*)"}], "\n", 
    RowBox[{
-    RowBox[{"{", 
-     RowBox[{"0", ",", "1", ",", "1"}], "}"}], "\[Rule]", "1"}], ",", 
-   RowBox[{
-    RowBox[{"{", 
-     RowBox[{"1", ",", "0", ",", "0"}], "}"}], "\[Rule]", "0"}], ",", 
-   RowBox[{
-    RowBox[{"{", 
-     RowBox[{"1", ",", "0", ",", "1"}], "}"}], "\[Rule]", "1"}], ",", 
-   RowBox[{
-    RowBox[{"{", 
-     RowBox[{"1", ",", "1", ",", "0"}], "}"}], "\[Rule]", "1"}], ",", 
-   RowBox[{
-    RowBox[{"{", 
-     RowBox[{"1", ",", "1", ",", "1"}], "}"}], "\[Rule]", "0"}]}], 
-  "}"}]], "Output",
- CellChangeTimes->{{3.6248617398334885`*^9, 3.624861740013496*^9}}]
-}, Open  ]]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Chop up the list and apply the rules", "Subsubsection"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{"Partition", "[", 
-   RowBox[{"list", ",", " ", "3", ",", " ", "1"}], "]"}], " ", "/.", " ", 
-  "rules"}]], "Code"],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
-   ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", "1", ",", "0", ",", 
-   "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
-   ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], "}"}]], "Output",
- CellChangeTimes->{{3.624861739843489*^9, 3.6248617400234966`*^9}}]
-}, Open  ]]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Pad the list with zeros on both sides", "Subsubsection"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"Join", "[", 
-  RowBox[{
-   RowBox[{"{", "0", "}"}], ",", " ", "%", ",", " ", 
-   RowBox[{"{", "0", "}"}]}], "]"}]], "Code"],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
-   ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", "1", ",", 
-   "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
-   ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
-  "}"}]], "Output",
- CellChangeTimes->{{3.624861739843489*^9, 3.624861740033497*^9}}]
-}, Open  ]]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Create a function to do this", "Subsubsection"],
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{"step", "[", "seq_", "]"}], " ", ":=", " ", 
-  RowBox[{"Join", "[", 
-   RowBox[{
-    RowBox[{"{", "0", "}"}], ",", " ", 
     RowBox[{
      RowBox[{"Partition", "[", 
-      RowBox[{"seq", ",", " ", "3", ",", " ", "1"}], "]"}], " ", "/.", " ", 
-     "rules"}], ",", " ", 
-    RowBox[{"{", "0", "}"}]}], "]"}]}]], "Code"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Apply the function twice ", "Subsubsection"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"step", "[", 
-  RowBox[{"step", "[", "list", "]"}], "]"}]], "Code"],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
-   ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", "1", ",", "1", ",", 
-   "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
-   ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
-  "}"}]], "Output",
- CellChangeTimes->{{3.62486173986349*^9, 3.624861740043497*^9}}]
-}, Open  ]]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Apply the function 30 times", "Subsubsection"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"Nest", "[", 
-  RowBox[{"step", ",", " ", "list", ",", " ", "30"}], "]"}]], "Code"],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-  "0", ",", "1", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", 
-   ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", "1", ",", "1", ",", 
-   "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
-   ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
-  "}"}]], "Output",
- CellChangeTimes->{{3.62486173986349*^9, 3.6248617400534973`*^9}}]
-}, Open  ]]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Show the evolution of the sequence", "Subsubsection"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"NestList", "[", 
-  RowBox[{"step", ",", " ", "list", ",", " ", "30"}], "]"}]], "Code"],
+      RowBox[{"list", ",", " ", "3", ",", " ", "1"}], "]"}], " ", "/.", " ", 
+     "rules"}], ";"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Pad", " ", "the", " ", "list", " ", "with", " ", "zeros", " ", "on", " ",
+      "both", " ", "sides"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"{", "0", "}"}], ",", " ", "list", ",", " ", 
+      RowBox[{"{", "0", "}"}]}], "]"}], ";"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Create", " ", "a", " ", "function", " ", "to", " ", "do", " ", "this"}], 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"step", "[", "seq_", "]"}], " ", ":=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", "0", "}"}], ",", " ", 
+       RowBox[{
+        RowBox[{"Partition", "[", 
+         RowBox[{"seq", ",", " ", "3", ",", " ", "1"}], "]"}], " ", "/.", " ",
+         "rules"}], ",", " ", 
+       RowBox[{"{", "0", "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"array", " ", "=", " ", 
+     RowBox[{"NestList", "[", 
+      RowBox[{"step", ",", " ", "list", ",", " ", "30"}], "]"}]}], ";"}], 
+   "\n", 
+   RowBox[{"ArrayPlot", " ", "[", "array", "]"}], "\n", 
+   RowBox[{
+    RowBox[{"lines", " ", "=", " ", 
+     RowBox[{"{", "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"indicesToLine", "[", 
+      RowBox[{"x1_", ",", " ", "y1_", ",", " ", "x2_", ",", " ", "y2_"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"(", "\n", "\t", 
+      RowBox[{
+       RowBox[{"Return", "[", 
+        RowBox[{"Line", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"x1", ",", "y1"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x2", ",", "y2"}], "}"}]}], "}"}], "]"}], "]"}], ";"}], 
+      "\n", ")"}]}], ";"}]}]}]], "Code",
+ CellChangeTimes->{{3.6248623702196913`*^9, 3.6248624662506514`*^9}, {
+   3.6248625105810204`*^9, 3.6248626297210207`*^9}, 3.6248626802210207`*^9, {
+   3.6248627192910204`*^9, 3.6248627232110205`*^9}, 3.6248627883410206`*^9, {
+   3.6248628371910205`*^9, 3.62486286249102*^9}, {3.6248629010010204`*^9, 
+   3.62486293174102*^9}, {3.62486298964202*^9, 3.6248630246150208`*^9}, 
+   3.62486324935902*^9, 3.6248634708460207`*^9, {3.62486374510172*^9, 
+   3.6248638448867083`*^9}, {3.624863901429536*^9, 3.62486399760295*^9}, {
+   3.624864028203562*^9, 3.624864115765313*^9}, {3.6248641710874195`*^9, 
+   3.62486420210804*^9}}],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -493,13 +369,11 @@ Cell[BoxData[
      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
      ",", "0"}], "}"}]}], "}"}]], "Output",
- CellChangeTimes->{{3.6248617398934913`*^9, 3.6248617400734987`*^9}}]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"ArrayPlot", " ", "[", "%", "]"}]], "Code"],
+ CellChangeTimes->{
+  3.624862477590765*^9, {3.6248626830910206`*^9, 3.62486270224102*^9}, 
+   3.6248627326810207`*^9, 3.6248627913910203`*^9, 3.6248628490810204`*^9, {
+   3.6248628842310205`*^9, 3.62486293574102*^9}, 3.6248630069710207`*^9, 
+   3.6248632501590204`*^9}],
 
 Cell[BoxData[
  GraphicsBox[RasterBox[CompressedData["
@@ -517,8 +391,11 @@ b91bebn/ALokBKc=
    "AxisPadding" -> Scaled[0.02], "DefaultBoundaryStyle" -> Automatic, 
     "DefaultPlotStyle" -> Automatic, "DomainPadding" -> Scaled[0.02], 
     "RangePadding" -> Scaled[0.05]}]], "Output",
- CellChangeTimes->{{3.624861739913492*^9, 3.6248617401034994`*^9}}]
-}, Open  ]]
+ CellChangeTimes->{
+  3.624862477590765*^9, {3.6248626830910206`*^9, 3.62486270224102*^9}, 
+   3.6248627326810207`*^9, 3.6248627913910203`*^9, 3.6248628490810204`*^9, {
+   3.6248628842310205`*^9, 3.62486293574102*^9}, 3.6248630069710207`*^9, 
+   3.6248632501790204`*^9}]
 }, Open  ]]
 },
 WindowSize->{998, 1040},
@@ -538,72 +415,9 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 54, 0, 39, "Subsubsection"],
-Cell[CellGroupData[{
-Cell[659, 26, 148, 4, 52, "Code"],
-Cell[810, 32, 441, 8, 31, "Output"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[1300, 46, 54, 0, 39, "Subsubsection"],
-Cell[1357, 48, 134, 4, 52, "Code"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[1528, 57, 48, 0, 39, "Subsubsection"],
-Cell[CellGroupData[{
-Cell[1601, 61, 87, 2, 52, "Code"],
-Cell[1691, 65, 584, 13, 42, "Output"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2324, 84, 69, 0, 39, "Subsubsection"],
-Cell[CellGroupData[{
-Cell[2418, 88, 1093, 35, 233, "Code"],
-Cell[3514, 125, 932, 28, 31, "Output"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[4495, 159, 61, 0, 39, "Subsubsection"],
-Cell[CellGroupData[{
-Cell[4581, 163, 149, 4, 52, "Code"],
-Cell[4733, 169, 416, 7, 31, "Output"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[5198, 182, 62, 0, 39, "Subsubsection"],
-Cell[CellGroupData[{
-Cell[5285, 186, 147, 4, 52, "Code"],
-Cell[5435, 192, 437, 8, 31, "Output"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[5921, 206, 53, 0, 39, "Subsubsection"],
-Cell[5977, 208, 352, 10, 52, "Code"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[6366, 223, 50, 0, 39, "Subsubsection"],
-Cell[CellGroupData[{
-Cell[6441, 227, 90, 2, 52, "Code"],
-Cell[6534, 231, 436, 8, 31, "Output"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[7019, 245, 52, 0, 39, "Subsubsection"],
-Cell[CellGroupData[{
-Cell[7096, 249, 106, 2, 52, "Code"],
-Cell[7205, 253, 438, 8, 31, "Output"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[7692, 267, 59, 0, 39, "Subsubsection"],
-Cell[CellGroupData[{
-Cell[7776, 271, 110, 2, 52, "Code"],
-Cell[7889, 275, 11531, 220, 632, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[19457, 500, 66, 1, 52, "Code"],
-Cell[19526, 503, 710, 16, 386, "Output"]
-}, Open  ]]
+Cell[580, 22, 4611, 127, 573, "Code"],
+Cell[5194, 151, 11732, 224, 632, "Output"],
+Cell[16929, 377, 913, 20, 386, "Output"]
 }, Open  ]]
 }
 ]
