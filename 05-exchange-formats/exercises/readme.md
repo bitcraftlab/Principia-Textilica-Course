@@ -27,10 +27,10 @@ Have a look at the [HoundsTooth](https://en.wikipedia.org/wiki/Houndstooth) for 
 *This is a Mathematica Exercise:*
 
 1. Create an integer sequence using numbers from 1 .. 5 and use it as cord flip-sequence to create 5-ply Braids (See the braiding demo!)
-2. Write some functions:
-  *  A function to change the braiding sequence so the resulting braid is the vertical mirror image of the original braid, 
-  *  A function to change the braiding sequence so the resulting braid is the horizontal mirror image of the original braid
-  *  A function to join braids together
+2. Write functions that let you
+  *  change the braiding sequence so the resulting braid is the vertical mirror image of the original braid
+  *  change the braiding sequence so the resulting braid is the horizontal mirror image of the original braid
+  *  join braids together
 3. Use those functions to create a complex braid.
 
 Also: 
