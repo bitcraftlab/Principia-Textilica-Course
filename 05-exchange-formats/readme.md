@@ -30,6 +30,13 @@ We will touch on topics of
 
 The exercises can be found [here](exercises).
 
+**Note:**
+If you want to submit your Mathematica code to Version control it is generally a good idea to save your work as **Mathematica Packages** rather than Notebooks.
+
 # Demos
 
-The demos can be found [here](demos).
+In this lecture I demonstrated how to create braids with *Mathematica*.
+Make sure to check out the [BraidingDemo](demos/BraidingDemo.m)!
+
+
+
