@@ -30,7 +30,6 @@ class Braid{
   }
   
   void drawCordStates(){
-    //cords[0].drawAllCordStates();
     for(Cord c : cords){
         c.drawAllCordStates();
     }
