@@ -1,0 +1,166 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      5500,        157]
+NotebookOptionsPosition[      5108,        139]
+NotebookOutlinePosition[      5450,        154]
+CellTagsIndexPosition[      5407,        151]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"seq", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "2", ",", "3", ",", "4"}], "}"}]}], "     ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"flow", " ", "of", " ", "a", " ", "cord"}], " ", "*)"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"cord", "[", "seq_", "]"}], ":=", " ", 
+   RowBox[{"Block", "[", "      ", 
+    RowBox[{"(*", " ", 
+     RowBox[{"seq", " ", "to", " ", "line"}], " ", "*)"}], "\n", "\t", 
+    RowBox[{
+     RowBox[{"{", " ", 
+      RowBox[{"pos2", ",", " ", "fn"}], "}"}], ",", "\n", "\t", 
+     RowBox[{
+      RowBox[{"seq2", " ", "=", " ", 
+       RowBox[{"Riffle", "[", 
+        RowBox[{"seq", ",", " ", "seq"}], "]"}]}], " ", ";", "   ", 
+      RowBox[{"(*", " ", 
+       RowBox[{"take", " ", "every", " ", "list", " ", "item", " ", "twice"}],
+        " ", "*)"}], "\n", "\t", 
+      RowBox[{
+       RowBox[{"fn", "[", 
+        RowBox[{"y_", ",", 
+         RowBox[{"{", "x_", "}"}]}], "]"}], ":=", "  ", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "y"}], "}"}]}], ";", "       ", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "function", " ", "to", " ", "turn", " ", "the", " ", "result", " ", 
+        "of", " ", "MapIndexed", " ", "into", " ", "coordinates"}], " ", 
+       "*)"}], "\n", "\t", 
+      RowBox[{"MapIndexed", "[", 
+       RowBox[{"fn", ",", " ", "seq2"}], "]"}]}]}], "        ", 
+    RowBox[{"(*", " ", 
+     RowBox[{
+     "wrapping", " ", "coordiantes", " ", "into", " ", "a", " ", "line"}], 
+     " ", "*)"}], "\n", "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"showCord", "[", "seq_", "]"}], ":=", " ", 
+   RowBox[{"Graphics", " ", "@", " ", 
+    RowBox[{"Line", " ", "@", " ", 
+     RowBox[{"cord", "[", "seq", "]"}]}]}]}], " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"drawing", " ", "cord"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"showBraid", "[", "seq_", "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{"showCord", " ", "/@", " ", "seq"}], " ", "//", " ", "Show"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"functionBraid", "[", 
+    RowBox[{"seq_", ",", " ", "fn_", ",", " ", 
+     RowBox[{"n_:", " ", "20"}]}], "]"}], " ", ":=", "  ", 
+   RowBox[{"(", 
+    RowBox[{"Transpose", " ", "@", " ", 
+     RowBox[{"NestList", "[", 
+      RowBox[{"fn", ",", " ", "seq", ",", " ", "n"}], "]"}]}], ")"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"cordFlip", "[", 
+   RowBox[{"seq_", ",", " ", "crd_"}], "]"}], " ", ":=", "  ", 
+  RowBox[{"Block", "[", "\n", "\t", 
+   RowBox[{
+    RowBox[{"{", " ", "\n", "\t\t", 
+     RowBox[{
+      RowBox[{"cord1", " ", "=", " ", "crd"}], ",", " ", "\n", "\t\t", 
+      RowBox[{"cord2", " ", "=", " ", 
+       RowBox[{"crd", " ", "+", " ", "1"}]}]}], " ", "\n", "\t", "}"}], ",", 
+    "\n", "    ", 
+    RowBox[{"seq", " ", "/.", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"cord1", " ", "->", " ", "cord2"}], ",", " ", 
+       RowBox[{"cord2", " ", "->", " ", "cord1"}]}], "}"}]}]}], "\n", 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Show", " ", "@", " ", 
+  RowBox[{"cordFlip", "[", 
+   RowBox[{"seq", ",", " ", "3"}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.625565354461789*^9, 3.6255653841323824`*^9}, {
+  3.6255654382334642`*^9, 3.625565525075201*^9}, {3.625565672897625*^9, 
+  3.625565673307629*^9}, {3.6255658274991713`*^9, 3.6255658285291815`*^9}, {
+  3.6255659833917303`*^9, 3.625566036572262*^9}, {3.62556611441304*^9, 
+  3.6255661318132143`*^9}, {3.6255662117840137`*^9, 3.6255662126340227`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "2", ",", "2", ",", "3", ",", "4"}], "}"}]], "Output",
+ CellChangeTimes->{3.6255660494523907`*^9, 3.62556613341323*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Show", "::", "gcomb"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Could not combine the graphics objects in \
+\[NoBreak]\\!\\(Show[\\(\\({1, 2, 2, 4, 3}\\)\\)]\\)\[NoBreak]. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/Show/gcomb\\\", \
+ButtonNote -> \\\"Show::gcomb\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.625566133453231*^9}],
+
+Cell[BoxData[
+ RowBox[{"Show", "[", 
+  RowBox[{"{", 
+   RowBox[{"1", ",", "2", ",", "2", ",", "4", ",", "3"}], "}"}], 
+  "]"}]], "Output",
+ CellChangeTimes->{3.6255660494523907`*^9, 3.625566133453231*^9}]
+}, Open  ]]
+},
+WindowSize->{1087, 1102},
+WindowMargins->{{Automatic, -3}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (July 1, 2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 3650, 90, 452, "Input"],
+Cell[4233, 114, 168, 3, 31, "Output"],
+Cell[4404, 119, 481, 10, 21, "Message"],
+Cell[4888, 131, 204, 5, 31, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
