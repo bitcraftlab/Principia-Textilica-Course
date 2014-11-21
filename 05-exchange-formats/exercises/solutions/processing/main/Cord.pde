@@ -4,12 +4,13 @@ class Cord{
   ArrayList<CordState> states = new ArrayList<CordState>();
   CordState currentState;
   String name;
-  color stringColor = color(255, 0, 0);
+  color stringColor;
   
   //constructor
-  Cord(String n, int pos){
+  Cord(String n, int pos, color c){
     name = n;
-    addState(new CordState(pos, pos, 0, false));
+    stringColor = c;
+    addState(new CordState(-1, pos, 0, false));
     currentState = states.get(states.size()-1);
   }
   
@@ -70,8 +71,15 @@ class CordState{
   
   //methods
   void drawCordState(color c){
-    stroke(c);
-    line(fromLane*5, step*10, toLane*5, step*10);  
-    //5 px x-difference between lanes and 10 px y-difference between steps
+    if(fromLane != -1){
+      stroke(c);
+      float x1 = fromLane*10 + OFFSET_X;
+      float x2 = toLane*10   + OFFSET_X;
+      float y1 = (step)*20   + OFFSET_Y;
+      float y2 = (step+1)*20 + OFFSET_Y;
+      line(x1, y1, x2, y2);
+      //println(step + ": " + x1+","+y1 + " to " + x2+","+y2);  
+      //5 px x-difference between lanes and 10 px y-difference between steps
+    }
   }
 }

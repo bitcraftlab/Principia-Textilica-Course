@@ -10,7 +10,8 @@ class Braid{
     
     cords = new Cord[noCords];
     for(int i = 0; i<noCords; ++i){
-      cords[i] = new Cord(str(i), i);
+      color c = color(i*50, i*i*20, 255-(i*50));
+      cords[i] = new Cord(str(i), i, c);
     }
 
   }
@@ -29,7 +30,10 @@ class Braid{
   }
   
   void drawCordStates(){
-    //
+    //cords[0].drawAllCordStates();
+    for(Cord c : cords){
+        c.drawAllCordStates();
+    }
   }
   
   String toString(){
