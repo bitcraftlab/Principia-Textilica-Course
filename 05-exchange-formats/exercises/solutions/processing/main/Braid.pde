@@ -4,16 +4,22 @@ class Braid{
   int[] pattern;
   int step = 0;
   
-  //constructor
-  Braid(int[] input, int noCords){
+  //constructor 
+  Braid(int[] input, int noCords, int[] colors){
+    if(colors == null){
+      colors = new color[noCords];
+      for(int i = 0; i<noCords; ++i){
+        colors[i] = color(random(256), random(256), random(256));
+      }
+    }
+    
     pattern = input;
     
     cords = new Cord[noCords];
     for(int i = 0; i<noCords; ++i){
-      color c = color(i*50, i*i*20, 255-(i*50));
-      cords[i] = new Cord(str(i), i, c);
+      //color c = color(i*50, i*i*20, 255-(i*50));
+      cords[i] = new Cord(str(i), i, colors[i]);
     }
-
   }
   
   //methods

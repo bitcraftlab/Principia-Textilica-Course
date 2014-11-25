@@ -11,8 +11,18 @@ void setup(){
   background(255);
   strokeWeight(8);
   
-  int[] input = new int[]{1,-4,-2, 3};
-  Braid b = new Braid(input, 5);
+  color[] colors = new color[]{
+    #EE4357,
+    #851E2A,
+    #D9A96A,
+    #85581E,
+    #6A9AD9  
+  };
+  
+  int[] input1 = new int[]{1,-4,-2, 3};
+  int[] input2 = new int[]{1,-4,-2, 3, 5,-8,-6,7};
+  Braid b = new Braid(input1, 5, null);
+  //Braid b = new Braid(input1, 9, null);
   doStuff(b);
   draw(b);
   
@@ -21,7 +31,7 @@ void setup(){
 
 void doStuff(Braid b){
   b.braid(15);
-  println(b.toString());
+  //println(b.toString());
 }
 
 void draw(Braid b){
