@@ -33,10 +33,6 @@ class Cord{
     currentState = new CordState(state);
   }
   
-  /*void drawCordState(int i){
-    states.get(i);
-  }*/
-  
   void drawAllCordStates(){
     ListIterator<CordState> iter = states.listIterator();
     while(iter.hasNext()){  
@@ -86,8 +82,6 @@ class CordState{
       float y1 = (step)*GAP_Y   + OFFSET_Y;
       float y2 = (step+1)*GAP_Y + OFFSET_Y;
       line(x1, y1, x2, y2);
-      //println(step + ": " + x1+","+y1 + " to " + x2+","+y2);  
-      //5 px x-difference between lanes and 10 px y-difference between steps
     }
   }
 }

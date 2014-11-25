@@ -13,12 +13,10 @@ class Braid{
         colors[i] = color(random(256), random(256), random(256));
       }
     }
-    
     pattern = input;
     
     cords = new Cord[noCords];
     for(int i = 0; i<noCords; ++i){
-      //color c = color(i*50, i*i*20, 255-(i*50));
       cords[i] = new Cord(str(i), i, colors[i]);
     }
   }
@@ -54,7 +52,6 @@ class Braid{
       //sort by lane for that step, put in name
       for(Cord c : cords){
         ordered[c.states.get(i).toLane] = c.name;
-        //txt += (str(c.lanes.get(i).toLane) + " ");    //if done properly, would check step value in cordstate obj...
       }
       
       for(String n : ordered){

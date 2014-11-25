@@ -15,13 +15,7 @@ void setup(){
   background(255);
   strokeWeight(8);
   
-  color[] colors = new color[]{
-    #EE4357,
-    #851E2A,
-    #D9A96A,
-    #85581E,
-    #6A9AD9  
-  };
+  color[] colors = new color[]{#EE4357, #851E2A, #D9A96A, #85581E, #6A9AD9 };
   
   int[] input1 = new int[]{1,-4,-2, 3};
   int[] input2 = new int[]{1,-4,-2, 3, 5,-8,-6,7};
@@ -29,13 +23,6 @@ void setup(){
   //b = new Braid(input1, 9, null);
   b.braid(4);
   draw();
-  
-  //take input and create cords accordingly
-}
-
-void doStuff(Braid b){
-  //b.braid(15);
-  //println(b.toString());
 }
 
 void draw(){  
@@ -53,6 +40,10 @@ void keyPressed(){
   else if(key == 'p' || key == 'P'){
     //println(b.toString());
     println(b.getWord());
+    typed = "";
+  }
+  else if(key == 's' || key == 'S'){
+    println(b.toString());
     typed = "";
   }
   else{
