@@ -81,10 +81,10 @@ class CordState{
   void drawCordState(color c){
     if(fromLane != -1){
       stroke(c);
-      float x1 = fromLane*10 + OFFSET_X;
-      float x2 = toLane*10   + OFFSET_X;
-      float y1 = (step)*20   + OFFSET_Y;
-      float y2 = (step+1)*20 + OFFSET_Y;
+      float x1 = fromLane*GAP_X + OFFSET_X;
+      float x2 = toLane*GAP_X   + OFFSET_X;
+      float y1 = (step)*GAP_Y   + OFFSET_Y;
+      float y2 = (step+1)*GAP_Y + OFFSET_Y;
       line(x1, y1, x2, y2);
       //println(step + ": " + x1+","+y1 + " to " + x2+","+y2);  
       //5 px x-difference between lanes and 10 px y-difference between steps
