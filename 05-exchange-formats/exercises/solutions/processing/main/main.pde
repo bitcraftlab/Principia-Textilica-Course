@@ -1,9 +1,13 @@
 import java.util.ListIterator;
+import java.util.LinkedList;
 
 public static final int OFFSET_X = 50;
 public static final int OFFSET_Y = 0;
 public static final int GAP_X = 10;
 public static final int GAP_Y = 12;
+
+String typed = "";
+Braid b = null;
 
 void setup(){
   //initialize
@@ -21,23 +25,37 @@ void setup(){
   
   int[] input1 = new int[]{1,-4,-2, 3};
   int[] input2 = new int[]{1,-4,-2, 3, 5,-8,-6,7};
-  Braid b = new Braid(input1, 5, null);
-  //Braid b = new Braid(input1, 9, null);
-  doStuff(b);
-  draw(b);
+  b = new Braid(input1, 5, null);
+  //b = new Braid(input1, 9, null);
+  b.braid(4);
+  draw();
   
   //take input and create cords accordingly
 }
 
 void doStuff(Braid b){
-  b.braid(15);
+  //b.braid(15);
   //println(b.toString());
 }
 
-void draw(Braid b){
-  println("Ready to braid?");
-  
+void draw(){  
   b.drawCordStates();
-  
   noLoop();
+}
+
+void keyPressed(){
+  if(key == '\n'){
+    int flipLane = Integer.parseInt(typed);
+    if(flipLane != 0 && flipLane > -(b.cords.length) && flipLane < b.cords.length) b.flipCordsAtLane(flipLane);
+    redraw();
+    typed = "";
+  }
+  else if(key == 'p' || key == 'P'){
+    //println(b.toString());
+    println(b.getWord());
+    typed = "";
+  }
+  else{
+    typed += key;
+  }
 }

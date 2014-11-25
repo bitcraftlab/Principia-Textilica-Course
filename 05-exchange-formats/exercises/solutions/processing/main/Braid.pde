@@ -3,6 +3,7 @@ class Braid{
   Cord[] cords;
   int[] pattern;
   int step = 0;
+  LinkedList<Integer> words = new LinkedList<Integer>();
   
   //constructor 
   Braid(int[] input, int noCords, int[] colors){
@@ -30,6 +31,7 @@ class Braid{
         for(Cord c : cords){
           c.updateStateWithBraidWord(pattern[s], step);
         }
+        words.add(pattern[s]);
         ++step;
       }
     }
@@ -61,5 +63,23 @@ class Braid{
       txt+="\n";
     }
     return txt;
+  }
+  
+  void flipCordsAtLane(int w){
+    words.add(w);
+    
+    for(Cord c : cords){
+      c.updateStateWithBraidWord(w, step);
+    }
+    ++step;
+  }
+  
+  String getWord(){
+    String completeWord = "";
+    ListIterator<Integer> iter = words.listIterator();
+    while(iter.hasNext()){
+      completeWord += (iter.next() + " ");   
+    }
+     return completeWord; 
   }
 }
