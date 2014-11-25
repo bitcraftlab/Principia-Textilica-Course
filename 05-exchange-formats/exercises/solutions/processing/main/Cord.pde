@@ -33,14 +33,22 @@ class Cord{
     currentState = new CordState(state);
   }
   
-  void drawCordState(int i){
+  /*void drawCordState(int i){
     states.get(i);
-  }
+  }*/
   
   void drawAllCordStates(){
     ListIterator<CordState> iter = states.listIterator();
     while(iter.hasNext()){  
       iter.next().drawCordState(stringColor);
+    } 
+  }
+  
+  void drawAllCordStates(boolean onTopValue){
+    ListIterator<CordState> iter = states.listIterator();
+    while(iter.hasNext()){
+      CordState cs = iter.next();   
+      if(cs.isTopCord == onTopValue) cs.drawCordState(stringColor);
     } 
   }
 }

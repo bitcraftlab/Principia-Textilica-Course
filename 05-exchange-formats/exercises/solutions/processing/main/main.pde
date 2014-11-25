@@ -7,6 +7,7 @@ void setup(){
   //initialize
   size(400, 400);
   background(255);
+  strokeWeight(9);
   
   int[] input = new int[]{1,-4,2,-3};
   Braid b = new Braid(input, 5);
