@@ -5,9 +5,11 @@ class Cord{
   CordState currentState;
   String name;
   color stringColor;
+  Braid braid;
   
   //constructor
-  Cord(String n, int pos, color c){
+  Cord(Braid b, String n, int pos, color c){
+    braid = b;
     name = n;
     stringColor = c;
     addState(new CordState(-1, pos, 0, false));
@@ -15,16 +17,21 @@ class Cord{
   }
   
   //methods
-  void updateStateWithBraidWord(int word, int step){
+  void updateStateWithBraidWord(int word, int step){    
     //check if relevant lane change
+    Cord neighbor = null;
     if(currentState.toLane == abs(word)-1){  //left to right (compare start index and target index)
-      addState(new CordState(currentState.toLane, currentState.toLane+1,step, word>=0));
+      //if(currentState.step == step) stepChange = 1;
+      neighbor = braid.getCordOnLane(currentState.toLane+1); //right of
+      addState(new CordState(currentState.toLane, currentState.toLane+1,currentState.step+1, word>=0));
     }
     else if(currentState.toLane == abs(word)){  //right to left
-      addState(new CordState(currentState.toLane, currentState.toLane-1,step, word<0));
+      //if(currentState.step == step) stepChange = 1;
+      neighbor = braid.getCordOnLane(currentState.toLane-1); //left of
+      addState(new CordState(currentState.toLane, currentState.toLane-1,currentState.step+1, word<0));
     }
-    else{  //add "empty" state change
-      addState(new CordState(currentState.toLane, currentState.toLane, step, false));
+    else{  //add "empty" state change //new: do nothing
+      //addState(new CordState(currentState.toLane, currentState.toLane, currentState.step, false));
     }
   }
   
@@ -55,7 +62,7 @@ class CordState{
   //member
   int fromLane;
   int toLane;
-  int step;
+  int step;  // = y-pos ?
   boolean isTopCord;
   
   //constructor

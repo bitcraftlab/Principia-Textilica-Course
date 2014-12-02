@@ -21,7 +21,7 @@ void setup(){
   int[] input2 = new int[]{1,-4,-2, 3, 5,-8,-6,7};
   b = new Braid(input1, 5, null);
   //b = new Braid(input1, 9, null);
-  b.braid(4);
+  b.braid(2);
   draw();
 }
 

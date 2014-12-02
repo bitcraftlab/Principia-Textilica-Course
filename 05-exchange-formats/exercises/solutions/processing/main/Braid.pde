@@ -23,16 +23,24 @@ class Braid{
   
   //methods
   void braid(int rep){
+    
     //repeat input pattern until... it's enough
     for(int i = 0; i< rep; ++i){
       for(int s = 0; s < pattern.length; ++s){
+        int stepIncrease = 0;
         for(Cord c : cords){
-          c.updateStateWithBraidWord(pattern[s], step);
+          //check for every cord if step has to be increased
+          //stepIncrease can be 1 or 0, don't let it reset to 0 if it already was 1
+          stepIncrease = max(stepIncrease, c.updateStateWithBraidWord(pattern[s], step));
         }
         words.add(pattern[s]);
-        ++step;
+        step += stepIncrease;
       }
     }
+  }
+  
+  Cord getCordOnLane(int lane){
+    //find cord with current tolane at lane 
   }
   
   void drawCordStates(){
