@@ -139,3 +139,6 @@ DynamicModule[
 		}
 	]
 ]
+
+
+CellularAutomaton[110, {{0},1}, 100] // Image
