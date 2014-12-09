@@ -38,10 +38,28 @@ class Braid{
     }
   }
   
-  /*Cord getCordOnLane(int lane){
+  Cord getCordOnLane(int lane){
     //find cord with current tolane at lane
-   return null; 
-  }*/
+    Cord tmp = null;
+    for(Cord c : cords){
+      if(c.currentState.toLane == lane){
+        tmp = c;
+        break;
+      }
+    }
+   return tmp; 
+  }
+  
+  Cord getDoubleCordFor(Cord cord){
+    Cord dC = null;
+    for(Cord c : cords){
+      if(c.currentState.toLane == cord.currentState.toLane && (c != cord)){
+        dC = c; 
+        break;
+      }
+    }
+    return dC;
+  }
   
   void drawCordStates(){
     for(Cord c : cords){
