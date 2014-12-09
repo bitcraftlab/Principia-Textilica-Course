@@ -1,5 +1,14 @@
 (* ::Package:: *)
 
+(* ::Title:: *)
+(*Elementary CA*)
+
+
+(* ::Text:: *)
+(*Hands-On Mathematica demo:*)
+(*Programming an elementary Cellular Automaton.*)
+
+
 (* ::Subsubsection:: *)
 (*Create a Sequence of 30 zeros*)
 
