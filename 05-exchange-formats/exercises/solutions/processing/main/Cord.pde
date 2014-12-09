@@ -22,10 +22,8 @@ class Cord{
     //Cord neighbor = null;
     if(currentState.toLane == abs(word)-1){  //left to right (compare start index and target index)
     
-      //second idea:
+      //second idea: //doesn't work
       // just get start of empty streak, flip cord there (both cords)
-      // after each braiding step (where this can happen), let braid check for double cords
-      // --> resolve by moving down the crossing for the cord that was flipped "too early"
       
       /*
       //0. since the order of the cords in the list is never changed we cannot say which cord is asked first/flipped first...
@@ -47,16 +45,13 @@ class Cord{
               while(iter.hasPrevious()){
                 CordState tmp = iter.previous  
                 if()
-              } 
-            
+              }            
           }
           else{
             //normal last flip
             addState(new CordState(currentState.toLane, currentState.toLane+1,currentState.step+1, word>=0));
           }
-          
-          
-          
+ 
           //replace with new state (keep step) 
           //update all following empty states (from-to-lanes)      
 
@@ -70,7 +65,6 @@ class Cord{
       addState(new CordState(currentState.toLane, currentState.toLane+1,currentState.step+1, word>=0));
     }
     else if(currentState.toLane == abs(word)){  //right to left
-      //neighbor = braid.getCordOnLane(currentState.toLane-1); //left of
       addState(new CordState(currentState.toLane, currentState.toLane-1,currentState.step+1, word<0));
     }
     else{  //add empty state for now
