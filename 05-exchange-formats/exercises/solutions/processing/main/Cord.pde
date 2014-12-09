@@ -19,19 +19,34 @@ class Cord{
   //methods
   void updateStateWithBraidWord(int word, int step){    
     //check if relevant lane change
-    Cord neighbor = null;
+    //Cord neighbor = null;
     if(currentState.toLane == abs(word)-1){  //left to right (compare start index and target index)
-      //if(currentState.step == step) stepChange = 1;
-      neighbor = braid.getCordOnLane(currentState.toLane+1); //right of
+      //0. since the order of the cords in the list is never changed we cannot say which cord is asked first/flipped first...
+      //--> check if there is another cord's current state on the same lane as this
+      // y: case 2: is second to flip
+      // n: case 1: is first to flip
+      
+      //case 1: this cord is flipped first:
+        //find first empty state after last non-empty state
+        //find neighbor's first empty state after last non-empty state
+        //check which one is further down, take that position to flip this cord 
+        //replace with new state (keep step) 
+        //update all following empty states (from-to-lanes)
+
+      //case 2: neighbor was flipped first:
+        //find last non-empty state of neighbor --> take that position to flip this cord
+        //replace with new state (keep step) 
+        //update all following empty states (from-to-lanes)
+      
+      //neighbor = braid.getCordOnLane(currentState.toLane+1); //right of
       addState(new CordState(currentState.toLane, currentState.toLane+1,currentState.step+1, word>=0));
     }
     else if(currentState.toLane == abs(word)){  //right to left
-      //if(currentState.step == step) stepChange = 1;
-      neighbor = braid.getCordOnLane(currentState.toLane-1); //left of
+      //neighbor = braid.getCordOnLane(currentState.toLane-1); //left of
       addState(new CordState(currentState.toLane, currentState.toLane-1,currentState.step+1, word<0));
     }
-    else{  //add "empty" state change //new: do nothing
-      //addState(new CordState(currentState.toLane, currentState.toLane, currentState.step, false));
+    else{  //add empty state for now
+      addState(new CordState(currentState.toLane, currentState.toLane, currentState.step+1, false));
     }
   }
   

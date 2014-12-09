@@ -17,31 +17,31 @@ class Braid{
     
     cords = new Cord[noCords];
     for(int i = 0; i<noCords; ++i){
-      cords[i] = new Cord(str(i), i, colors[i]);
+      cords[i] = new Cord(this, str(i), i, colors[i]);
     }
   }
   
   //methods
   void braid(int rep){
     
-    //repeat input pattern until... it's enough
+    //repeat input pattern
+    int maxStepInCords = 0;
     for(int i = 0; i< rep; ++i){
       for(int s = 0; s < pattern.length; ++s){
-        int stepIncrease = 0;
         for(Cord c : cords){
-          //check for every cord if step has to be increased
-          //stepIncrease can be 1 or 0, don't let it reset to 0 if it already was 1
-          stepIncrease = max(stepIncrease, c.updateStateWithBraidWord(pattern[s], step));
+          c.updateStateWithBraidWord(pattern[s], step);
+          maxStepInCords = max(maxStepInCords, c.currentState.step);
         }
         words.add(pattern[s]);
-        step += stepIncrease;
+        step = maxStepInCords;
       }
     }
   }
   
-  Cord getCordOnLane(int lane){
-    //find cord with current tolane at lane 
-  }
+  /*Cord getCordOnLane(int lane){
+    //find cord with current tolane at lane
+   return null; 
+  }*/
   
   void drawCordStates(){
     for(Cord c : cords){

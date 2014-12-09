@@ -15,13 +15,15 @@ void setup(){
   background(255);
   strokeWeight(8);
   
-  color[] colors = new color[]{#EE4357, #851E2A, #D9A96A, #85581E, #6A9AD9 };
+  color[] colors = new color[]{#EE4357, #851E2A, #D9A96A, #85581E, #6A9AD9};
   
   int[] input1 = new int[]{1,-4,-2, 3};
   int[] input2 = new int[]{1,-4,-2, 3, 5,-8,-6,7};
-  b = new Braid(input1, 5, null);
+  int[] input3 = new int[]{1,-2};
+  int[] input4 = new int[]{1,-2, 3, -4};
+  b = new Braid(input3, 5, null);
   //b = new Braid(input1, 9, null);
-  b.braid(2);
+  b.braid(10);
   draw();
 }
 
