@@ -22,13 +22,35 @@ int maxInArray(int[] a){
 
 PImage mat2img(int[][] mat){
   
-  PImage img = createImage(mat.length, mat[0].length, RGB);
+  PImage img = createImage(mat[0].length, mat.length, RGB);
   img.loadPixels();
   
   int i = 0;
   for(int m = 0; m < mat.length; ++m){
     for(int n = 0; n < mat[m].length; ++n){
       img.pixels[i] = mat[m][n] != 0 ? color(255, 0, 0) : color(255, 255, 255);
+      /*color c = color(255, 255, 255);
+      switch(mat[m][n]){
+        case 0:
+          c = color(255, 255, 255);
+          break;
+        case 1:
+          c = color(50, 0, 0);
+          break;
+        case 2:
+          c = color(100, 50, 0);
+          break;
+        case 3:
+          c = color(150, 100, 0);
+          break;
+        case 4:
+          c = color(210, 140, 0);
+          break;
+        default:
+          c = color(0, 0, 0);
+          break;
+      }
+      img.pixels[i] = c;*/
       ++i;
     }
   }
