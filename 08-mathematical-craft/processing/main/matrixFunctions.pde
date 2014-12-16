@@ -1,5 +1,6 @@
 //-------------------------------------------------------------------------------------------------------//
 
+//this needs fixing!
 int[][] seq2mat(int[] seq, int rows, int columns){
   int[][] mat = new int[rows][columns];
 
