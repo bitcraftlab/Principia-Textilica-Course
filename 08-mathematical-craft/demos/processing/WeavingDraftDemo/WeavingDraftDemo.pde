@@ -24,10 +24,12 @@ void setup() {
   
   // load a draft
   
-  // w.loadDrawdown("57002.gif");
-  //w.load("57002-liftplan.wif");
+  w.load("57002-liftplan.wif");
+  
   // w.load("57002.wif");
-  w.load("57002-xmas.gif");
+  // w.loadDrawdown("57002.gif");
+  // w.loadDrawdown("57002-xmas.png");
+
   img = w.getDraft();
   
   // coordinate system origin in top right corner
