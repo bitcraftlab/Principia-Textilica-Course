@@ -13,8 +13,7 @@ Use the **[standalone builder](http://www.rzm-dev.com/pattern/standaloneBuilder.
 ---
 
 **Step 1)**
-Create a basic repeat using primitive stitches, translation and rotation commands.  
-Here's an example:
+Create a basic repeat using primitive stitches, translation and rotation commands.
     
 **Step 2)** Now use loop and translation commands, to create a rectangular grid of those units. You may also use the scale commands, to create a circular grid.
 
