@@ -24,7 +24,7 @@ Create a basic repeat using primitive stitches, translation and rotation command
 
 *Processing Excercise*
 
-You can find a *Processing* Version of the *Pa++ern* Generator [here](/demos/processing/CodeStitching).  
+You can find a *Processing* Version of the *Pa++ern* Generator [here](../demos/processing/CodeStitching).  
 It takes a *Pa++ern* program and parses it character by character.
 Can you extend the program to create custom commands for custom stitches?  
 
