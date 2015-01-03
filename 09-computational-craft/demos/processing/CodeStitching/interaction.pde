@@ -14,10 +14,5 @@ void keyPressed() {
     timer0 = millis();
     break;
 
-  case 's':
-    // save embroidery to external file 
-    output = true;
-    break;
-    
   }
 }

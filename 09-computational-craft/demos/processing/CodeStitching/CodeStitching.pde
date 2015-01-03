@@ -92,10 +92,7 @@ void draw() {
   
   // white background
   background(255);
-
-  // begin the output, so we can pipe our output to an external file
-  beginOutput(); 
-
+  
   // pick the first color from the palette
   c = c0;
   stroke(pal[c]); 
@@ -109,7 +106,7 @@ void draw() {
   // set the timer that controls the step-by-step drawing progress
   timer = (millis() - timer0) / delay; 
 
-  while (i < p.length () && (output || o < timer)) {
+  while (i < p.length () && o < timer) {
 
     // get the character code at the input pointer
     char ch = p.charAt(i);
@@ -198,6 +195,4 @@ void draw() {
     
   } 
 
-  // end the output, so we can save to an external file
-  endOutput();
 }
