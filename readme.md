@@ -56,23 +56,18 @@ Please fork it to your repo.
 # ///////// Participants ///////// #
 
 |  Wiki                                                                                                     |   Github                                            |            
-|:----------------------------------------------------------------------------------------------------------|:----------------------------------------------------| 
-|  **///////// GROUP 1 /////////**                                                                          |                                                     |                                          
-| [Thomas Kessler](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Thomas_Kessler)             | [magenknurren](https://github.com/magenknurren)     |
-| [Jie Qiu](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Jie_Qiu)                           | [queenaquin](https://github.com/queenaquin)         |
-| [Scarlett Nimz](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Scarlett_Nimz)               | ???                                                 |
-|  **///////// GROUP 2 /////////**                                                                          |                                                     |       
+|:----------------------------------------------------------------------------------------------------------|:----------------------------------------------------|                                              |
+|  **///////// GROUP 1 /////////**                                                                          |                                                     |       
 | [Felicitas Höbelt](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Felicitas_H%C3%B6belt)    | [FairyCup](https://github.com/FairyCup)             |
 | [Meryem Kubra Uluc](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Meryem_Kubra_Uluc)       | [meryem01](https://github.com/meryem01/)            |
-| Mohammad Umar                                                                                             | ???                                                 |
-|  **///////// GROUP 3 /////////**                                                                          |                                                     |  
+| [Bahar Akgun](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Bahar_Akgun)                   | *???*                                               |
+|  **///////// GROUP 2 /////////**                                                                          |                                                     |  
 | [Lisa Germain](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Lisa_Germain)                 | [klatou](https://github.com/klatou)                 |
 | [Iremnur Tokac](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Iremnur_Tokac)               | [iremnurtokac](https://github.com/iremnurtokac)     |
-| Aline Martinez                                                                                            | [AlineMa](https://github.com/AlineMa)               |
-|  **///////// GROUP 4 /////////**                                                                          |                                                     |          
+| [Aline Martinez](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Aline_Martinez)             | [AlineMa](https://github.com/AlineMa)               |
+|  **///////// GROUP 3 /////////**                                                                          |                                                     |          
 | [Eeva Ahlmo](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Eeva_Ahlamo)                    | [west468](https://github.com/west468)               |
-| [Hasibullah Sahibzada](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Hasibullah_Sahibzada) | [hasibsahibzada](https://github.com/hasibsahibzada) |
-| [Bahar Akgun](http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Bahar_Akgun)                   | ???                                                 |
+ 
 
 
 [part1]: http://www.uni-weimar.de/medien/wiki/GMU:Principia_Textilica/Part1
