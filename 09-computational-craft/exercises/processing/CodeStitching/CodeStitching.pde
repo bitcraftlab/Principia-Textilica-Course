@@ -23,7 +23,7 @@ String[] programs = {
   "(>),,,(*<<<i((o >-(>)..... >((?),.)...o >- >((?),.)...o >-(>), >(?).....o >- >(?),.),,,,....)),..",
   "(^),..(i),..((((<),),((((-(^?),,.. ^|(?>),,..(?),.)....) ((>),),)*)...)((<<v),),),",
   "iii(<^^),(>v+((>),,((?>),..)...),...*i),.",
-  "!!!!f p> !!!h"
+  "?!!!f p> $!!!h p vvvv!!!F p >>vvvv!!!H"
 };
 
 int pp = 3;              // program pointer
@@ -134,6 +134,14 @@ void draw() {
       // rotate left 
       rotate(-af); 
       break;
+    case '$' : 
+      // rotate right 
+      rotate(af); 
+      break;
+
+    case '#':
+      //empty stitch character
+      x = ' ';
 
     case '*' : 
       // change color
