@@ -34,7 +34,7 @@ String[] programs = {
   "?!!!f#>$$h p vvvv!!!F p >>vvvv!!!H"
 };
 
-int pp = 2;              // program pointer
+int pp =0;              // program pointer
 String p0;               // program
 
 // initial values
