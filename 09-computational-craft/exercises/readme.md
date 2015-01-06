@@ -49,3 +49,4 @@ What are the elementary commands? What operation does each of the commands encod
 
 
 
+ls
