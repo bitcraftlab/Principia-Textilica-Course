@@ -20,6 +20,10 @@
 // add your own program here ...
 
 String[] programs = {
+  ">>>>>>>>>^^^^^^^(((((iiiii^^^vvvvvvvvvvvvvvvvvvv>>>>>>>>>>>((^^><<<<o!o),))),),),),"
++
+">>>>>>>>>(((((iiiii^^^vvvvvvvvvvvvvvvvvvv>>>>>>>>>>>((^^><<<<o!o),))),),),),",
+  
   "^ ?  /  (?),,,,...v     i      ^^(?),/  (?),,,....vv   !"+
      "ii    ^^^ ?  /  (?),,,,...vvv  !!     iii  ^^^^(?),/  (?),,,....vvvv !!!"+
      "*o(|-?),.      (?),,,...",
