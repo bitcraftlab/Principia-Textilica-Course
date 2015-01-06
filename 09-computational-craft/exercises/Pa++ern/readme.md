@@ -1,5 +1,27 @@
 # Pa++ern 
 
+![Single-pattern](./img/singlepattern.png "Single-pattern")
+```
+             ^ ?  /  (?),,,,...v
+     i      ^^(?),/  (?),,,....vv   !
+     ii    ^^^ ?  /  (?),,,,...vvv  !!
+     iii  ^^^^(?),/  (?),,,....vvvv !!!
+     *o(|-?),.      (?),,,...
+```
+
+![Four-pattern](./img/4pattern.png "Four-pattern")
+
+```
+     (        ^ ?  /  (?),,,,...v
+     i      ^^(?),/  (?),,,....vv   !
+     ii    ^^^ ?  /  (?),,,,...vvv  !!
+     iii  ^^^^(?),/  (?),,,....vvvv !!!
+     *o(|-?),.      (?),,,...
+     <(?),.)....
+```
+
+![Final pattern (grid)](./img/pattern_full.png "Final pattern (grid)")
+
 ```
 (^),.(<),..
 (
@@ -36,4 +58,4 @@ shift starting point to somewhere top left
 	go to top again, move to right
 )repeat column to form grid
 ```
-![Final pattern (grid)](./img/pattern_full.png "Final pattern (grid)")
+
