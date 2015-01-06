@@ -1,3 +1,3 @@
 # Pa++ern 
 
-![Final pattern (grid)](/img/pattern_full.PNG)
+![Final pattern (grid)](/img/pattern_full.png)
