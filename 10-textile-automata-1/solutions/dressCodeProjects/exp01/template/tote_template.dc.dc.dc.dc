@@ -1,0 +1,33 @@
+//width of bag
+w=14;
+//height of bag
+h=15;
+//length of handle
+l=19;
+//width of handle
+hw=2;
+f=3;
+
+//slider code
+slider(w,3,30,"width");
+slider(h,3,30,"height");
+slider(f,0,h,"fold position");
+slider(l,1,40,"handle length");
+slider(hw,1,5,"handle width");
+
+//front template
+front = template("front");
+
+setWidth(front ,inch(w));
+setHeight(front,inch(h));
+setSeam(front,inch(0.5));
+setHFold(front,inch(h-f));
+
+//handle template
+handle1 = template("handle");
+
+setWidth(handle1 ,inch(hw));
+setHeight(handle1 ,inch(l));
+setSeam(handle1 ,inch(0.5));
+setHFold(handle1,inch(l-2));
+setHFold(handle1,inch(2));
