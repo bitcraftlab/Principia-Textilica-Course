@@ -2,7 +2,7 @@
 
 class LSystem {
 
-  String axiom = "X";
+  String axiom = "-X";
   String ruleX = " F-[[X]+X]+F[+FX]-X";
   String ruleF = "FF";
 
@@ -17,6 +17,7 @@ class LSystem {
   void generate(int iter) {
     seq = axiom;
     for (int i = 0; i < iter; i++) {
+      println(i + " of " + iter);
       seq = iterate(seq);
     }
   }
@@ -26,7 +27,8 @@ class LSystem {
 
     String output = "";     
 
-    for (int i = 0; i < input.length (); i++) {
+    for (int i = 0; i < input.length(); i++) {
+      //if(i%100 == 0) println(i + " of " + input.length());
       char ch = input.charAt(i);
 
       // hard coding the rules here, to simplify things
@@ -59,7 +61,7 @@ class LSystem {
     float currentAngle = 0.0;
     
     for (int i = 0; i < seq.length(); i++) {
-
+      //if(i%200 == 0) println(i + " of " + seq.length());
       char ch = seq.charAt(i);
       
       switch(ch) {
@@ -92,9 +94,7 @@ class LSystem {
         x = posX.get(sizeXY-1);
         y = posY.get(sizeXY-1);
         posX.remove(sizeXY-1);
-        posY.remove(sizeXY-1);
-        println(seq.length());
-        
+        posY.remove(sizeXY-1);        
         break;
       }
     }
