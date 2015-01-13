@@ -47,7 +47,7 @@ class Trochoid{
     float theta = 0.0;
     float shift = 0.0;
     for(int step = startStep; step < stopStep; ++step){
-      theta = TWO_PI/360 * step;
+      theta = TWO_PI/360.0 * (float)step;
       float x = 0.0;
       float y = 0.0;
       if(compositionTrochoid != null){
