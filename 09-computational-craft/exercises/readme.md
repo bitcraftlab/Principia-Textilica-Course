@@ -45,7 +45,3 @@ What are the elementary commands? What operation does each of the commands encod
 - Make use of loops to create a concise program!  
 - Can you write the same program without using loops?  
 - Which version do you prefer? Why?
-
-
-
-
