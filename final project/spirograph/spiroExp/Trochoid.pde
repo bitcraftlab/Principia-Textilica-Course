@@ -64,6 +64,6 @@ class Trochoid{
       line(lastX < 0.001? x+R+r+d + shift:lastX, lastY < 0.001? y+R+r+d: lastY, x+R+r+d + shift, y+R+r+d);
       lastX = x+R+r+d + shift;
       lastY = y+R+r+d;
+    }
   }
-}
 }

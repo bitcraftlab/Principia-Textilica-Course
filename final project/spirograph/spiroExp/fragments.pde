@@ -1,87 +1,79 @@
-void drawFigure1(){
-
-  float repeat = 3;
-  float shiftFactor = 0.0;
-  //Hypotrochoid: small circle inside bigger circle
-
-  float R = 65;  //radius bigger circle
-  float r = 30;  //radius smaller circle
-  float d = 45;  //distance tracing point from center smaller circle (if d = r then Hypocycloid)
-  float theta = 0.0;
-  float shift = 0.0;
-
-  noFill();
-  beginShape();
-  for(int i = 0; theta < repeat*TWO_PI; ++i){
-    float x = (R-r) * cos(theta) + d*cos((R-r)*theta/r);
-    float y = (R-r) * sin(theta) - d*sin((R-r)*theta/r);
-    shift = shiftFactor > 0.00001? (float)i*shiftFactor :0.0;
-    vertex(x+R + shift, y+R);
-    theta += TWO_PI/360;
-  }
-  endShape();
-  
-}
-
-//--------------------------------------------------------------------------
+/*int lastStop = 0;
+int speed = 2;
+float lastX = 0.0;
+float lastY = 0.0;
+float scaleFactor = 1.5;
 
 
-void drawHypotrochoid(int startStep, int stopStep){
+Trochoid t1_fix;
+Trochoid t1;
+Trochoid t2_fix;
+Trochoid t2;
+Trochoid t3_fix;
+Trochoid t3;
+Trochoid t4_fix;
+Trochoid t4;
+Trochoid t5;
+Trochoid t5_fix;
 
-  //float repeat = 3;
-  float scale = 1.5;
-  float shiftFactor = 0.0;
-  //Hypotrochoid: small circle inside bigger circle
-
-  float R = scale*65;  //radius bigger circle
-  float r = scale*30;  //radius smaller circle
-  float d = scale*5;  //distance tracing point from center smaller circle (if d = r then Hypocycloid)
-  float theta = 0.0;
-  float shift = 0.0;
-  for(int step = startStep; step < stopStep; ++step){
-    theta = TWO_PI/360 * step;
-    float x = (R-r) * cos(theta) + d*cos((R-r)*theta/r);
-    float y = (R-r) * sin(theta) - d*sin((R-r)*theta/r);
+void setup(){
+  size(750, 800);
+    t1_fix = new Trochoid(1, 42, 8, 5, 0.0);
+    t1 = new Trochoid(1, 42, 8, 5, 0.1);
     
-    shift = shiftFactor > 0.00001? (float)step*shiftFactor :0.0;
-    //point(x+R+r+d + shift, y+R+r+d);
-    line(lastX < 0.001? x+R+r+d + shift:lastX, lastY < 0.001? y+R+r+d: lastY, x+R+r+d + shift, y+R+r+d);
-    lastX = x+R+r+d + shift;
-    lastY = y+R+r+d;
-  }
+    t2_fix = new Trochoid(2, 65, 30, 10, 0.0);
+    t2 = new Trochoid(2, 65, 30, 10, 0.1);
+    
+    t3_fix = new Trochoid(2, 60, 40, 20, 0.0);
+    t3 = new Trochoid(2, 60, 40, 20, 0.1);
+
+    t4_fix = new Trochoid(2, 60, 40, 20, 0.0);    
+    t4_fix.compositionTrochoid = t2_fix;
+    t4 = new Trochoid(2, 60, 40, 20, 0.1);
+    
+    t5_fix = new Trochoid(2, 50, 5, 5, 0.0);
+    t5 = new Trochoid(2, 50, 5, 5, 0.1);
+    
 }
 
-//--------------------------------------------------------------------------
+void draw(){
 
-void drawTrochoid(int type, int startStep, int stopStep, float R, float r, float d, float xShift){
+  pushMatrix();  
+
+  t1_fix.drawStep(lastStop, lastStop + speed);
+  translate(120, 0);
+  t1.drawStep(lastStop, lastStop + speed);
   
-  float scale = 1.5;
-  float shiftFactor = xShift;
-  //Hypotrochoid: small circle inside bigger circle
+  //------------------------------------------------------------
+  translate(-180,100);
+  t2_fix.drawStep(lastStop, lastStop + speed);
+  translate(160,0);
+  t2.drawStep(lastStop, lastStop + speed);
+  
+  //------------------------------------------------------------
+  translate(-200,110);
+  t3_fix.drawStep(lastStop, lastStop + speed);
+  
+  translate(150,0);
+  t3.drawStep(lastStop, lastStop + speed);
+  
+  //-Composition-Experiment-------------------------------------
+  translate(-170,130);
+  t4_fix.drawStep(lastStop, lastStop + speed);
+  translate(150,0);
+  t4.compositionTrochoid = t2_fix;
+  t4.drawStep(lastStop, lastStop + speed);
+  
+  //------------------------------------------------------------
+  translate(-40,250);
+  t5_fix.drawStep(lastStop, lastStop + speed);
+  translate(150,0);
+  t5.drawStep(lastStop, lastStop + speed);
+    
+  //============================================================
+  popMatrix();
+  lastStop += speed;
+  //noLoop();
+}*/
 
-  //float R = scale*42;  //radius bigger circle
-  //float r = scale*8;  //radius smaller circle
-  //float d = scale*5;  //distance tracing point from center smaller circle (if d = r then Hypocycloid)
-  float theta = 0.0;
-  float shift = 0.0;
-  for(int step = startStep; step < stopStep; ++step){
-    theta = TWO_PI/360 * step;
-    float x = 0.0;
-    float y = 0.0;
-    if(type == 1){     //Epitrochoid
-      x = (R-r) * cos(theta) - d*cos((R-r)*theta/r);
-      y = (R-r) * sin(theta) - d*sin((R-r)*theta/r);
-    }
-    else if(type == 2){//Hypotrochoid
-      x = (R-r) * cos(theta) + d*cos((R-r)*theta/r);
-      y = (R-r) * sin(theta) - d*sin((R-r)*theta/r);
-    }
-
-    shift = shiftFactor > 0.00001? (float)step*shiftFactor :0.0;
-    //point(x+R+r+d + shift, y+R+r+d);
-    line(lastX < 0.001? x+R+r+d + shift:lastX, lastY < 0.001? y+R+r+d: lastY, x+R+r+d + shift, y+R+r+d);
-    lastX = x+R+r+d + shift;
-    lastY = y+R+r+d;
-  }
-}
 
