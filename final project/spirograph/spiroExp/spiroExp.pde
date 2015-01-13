@@ -1,5 +1,5 @@
 int lastStop = 0;
-int speed = 5;
+int speed = 3;
 float lastX = 0.0;
 float lastY = 0.0;
 float scaleFactor = 1.5;
@@ -46,6 +46,15 @@ void draw(){
   Trochoid t4 = new Trochoid(2, 60, 40, 20, 0.1);
   t4.compositionTrochoid = t2_fix;
   t4.drawStep(lastStop, lastStop + speed);
+  
+  //------------------------------------------------------------
+  translate(-40,250);
+  Trochoid t5_fix = new Trochoid(2, 50, 5, 5, 0.0);
+  t5_fix.drawStep(lastStop, lastStop + speed);
+  
+  translate(150,0);
+  Trochoid t5 = new Trochoid(2, 50, 5, 5, 0.1);
+  t5.drawStep(lastStop, lastStop + speed);
     
   //============================================================
   popMatrix();
