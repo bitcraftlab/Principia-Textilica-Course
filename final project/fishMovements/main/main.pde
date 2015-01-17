@@ -1,16 +1,17 @@
 //import java.awt*;
 
 Fish[] fish = new Fish[20];
-PVector tankDim = new PVector(400,400);
+PVector tankDim = new PVector(600,600);
 
 void setup(){
+  size(700, 700);
+  ellipseMode(CENTER);
+  
   for(int i = 0; i < fish.length; ++i){
-    fish[i] = new Fish(100, 100);
+    fish[i] = new Fish(random(100, width-100), random(100, height-100));
     fish[i].id = i;  
   }
-  
-  size(500, 500);
-  ellipseMode(CENTER);
+
 }
 
 void draw(){
