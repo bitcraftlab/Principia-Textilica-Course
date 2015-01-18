@@ -4,6 +4,7 @@ class Fish{
   //public float minSpeed = random(0.15, 0.3);
   public float maxSpeed = 0.6;
   public float minSpeed = 0.2;
+  public float fov = 90 * 180/PI;
   public boolean selected = false; 
   
   private PVector pos = new PVector(100.0, 100.0);
@@ -47,13 +48,15 @@ class Fish{
     updatePos();
   }
   
+//-------------------------------------------------------------------------------------------
+  
   public boolean updateRegardingWalls(){
     
     float signX = dir.x <0? -1 :1;
     float signY = dir.y <0? -1 :1;
-    boolean seeLeft = pos.x < (width-tankDim.x)*0.5 + 20 && signX < 0;
-    boolean seeRight = pos.x > (width-(width-tankDim.x)*0.5 -20) && signX > 0;
-    boolean seeTop = pos.y < (height-tankDim.y)*0.5 + 20 && signY < 0;
+    boolean seeLeft =   pos.x < (width-tankDim.x)*0.5 + 20        && signX < 0;
+    boolean seeRight =  pos.x > (width-(width-tankDim.x)*0.5 -20) && signX > 0;
+    boolean seeTop =    pos.y < (height-tankDim.y)*0.5 + 20       && signY < 0;
     boolean seeBottom = pos.y > height-(height-tankDim.y)*0.5 -20 && signY > 0;
     float awaySpeed = 0.025;
     
@@ -79,33 +82,51 @@ class Fish{
       //turn(turnSpeed*(-signX)*180/PI);
     }
     
-    if(selected) println(id + " " + dir.x + " " + dir.y);
+    //if(selected) println(id + " " + dir.x + " " + dir.y);
     dir = normalize(dir);
     return (seeLeft || seeRight || seeTop || seeBottom);
   }
+
+//-------------------------------------------------------------------------------------------
+
+  public boolean canSeeOther(Fish f){
+    //check if f lies within field of view (fov) of this
+    PVector relativePosition = new PVector(f.pos.x-this.pos.x, f.pos.y-this.pos.y);
+    boolean result = ( getScalarProduct(dir, relativePosition)>0 && (getAngle(dir, relativePosition) <= fov*0.5));
+    if(selected) println(result + " " + f.id);
+    return result;
+  }
+  
+//-------------------------------------------------------------------------------------------
   
   public boolean updateRegardingNeighbors(Fish[] fish){
     boolean neighborIsVisible = false;
-    //check neighbor distances
+    float distance = -1.0;
+    
+    //check all neighbor distances
     for(Fish f: fish){
       if(f.id != this.id){ //exclude self
-        if(distance(this.pos, f.pos) < privateRadius){
-          //too close, turn away from neighbor
-          dir.x += withdrawFactor*(this.pos.x - f.pos.x + f.dir.x);
-          dir.y += withdrawFactor*(this.pos.y - f.pos.y + f.dir.y);
-          neighborIsVisible = true;
-          if(selected) println(neighborIsVisible);
-        }
-        else if(distance(this.pos, f.pos)< companyRadius){
-          //follow
-          dir.x += (followFactor* f.dir.x);
-          dir.y += (followFactor* f.dir.y);
-          neighborIsVisible = true;
-          if(selected) println(neighborIsVisible);
+        
+        distance = distance(this.pos, f.pos);
+        if(distance < companyRadius){
+        
+          neighborIsVisible = canSeeOther(f);
+          
+          if(distance < privateRadius){// && neighborIsVisible){
+            //too close, turn away from neighbor
+            dir.x += withdrawFactor*(this.pos.x - f.pos.x + f.dir.x);
+            dir.y += withdrawFactor*(this.pos.y - f.pos.y + f.dir.y);
+            dir = normalize(dir);
+          }
+          else if(neighborIsVisible){
+            //follow
+            dir.x += (followFactor* f.dir.x);
+            dir.y += (followFactor* f.dir.y);
+            dir = normalize(dir);
+          }
         }
       }
     }
-    dir = normalize(dir);
     return neighborIsVisible;
   }
   
