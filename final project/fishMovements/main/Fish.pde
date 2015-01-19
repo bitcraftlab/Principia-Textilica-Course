@@ -1,8 +1,8 @@
 class Fish{
-  public int id; 
-  //public float maxSpeed = random(0.4, 0.65);
-  //public float minSpeed = random(0.15, 0.3);
-  public float maxSpeed = 0.6;
+  public int id;
+  public color fishColor; 
+
+  public float maxSpeed = 0.8;
   public float minSpeed = 0.2;
   public float fov = 90 * 180/PI;
   public boolean selected = false; 
@@ -20,6 +20,7 @@ class Fish{
   public Fish(float x, float y){
     pos.x = x;
     pos.y = y;
+    fishColor = color(random(35,65), random(90,100), random(40,80));
   }
   
   public void turn(float alpha){
@@ -32,6 +33,10 @@ class Fish{
   
   public void update(Fish[] fish){
 
+     //1. check for wall
+     //2. check for neighbors
+     //3. move
+     
     boolean wallAhead = updateRegardingWalls();
     if(!wallAhead){
       speed = speed >= maxSpeed? maxSpeed : speed*1.05;
@@ -116,17 +121,16 @@ class Fish{
             //too close, turn away from neighbor
             dir.x += withdrawFactor*(this.pos.x - f.pos.x + f.dir.x);
             dir.y += withdrawFactor*(this.pos.y - f.pos.y + f.dir.y);
-            dir = normalize(dir);
           }
           else if(neighborIsVisible){
             //follow
             dir.x += (followFactor* f.dir.x);
             dir.y += (followFactor* f.dir.y);
-            dir = normalize(dir);
           }
         }
       }
     }
+    dir = normalize(dir);
     return neighborIsVisible;
   }
   
@@ -136,10 +140,12 @@ class Fish{
   }
   
   public void drawFish(){
+    stroke(fishColor);
     if(selected) stroke(255, 0, 0);
+    fill(fishColor);
     ellipse(pos.x, pos.y, 20, 20);
+    stroke(color(hue(fishColor), saturation(fishColor), brightness(fishColor) > 50? brightness(fishColor)*0.5:brightness(fishColor)*2));
     line(pos.x, pos.y, pos.x+(10*dir.x), pos.y+(10*dir.y));
-    stroke(0, 0, 0);
   }
   
 }
