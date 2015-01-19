@@ -2,11 +2,11 @@
 
 Fish[] fish = new Fish[50];
 PVector tankDim = new PVector(700,700);
+int lastMillis = 0;
 
 void setup(){
   size((int)(tankDim.x + 100), (int)(tankDim.y+100));
-  ellipseMode(CENTER);
-  colorMode(HSB, 100);
+
   
   for(int i = 0; i < fish.length; ++i){
     fish[i] = new Fish(random(100, width-100), random(100, height-100));
@@ -16,6 +16,7 @@ void setup(){
 }
 
 void draw(){
+  colorMode(HSB, 100); 
   background(60,30,30);
   stroke(0,0,0);
   noFill();
@@ -23,9 +24,10 @@ void draw(){
   
   
   for(Fish f : fish){
-    f.update(fish);
+    f.update(fish, millis()-lastMillis);
     f.drawFish();
   }
+  lastMillis = millis();
 }
 
 void mouseClicked() {
