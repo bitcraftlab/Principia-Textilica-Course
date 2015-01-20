@@ -19,7 +19,7 @@ class Fish{
   public float minSpeed = 0.2;
   public int maxTimeBetweenTraces = 100;
   public int maxNumberOfTracedPos = 150;
-  public int traceWeight          = 20;
+  public int traceWeight          = 10;
   
   private boolean leaveTrace = true;
   private LinkedList<PVector> tracePositions = new LinkedList<PVector>();
@@ -86,6 +86,14 @@ class Fish{
     }
   }
 
+public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisible){
+  if(startled)                speed = speed > startledSpeed? startledSpeed : speed*1.05;
+  else if(wallAhead)          speed = speed <= minSpeed? minSpeed : speed*0.95;
+  //else if(neighborIsVisible)  speed = speed >= maxSpeed? maxSpeed : speed*1.05;
+  //else if(!neighborIsVisible) speed = speed >= maxSpeed? maxSpeed : speed*1.05;
+  else speed = speed >= maxSpeed? maxSpeed : speed*1.05;
+}
+
 //-------------------------------------------------------------------------------------------
 
   public void update(Fish[] fish, int timeElapsed){  
@@ -98,29 +106,25 @@ class Fish{
     
     leaveTrace(true, timeElapsed); 
     boolean wallAhead = updateDirectionRegardingWalls();
-    
+    boolean neighborIsVisible = false;
 
     /*else*/ if(!wallAhead){
-      speed = speed >= maxSpeed? maxSpeed : speed*1.05;
+      //speed = speed >= maxSpeed? maxSpeed : speed*1.05;
       
-      boolean neighborIsVisible = updateDirectionRegardingNeighbors(fish);
+      neighborIsVisible = updateDirectionRegardingNeighbors(fish);
       if (!neighborIsVisible){
-        speed = speed >= maxSpeed? maxSpeed : speed*1.05;
+        //speed = speed >= maxSpeed? maxSpeed : speed*1.05;
       }
     }
     else{
-      speed = speed <= minSpeed? minSpeed : speed*0.95;
+      //speed = speed <= minSpeed? minSpeed : speed*0.95;
     }
     
-    if(startled){
-      print(timeToCalmDown + " " + speed + " ");
-      speed = speed > startledSpeed? startledSpeed : speed*1.05;
-      println(speed);
-      //calm down?
-      //startled(random(0.0, 1.0) <0.2);
+    if(startled){ //calm down?
       checkCalmDown(timeElapsed);
-      //turn(0.002*random(-1,1)*180/PI);
     }
+    
+    setSpeed(startled, wallAhead, neighborIsVisible);
     
     if(!startled && energy < maxEnergy) energy += 0.5*timeElapsed;
     
@@ -199,6 +203,7 @@ class Fish{
         if(neighborIsVisible && f.isPredatory && distance < companyRadius){
           turnAwayFrom(f);
           startled(true);
+          break;
         }
         else if(distance < startleRadius && f.startled){
           startled(true);  //may lead to problems--> startle stop/restart cycles?
