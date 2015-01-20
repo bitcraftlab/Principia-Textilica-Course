@@ -7,21 +7,27 @@ class Fish{
   public int maxTimeToCalmDown = 1500; //ms
   public int maxEnergy = 1500;
   public float withdrawFactor = 0.1;
-  public float followFactor = 0.1;
-  public float obstacleForce = 0.01;
-  public float startledSpeed = 1.3;
+  public float followFactor   = 0.1;
+  public float obstacleForce  = 0.01;
+  public float startledSpeed  = 1.3;
   public float maxSpeed = 0.4;
   public float minSpeed = 0.2;
+  public int maxTimeBetweenTraces = 100;
+  public int maxNumberOfTracedPos = 150;
+  public int traceWeight          = 20;
   
   private boolean leaveTrace = true;
+  private LinkedList<PVector> tracePositions = new LinkedList<PVector>();
+  private int sizeTracePositions = 0;
   private PVector pos = new PVector(100.0, 100.0);
   private PVector dir = new PVector(1.0, 1.0); 
-  private float privateRadius = 30.0;
-  private float startleRadius = 40.0;
-  private float companyRadius = 70.0;
-  private int timeToCalmDown = 1500; //ms
-  private int energy = 0;
-  private float fov = 90 * 180/PI; 
+  private float privateRadius  = 30.0;
+  private float startleRadius  = 40.0;
+  private float companyRadius  = 70.0;
+  private int timeToCalmDown   = maxTimeToCalmDown; //ms
+  public int timeBetweenTraces = maxTimeBetweenTraces;
+  private int energy  = 0;
+  private float fov   = 90 * 180/PI; 
   private float speed = random(minSpeed, maxSpeed);
 
 //-------------------------------------------------------------------------------------------
@@ -31,7 +37,7 @@ class Fish{
     pos.y = y;
     //fishColor = color(random(35,65), random(90,100), random(40,80));
     colorMode(HSB, 100.0, 100.0, 100.0); 
-    fishColor = color(60.0, 60.0, 100.0);
+    fishColor = color(random(45,65), 80.0, 100.0);
   }
   
   public void turn(float alpha){
@@ -40,6 +46,20 @@ class Fish{
     dir.x = x;
     dir.y = y;
     dir = normalize(dir);
+  }
+  
+  public void leaveTrace(boolean lt, int timeElapsed){
+    leaveTrace = lt;
+    if(leaveTrace) timeBetweenTraces -= timeElapsed;
+    if(timeBetweenTraces <= 0){
+      timeBetweenTraces = maxTimeBetweenTraces;
+      tracePositions.addFirst(new PVector(pos.x, pos.y)); //add position to head of list
+      ++sizeTracePositions;
+      if(sizeTracePositions > maxNumberOfTracedPos) {
+        tracePositions.removeLast();
+        --sizeTracePositions;
+      }
+    }
   }
   
   public void startled(boolean s){
@@ -58,25 +78,28 @@ class Fish{
 
 //-------------------------------------------------------------------------------------------
 
-  public void update(Fish[] fish, int millis){  
+  public void update(Fish[] fish, int timeElapsed){  
+     // leave trace
+     // startled?
+     // wall?
+     // neighbors?
+     // eat?
+     // move
     
-     //1. check for wall
-     //2. check for neighbors
-     //3. move
-     
-    boolean wallAhead = updateRegardingWalls();
+    leaveTrace(true, timeElapsed); 
+    boolean wallAhead = updateDirectionRegardingWalls();
     
     if(startled){
       speed = speed >= startledSpeed? startledSpeed : speed*1.05;
       //calm down?
       //startled(random(0.0, 1.0) <0.2);
-      checkCalmDown(millis);
+      checkCalmDown(timeElapsed);
       //turn(0.002*random(-1,1)*180/PI);
     }
     else if(!wallAhead){
       speed = speed >= maxSpeed? maxSpeed : speed*1.05;
       
-      boolean neighborIsVisible = updateRegardingNeighbors(fish);
+      boolean neighborIsVisible = updateDirectionRegardingNeighbors(fish);
       if (!neighborIsVisible){
         turn(0.002*random(-1,1)*180/PI);
         speed = speed >= maxSpeed? maxSpeed : speed*1.05;
@@ -86,7 +109,7 @@ class Fish{
       speed = speed <= minSpeed? minSpeed : speed*0.95;
     }
     
-    if(!startled && energy < maxEnergy) energy += 0.5*millis;
+    if(!startled && energy < maxEnergy) energy += 0.5*timeElapsed;
     updatePos();
     
     //just for testing:
@@ -95,7 +118,7 @@ class Fish{
   
 //-------------------------------------------------------------------------------------------
   
-  public boolean updateRegardingWalls(){
+  public boolean updateDirectionRegardingWalls(){
     
     float signX = dir.x <0? -1 :1;
     float signY = dir.y <0? -1 :1;
@@ -144,7 +167,7 @@ class Fish{
   
 //-------------------------------------------------------------------------------------------
   
-  public boolean updateRegardingNeighbors(Fish[] fish){
+  public boolean updateDirectionRegardingNeighbors(Fish[] fish){
     boolean neighborIsVisible = false;
     float distance = -1.0;
     
@@ -184,14 +207,37 @@ class Fish{
 
 //-------------------------------------------------------------------------------------------
 
-  public void drawFish(){
+  public void drawBody(){
     stroke(fishColor);
+    
     if(selected || startled) stroke(95, 100, 100);
     fill(color(hue(fishColor), saturation(100*energy/maxEnergy), brightness(100*energy/maxEnergy)));
     ellipseMode(CENTER);
     ellipse(pos.x, pos.y, 20, 20);
-    //stroke(color(hue(fishColor), saturation(fishColor), brightness(fishColor) > 50? brightness(fishColor)*0.5:brightness(fishColor)*2));
-    //line(pos.x, pos.y, pos.x+(10*dir.x), pos.y+(10*dir.y));
+    //line(pos.x, pos.y, pos.x+(10*dir.x), pos.y+(10*dir.y));  //direction vector vis
   }
   
+//-------------------------------------------------------------------------------------------  
+  public void drawTrace(){
+    if(leaveTrace){
+      stroke(fishColor);
+      strokeWeight(traceWeight);
+      noFill();
+      beginShape();
+      //vertex(pos.x, pos.y);
+      for(PVector p : tracePositions){
+        vertex(p.x, p.y);
+      }
+      endShape();
+      strokeWeight(1);
+    }
+  }
+  
+//-------------------------------------------------------------------------------------------  
+  public void drawFish(){
+    drawTrace();
+    drawBody();
+  }
 }
+
+

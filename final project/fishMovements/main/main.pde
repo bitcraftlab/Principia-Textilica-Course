@@ -1,4 +1,5 @@
 //import java.awt*;
+import java.util.LinkedList;
 
 Fish[] fish = new Fish[50];
 PVector tankDim = new PVector(700,700);
@@ -25,7 +26,10 @@ void draw(){
   
   for(Fish f : fish){
     f.update(fish, millis()-lastMillis);
-    f.drawFish();
+    f.drawTrace();
+  }
+  for(Fish f : fish){
+    f.drawBody();
   }
   lastMillis = millis();
 }
