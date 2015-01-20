@@ -3,26 +3,26 @@ class Fish{
   public color fishColor; 
   public boolean selected = false;
   public boolean startled = false;
+  
   public int maxTimeToCalmDown = 1500; //ms
-  public int timeToCalmDown = 1500; //ms
-  public int energy = 0;
   public int maxEnergy = 1500;
-
+  public float withdrawFactor = 0.1;
+  public float followFactor = 0.1;
+  public float obstacleForce = 0.01;
   public float startledSpeed = 1.3;
   public float maxSpeed = 0.4;
   public float minSpeed = 0.2;
-  public float fov = 90 * 180/PI; 
   
+  private boolean leaveTrace = true;
   private PVector pos = new PVector(100.0, 100.0);
   private PVector dir = new PVector(1.0, 1.0); 
   private float privateRadius = 30.0;
   private float startleRadius = 40.0;
   private float companyRadius = 70.0;
-  
-  public float withdrawFactor = 0.1;
-  public float followFactor = 0.1;
-  public float obstacleForce = 0.01;
-  public float speed = random(minSpeed, maxSpeed);
+  private int timeToCalmDown = 1500; //ms
+  private int energy = 0;
+  private float fov = 90 * 180/PI; 
+  private float speed = random(minSpeed, maxSpeed);
 
 //-------------------------------------------------------------------------------------------
 
