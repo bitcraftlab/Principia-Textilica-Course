@@ -8,6 +8,9 @@ int lastMillis = 0;
 
 void setup(){
   size((int)(tankDim.x + 100), (int)(tankDim.y+100));
+strokeJoin(ROUND);
+colorMode(HSB, 100); 
+
 
   predator = new Fish(width/2, height/2, true);
   predator.fishColor = color(random(45,65), 0.0, 0.0);
@@ -25,7 +28,7 @@ void setup(){
 }
 
 void draw(){
-  colorMode(HSB, 100); 
+  
   background(60,30,30);
   stroke(0,0,0);
   noFill();
