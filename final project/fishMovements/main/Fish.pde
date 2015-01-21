@@ -8,6 +8,7 @@ class Fish{
   public float privateRadius  = 30.0;
   public float startleRadius  = 40.0;
   public float companyRadius  = 70.0;
+  public float distanceToSeeWall = 20.0;
   
   public int maxTimeToCalmDown = 1500; //ms
   public int maxEnergy = 1500;
@@ -15,13 +16,14 @@ class Fish{
   public float followFactor   = 0.1;
   public float obstacleForce  = 0.01;
   public float startledSpeed  = 1.3;
-  public float maxSpeed = 0.4;
-  public float minSpeed = 0.2;
+  public float maxSpeed = 0.6;
+  public float minSpeed = 0.6;
   public int maxTimeBetweenTraces = 100;
   public int maxNumberOfTracedPos = 150;
   public int traceWeight          = 10;
   
   private boolean leaveTrace = true;
+  private boolean isAvoidingWall = false;
   private LinkedList<PVector> tracePositions = new LinkedList<PVector>();
   private int sizeTracePositions = 0;
   private PVector pos = new PVector(100.0, 100.0);
@@ -105,13 +107,13 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
      // move
     
     leaveTrace(true, timeElapsed); 
-    boolean wallAhead = updateDirectionRegardingWalls();
+    updateDirectionRegardingCircularWalls();
     boolean neighborIsVisible = false;
 
-    /*else*/ if(!wallAhead){
+    /*else*/ if(!isAvoidingWall){
       //speed = speed >= maxSpeed? maxSpeed : speed*1.05;
       
-      neighborIsVisible = updateDirectionRegardingNeighbors(fish);
+      //neighborIsVisible = updateDirectionRegardingNeighbors(fish);
       if (!neighborIsVisible){
         //speed = speed >= maxSpeed? maxSpeed : speed*1.05;
       }
@@ -124,7 +126,7 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
       checkCalmDown(timeElapsed);
     }
     
-    setSpeed(startled, wallAhead, neighborIsVisible);
+    setSpeed(startled, isAvoidingWall, neighborIsVisible);
     
     if(!startled && energy < maxEnergy) energy += 0.5*timeElapsed;
     
@@ -135,8 +137,35 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
   }
   
 //-------------------------------------------------------------------------------------------
-  
-  public boolean updateDirectionRegardingWalls(){
+  public void updateDirectionRegardingCircularWalls(){
+    PVector cv = new PVector((-this.pos.x+tank.center.x), (-this.pos.y+tank.center.y));
+    boolean atWall = lengthVector(cv)>(tank.radius-distanceToSeeWall);
+    
+    /*if(isAvoidingWall){
+      isAvoidingWall = atWall;
+    }
+    else{
+      if(atWall){
+        dir = getReflectionVector(dir, cv);
+        dir = normalize(dir);
+      }   
+    }*/
+    
+    if(atWall && !isAvoidingWall){
+      isAvoidingWall = true; 
+      dir = getReflectionVector(dir, cv);
+      dir = normalize(dir);
+    }
+    else if(!atWall && isAvoidingWall){
+      isAvoidingWall = false;
+    }
+    
+    if(selected) println(id + " " + dir.x + " " + dir.y + " " + speed +  " " + isAvoidingWall + " " + atWall);
+  }
+
+//-------------------------------------------------------------------------------------------
+  //for rectangular tank...
+  /*public boolean updateDirectionRegardingRectangularWalls(){
     
     float signX = dir.x <0? -1 :1;
     float signY = dir.y <0? -1 :1;
@@ -171,7 +200,7 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
     //if(selected) println(id + " " + dir.x + " " + dir.y);
     dir = normalize(dir);
     return (seeLeft || seeRight || seeTop || seeBottom);
-  }
+  }*/
 
 //-------------------------------------------------------------------------------------------
 

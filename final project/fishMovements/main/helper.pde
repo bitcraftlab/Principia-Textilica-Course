@@ -29,3 +29,12 @@ public PVector add(PVector v1, PVector v2){
   return v1;*/
   return new PVector(v1.x+=v2.x, v1.y+=v2.y);
 }
+
+public PVector getReflectionVector(PVector v, PVector mirrorNormal){
+  mirrorNormal = normalize(mirrorNormal);
+  float sp = getScalarProduct(v, mirrorNormal);
+  float x = v.x - 2*sp*mirrorNormal.x;
+  float y = v.y - 2*sp*mirrorNormal.y;
+  PVector result = new PVector(x,y);
+  return result;
+}
