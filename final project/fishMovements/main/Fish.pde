@@ -10,17 +10,19 @@ class Fish{
   public float companyRadius  = 70.0;
   public float distanceToSeeWall = 20.0;
   
+  public float wallFactor     = 0.4;
+  public float neighborFactor = 0.1;
+  public float followFactor   = 0.2;
+  public float avoidFactor    = 0.1;
+  
   public int maxTimeToCalmDown = 1500; //ms
   public int maxEnergy = 1500;
-  public float withdrawFactor = 0.1;
-  public float followFactor   = 0.1;
-  public float obstacleForce  = 0.01;
   public float startledSpeed  = 1.3;
   public float maxSpeed = 0.6;
-  public float minSpeed = 0.6;
+  public float minSpeed = 0.4;
   public int maxTimeBetweenTraces = 100;
   public int maxNumberOfTracedPos = 150;
-  public int traceWeight          = 10;
+  public int traceWeight          = 7;
   
   private boolean leaveTrace = true;
   private boolean isAvoidingWall = false;
@@ -40,7 +42,6 @@ class Fish{
     pos.x = x;
     pos.y = y;
     isPredatory = predator;
-    //fishColor = color(random(35,65), random(90,100), random(40,80));
     colorMode(HSB, 100.0, 100.0, 100.0); 
     fishColor = color(random(45,65), 80.0, 100.0);
   }
@@ -52,7 +53,8 @@ class Fish{
     dir.y = y;
     dir = normalize(dir);
   }
-  
+
+//-------------------------------------------------------------------------------------------
   public void leaveTrace(boolean lt, int timeElapsed){
     leaveTrace = lt;
     if(leaveTrace) timeBetweenTraces -= timeElapsed;
@@ -99,108 +101,49 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
 //-------------------------------------------------------------------------------------------
 
   public void update(Fish[] fish, int timeElapsed){  
-     // leave trace
-     // startled?
-     // wall?
-     // neighbors?
-     // eat?
-     // move
     
     leaveTrace(true, timeElapsed); 
-    updateDirectionRegardingCircularWalls();
-    boolean neighborIsVisible = false;
-
-    /*else*/ if(!isAvoidingWall){
-      //speed = speed >= maxSpeed? maxSpeed : speed*1.05;
-      
-      //neighborIsVisible = updateDirectionRegardingNeighbors(fish);
-      if (!neighborIsVisible){
-        //speed = speed >= maxSpeed? maxSpeed : speed*1.05;
-      }
+    
+    PVector wallComponent = getDirectionRegardingCircularWalls();
+    PVector neighborComponent = getDirectionRegardingNeighbors(fish);
+    //PVector randomComponent ?
+    PVector sumComponents = new PVector(wallComponent.x * wallFactor + neighborComponent.x * neighborFactor,
+                                        wallComponent.y * wallFactor + neighborComponent.y * neighborFactor);
+    
+    if(lengthVector(sumComponents) > 0.01){
+      sumComponents = normalize(sumComponents);
+      //if(id == 1) println(sumComponents);
+      dir = normalize(interpolate(sumComponents, dir, 0.2));
     }
-    else{
-      //speed = speed <= minSpeed? minSpeed : speed*0.95;
-    }
+    
     
     if(startled){ //calm down?
       checkCalmDown(timeElapsed);
     }
     
-    setSpeed(startled, isAvoidingWall, neighborIsVisible);
+    //setSpeed(startled, isAvoidingWall, neighborIsVisible);
     
     if(!startled && energy < maxEnergy) energy += 0.5*timeElapsed;
     
     updatePos();
-    
-    //just for testing:
-    //if(!startled) startled(random(0.0, 1.0) <0.0005);
   }
   
 //-------------------------------------------------------------------------------------------
-  public void updateDirectionRegardingCircularWalls(){
+  public PVector getDirectionRegardingCircularWalls(){
+    PVector refl = new PVector(0,0);
     PVector cv = new PVector((-this.pos.x+tank.center.x), (-this.pos.y+tank.center.y));
     boolean atWall = lengthVector(cv)>(tank.radius-distanceToSeeWall);
     
-    /*if(isAvoidingWall){
-      isAvoidingWall = atWall;
-    }
-    else{
-      if(atWall){
-        dir = getReflectionVector(dir, cv);
-        dir = normalize(dir);
-      }   
-    }*/
-    
-    if(atWall && !isAvoidingWall){
+    if(atWall){// && !isAvoidingWall){
       isAvoidingWall = true; 
-      dir = getReflectionVector(dir, cv);
-      dir = normalize(dir);
+      refl = getReflectionVector(dir, cv);
     }
     else if(!atWall && isAvoidingWall){
       isAvoidingWall = false;
     }
     
-    if(selected) println(id + " " + dir.x + " " + dir.y + " " + speed +  " " + isAvoidingWall + " " + atWall);
+    return refl;
   }
-
-//-------------------------------------------------------------------------------------------
-  //for rectangular tank...
-  /*public boolean updateDirectionRegardingRectangularWalls(){
-    
-    float signX = dir.x <0? -1 :1;
-    float signY = dir.y <0? -1 :1;
-    boolean seeLeft =   pos.x < (width-tankDim.x)*0.5 + 20        && signX < 0;
-    boolean seeRight =  pos.x > (width-(width-tankDim.x)*0.5 -20) && signX > 0;
-    boolean seeTop =    pos.y < (height-tankDim.y)*0.5 + 20       && signY < 0;
-    boolean seeBottom = pos.y > height-(height-tankDim.y)*0.5 -20 && signY > 0;
-    float awaySpeed = 0.025;
-    
-    if(seeLeft){
-      dir.x += awaySpeed;
-      if(pos.x < 0) dir.x = 0.5 + random(0.5, 1.0);
-      //turn(turnSpeed*signY*180/PI);
-    }
-    else if(seeRight){
-      dir.x -= awaySpeed;
-      if(pos.x > width) dir.x = -0.5 - random(0.5, 1.0);
-      //turn(turnSpeed*(-signY)*180/PI);
-    }
-
-    if(seeTop){
-      dir.y += awaySpeed;
-      if(pos.y < 0) dir.y = 0.5 + random(0.5, 1.0);
-      //turn(turnSpeed*signX*180/PI);
-    }
-    else if(seeBottom){
-      dir.y -= awaySpeed;
-      if(pos.y > height) dir.y = -0.5 - random(0.5, 1.0);
-      //turn(turnSpeed*(-signX)*180/PI);
-    }
-    
-    //if(selected) println(id + " " + dir.x + " " + dir.y);
-    dir = normalize(dir);
-    return (seeLeft || seeRight || seeTop || seeBottom);
-  }*/
 
 //-------------------------------------------------------------------------------------------
 
@@ -208,18 +151,18 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
     //check if f lies within field of view (fov) of this
     PVector relativePosition = new PVector(f.pos.x-this.pos.x, f.pos.y-this.pos.y);
     boolean result = ( getScalarProduct(dir, relativePosition)>0 && (getAngle(dir, relativePosition) <= fov*0.5));
-    if(selected) println(result + " " + f.id);
     return result;
   }
   
-  public void turnAwayFrom(Fish f){
+  /*public void turnAwayFrom(Fish f){
     dir.x += withdrawFactor*(this.pos.x - f.pos.x + f.dir.x);
     dir.y += withdrawFactor*(this.pos.y - f.pos.y + f.dir.y);
-  }
+  }*/
   
 //-------------------------------------------------------------------------------------------
   
-  public boolean updateDirectionRegardingNeighbors(Fish[] fish){
+  public PVector getDirectionRegardingNeighbors(Fish[] fish){
+    PVector dirNew = new PVector(0,0);
     boolean neighborIsVisible = false;
     float distance = -1.0;
     
@@ -229,35 +172,36 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
         
         neighborIsVisible = canSeeOther(f);
         distance = distance(this.pos, f.pos);
+        
         if(neighborIsVisible && f.isPredatory && distance < companyRadius){
-          turnAwayFrom(f);
+          //turnAwayFrom(f);
+          dirNew = add(dirNew, interpolate(new PVector(pos.x-f.pos.x, pos.y-f.pos.y), dir, avoidFactor));
           startled(true);
           break;
         }
-        else if(distance < startleRadius && f.startled){
-          startled(true);  //may lead to problems--> startle stop/restart cycles?
-        }
         else if(neighborIsVisible && distance < privateRadius){
           //too close, turn away from neighbor
-          turnAwayFrom(f);
+          dirNew = add(dirNew, interpolate(new PVector(pos.x-f.pos.x, pos.y-f.pos.y), dir, avoidFactor));
         }
         else if(neighborIsVisible && distance < companyRadius){
           //follow
-          dir.x += (followFactor* f.dir.x);
-          dir.y += (followFactor* f.dir.y);
+          dirNew = add(dirNew, interpolate(dir, f.dir, followFactor));
         }
-        else if(!neighborIsVisible){
-          turn(0.002*random(-1,1)*180/PI);
-        }
+        /*else if(!neighborIsVisible){
+          //turn(0.002*random(-1,1)*180/PI);
+        }*/
         
+        
+        if(distance < startleRadius && f.startled){
+          startled(true);
+        }
       }
     }
-    dir = normalize(dir);
-    return neighborIsVisible;
+    //dirNew = normalize(dirNew); //nope
+    return dirNew;
   }
   
 //-------------------------------------------------------------------------------------------
-  
   public void updatePos(){
       //check for collisions?    
       pos.x += speed*dir.x;
