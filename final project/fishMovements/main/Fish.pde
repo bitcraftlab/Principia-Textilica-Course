@@ -10,19 +10,19 @@ class Fish{
   public float companyRadius  = 70.0;
   public float distanceToSeeWall = 20.0;
   
-  public float wallFactor     = 0.4;
-  public float neighborFactor = 0.1;
-  public float followFactor   = 0.2;
+  public float wallFactor     = 0.6;
+  public float neighborFactor = 0.2;
+  public float followFactor   = 0.3;
   public float avoidFactor    = 0.1;
   
   public int maxTimeToCalmDown = 1500; //ms
   public int maxEnergy = 1500;
-  public float startledSpeed  = 1.3;
+  public float startledSpeed  = 1.0;
   public float maxSpeed = 0.6;
   public float minSpeed = 0.4;
   public int maxTimeBetweenTraces = 100;
   public int maxNumberOfTracedPos = 150;
-  public int traceWeight          = 7;
+  public int traceWeight          = 2;
   
   private boolean leaveTrace = true;
   private boolean isAvoidingWall = false;
@@ -33,7 +33,7 @@ class Fish{
   private int timeToCalmDown   = maxTimeToCalmDown; //ms
   public int timeBetweenTraces = maxTimeBetweenTraces;
   private int energy  = 0;
-  private float fov   = 90 * 180/PI; 
+  private float fov   = 120 * 180/PI; 
   private float speed = random(minSpeed, maxSpeed);
 
 //-------------------------------------------------------------------------------------------
@@ -44,14 +44,6 @@ class Fish{
     isPredatory = predator;
     colorMode(HSB, 100.0, 100.0, 100.0); 
     fishColor = color(random(45,65), 80.0, 100.0);
-  }
-  
-  public void turn(float alpha){
-    float x = dir.x*cos(alpha) - dir.y*sin(alpha);
-    float y = dir.x*sin(alpha) + dir.y*cos(alpha);
-    dir.x = x;
-    dir.y = y;
-    dir = normalize(dir);
   }
 
 //-------------------------------------------------------------------------------------------
@@ -90,11 +82,9 @@ class Fish{
     }
   }
 
-public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisible){
+public void setSpeed(boolean startled, boolean wallAhead){
   if(startled)                speed = speed > startledSpeed? startledSpeed : speed*1.05;
   else if(wallAhead)          speed = speed <= minSpeed? minSpeed : speed*0.95;
-  //else if(neighborIsVisible)  speed = speed >= maxSpeed? maxSpeed : speed*1.05;
-  //else if(!neighborIsVisible) speed = speed >= maxSpeed? maxSpeed : speed*1.05;
   else speed = speed >= maxSpeed? maxSpeed : speed*1.05;
 }
 
@@ -112,16 +102,14 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
     
     if(lengthVector(sumComponents) > 0.01){
       sumComponents = normalize(sumComponents);
-      //if(id == 1) println(sumComponents);
       dir = normalize(interpolate(sumComponents, dir, 0.2));
     }
-    
     
     if(startled){ //calm down?
       checkCalmDown(timeElapsed);
     }
     
-    //setSpeed(startled, isAvoidingWall, neighborIsVisible);
+    setSpeed(startled, isAvoidingWall);
     
     if(!startled && energy < maxEnergy) energy += 0.5*timeElapsed;
     
@@ -134,14 +122,13 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
     PVector cv = new PVector((-this.pos.x+tank.center.x), (-this.pos.y+tank.center.y));
     boolean atWall = lengthVector(cv)>(tank.radius-distanceToSeeWall);
     
-    if(atWall){// && !isAvoidingWall){
+    if(atWall){
       isAvoidingWall = true; 
       refl = getReflectionVector(dir, cv);
     }
     else if(!atWall && isAvoidingWall){
       isAvoidingWall = false;
     }
-    
     return refl;
   }
 
@@ -153,11 +140,6 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
     boolean result = ( getScalarProduct(dir, relativePosition)>0 && (getAngle(dir, relativePosition) <= fov*0.5));
     return result;
   }
-  
-  /*public void turnAwayFrom(Fish f){
-    dir.x += withdrawFactor*(this.pos.x - f.pos.x + f.dir.x);
-    dir.y += withdrawFactor*(this.pos.y - f.pos.y + f.dir.y);
-  }*/
   
 //-------------------------------------------------------------------------------------------
   
@@ -174,7 +156,7 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
         distance = distance(this.pos, f.pos);
         
         if(neighborIsVisible && f.isPredatory && distance < companyRadius){
-          //turnAwayFrom(f);
+          //run away
           dirNew = add(dirNew, interpolate(new PVector(pos.x-f.pos.x, pos.y-f.pos.y), dir, avoidFactor));
           startled(true);
           break;
@@ -186,11 +168,7 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
         else if(neighborIsVisible && distance < companyRadius){
           //follow
           dirNew = add(dirNew, interpolate(dir, f.dir, followFactor));
-        }
-        /*else if(!neighborIsVisible){
-          //turn(0.002*random(-1,1)*180/PI);
-        }*/
-        
+        }       
         
         if(distance < startleRadius && f.startled){
           startled(true);
@@ -213,7 +191,7 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
   public void drawBody(){
     stroke(fishColor);
     
-    if(selected || startled) stroke(95, 100, 100);
+    if(selected || startled) stroke(95, 0, 50);
     fill(color(hue(fishColor), saturation(100*energy/maxEnergy), brightness(100*energy/maxEnergy)));
     ellipseMode(CENTER);
     ellipse(pos.x, pos.y, 20, 20);
@@ -223,7 +201,7 @@ public void setSpeed(boolean startled, boolean wallAhead, boolean neighborIsVisi
 //-------------------------------------------------------------------------------------------  
   public void drawTrace(){
     if(leaveTrace){
-      stroke(fishColor);
+      stroke(color(hue(fishColor), saturation(fishColor)*0.75, brightness(fishColor)*0.75));
       strokeWeight(traceWeight);
       noFill();
       beginShape();

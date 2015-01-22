@@ -1,6 +1,14 @@
     //just for testing:
     //if(!startled) startled(random(0.0, 1.0) <0.0005);
     
+   /*public void turn(float alpha){
+    float x = dir.x*cos(alpha) - dir.y*sin(alpha);
+    float y = dir.x*sin(alpha) + dir.y*cos(alpha);
+    dir.x = x;
+    dir.y = y;
+    dir = normalize(dir);
+  }*/
+    
   //-------------------------------------------------------------------------------------------
   //for rectangular tank...
   /*public boolean updateDirectionRegardingRectangularWalls(){

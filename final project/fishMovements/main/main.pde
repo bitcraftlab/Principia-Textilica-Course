@@ -20,11 +20,11 @@ void setup(){
   predator.companyRadius  = 70.0;
   predator.maxSpeed = 0.3;
   
-  for(int i = 0; i < fish.length; ++i){
+  for(int i = 0; i < fish.length-1; ++i){
     fish[i] = new Fish(random(100, width-100), random(100, height-100), false);
     fish[i].id = i;  
   }
-  //fish[fish.length-1] = predator;
+  fish[fish.length-1] = predator;
 
 }
 
