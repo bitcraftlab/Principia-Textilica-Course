@@ -1,9 +1,12 @@
 public PVector normalize(PVector v){
   //v * 1/|v|
-  float lengthVec = 1/lengthVector(v);
-  v.x *= lengthVec;
-  v.y *= lengthVec;
-  return v;
+  if(lengthVector(v) > 0.0001){
+    float lengthVec = 1/lengthVector(v);
+    v.x *= lengthVec;
+    v.y *= lengthVec;
+    return v;
+  }
+  else return null;
 }
 
 public float lengthVector(PVector v){

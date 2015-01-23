@@ -5,23 +5,24 @@ class Fish{
   public boolean startled = false;
   public boolean isPredatory = false;
   
-  public float privateRadius  = 30.0;
+  public float privateRadius  = 40.0;
   public float startleRadius  = 40.0;
   public float companyRadius  = 70.0;
   public float distanceToSeeWall = 20.0;
   
-  public float wallFactor     = 0.6;
-  public float neighborFactor = 0.2;
-  public float followFactor   = 0.3;
-  public float avoidFactor    = 0.1;
+  public float wallFactor     = 1.0;
+  public float neighborFactor = 0.5;
+  public float followFactor   = 1.0;
+  public float avoidFactor    = 1.0;
+  public float interpolationSpeed = 1.0/200.0;  // 1/how many ms to reach 100% of interpolation range
   
   public int maxTimeToCalmDown = 1500; //ms
   public int maxEnergy = 1500;
   public float startledSpeed  = 1.0;
   public float maxSpeed = 0.6;
   public float minSpeed = 0.4;
-  public int maxTimeBetweenTraces = 100;
-  public int maxNumberOfTracedPos = 150;
+  public int maxTimeBetweenTraces = 50;
+  public int maxNumberOfTracedPos = 250;
   public int traceWeight          = 2;
   
   private boolean leaveTrace = true;
@@ -33,7 +34,7 @@ class Fish{
   private int timeToCalmDown   = maxTimeToCalmDown; //ms
   public int timeBetweenTraces = maxTimeBetweenTraces;
   private int energy  = 0;
-  private float fov   = 120 * 180/PI; 
+  private float fov   = 180 * 180/PI; 
   private float speed = random(minSpeed, maxSpeed);
 
 //-------------------------------------------------------------------------------------------
@@ -94,15 +95,22 @@ public void setSpeed(boolean startled, boolean wallAhead){
     
     leaveTrace(true, timeElapsed); 
     
-    PVector wallComponent = getDirectionRegardingCircularWalls();
-    PVector neighborComponent = getDirectionRegardingNeighbors(fish);
+    PVector wallComponent = normalize(getDirectionRegardingCircularWalls());
+    PVector neighborComponent = normalize(getDirectionRegardingNeighbors(fish, timeElapsed));
     //PVector randomComponent ?
-    PVector sumComponents = new PVector(wallComponent.x * wallFactor + neighborComponent.x * neighborFactor,
-                                        wallComponent.y * wallFactor + neighborComponent.y * neighborFactor);
+    PVector sumComponents = new PVector();
+    if(wallComponent != null){
+      sumComponents.x += wallComponent.x * wallFactor;
+      sumComponents.y += wallComponent.y * wallFactor;
+    }
+    if(neighborComponent != null){
+      sumComponents.x += neighborComponent.x * neighborFactor;
+      sumComponents.y += neighborComponent.y * neighborFactor;
+    }
     
-    if(lengthVector(sumComponents) > 0.01){
-      sumComponents = normalize(sumComponents);
-      dir = normalize(interpolate(sumComponents, dir, 0.2));
+    sumComponents = normalize(sumComponents);
+    if(sumComponents != null){
+      dir = normalize(interpolate(dir, sumComponents, interpolationSpeed*timeElapsed));
     }
     
     if(startled){ //calm down?
@@ -113,7 +121,17 @@ public void setSpeed(boolean startled, boolean wallAhead){
     
     if(!startled && energy < maxEnergy) energy += 0.5*timeElapsed;
     
-    updatePos();
+    if(dir != null){
+      pos.x += speed*dir.x;
+      pos.y += speed*dir.y;
+    }
+    
+    if(selected){
+      String wall = (wallComponent == null)? "0, 0": (wallComponent.x * wallFactor + " " + wallComponent.y * wallFactor);
+      String neigh = (neighborComponent == null)? "0, 0": (neighborComponent.x * neighborFactor + " " + neighborComponent.y * neighborFactor);
+      
+      println(wall + "  " + neigh);
+    }
   }
   
 //-------------------------------------------------------------------------------------------
@@ -125,6 +143,11 @@ public void setSpeed(boolean startled, boolean wallAhead){
     if(atWall){
       isAvoidingWall = true; 
       refl = getReflectionVector(dir, cv);
+      cv = normalize(cv);
+      refl.x += cv.x;
+      refl.y += cv.y;
+      //cv.x = -cv.x;
+      //cv.y = -cv.y;
     }
     else if(!atWall && isAvoidingWall){
       isAvoidingWall = false;
@@ -143,7 +166,7 @@ public void setSpeed(boolean startled, boolean wallAhead){
   
 //-------------------------------------------------------------------------------------------
   
-  public PVector getDirectionRegardingNeighbors(Fish[] fish){
+  public PVector getDirectionRegardingNeighbors(Fish[] fish, int timeElapsed){
     PVector dirNew = new PVector(0,0);
     boolean neighborIsVisible = false;
     float distance = -1.0;
@@ -157,17 +180,17 @@ public void setSpeed(boolean startled, boolean wallAhead){
         
         if(neighborIsVisible && f.isPredatory && distance < companyRadius){
           //run away
-          dirNew = add(dirNew, interpolate(new PVector(pos.x-f.pos.x, pos.y-f.pos.y), dir, avoidFactor));
+          dirNew = add(dirNew, interpolate(dir, new PVector(pos.x-f.pos.x, pos.y-f.pos.y), interpolationSpeed*timeElapsed));
           startled(true);
           break;
         }
         else if(neighborIsVisible && distance < privateRadius){
           //too close, turn away from neighbor
-          dirNew = add(dirNew, interpolate(new PVector(pos.x-f.pos.x, pos.y-f.pos.y), dir, avoidFactor));
+          dirNew = add(dirNew, interpolate(dir, new PVector(pos.x-f.pos.x, pos.y-f.pos.y), interpolationSpeed*timeElapsed));
         }
         else if(neighborIsVisible && distance < companyRadius){
           //follow
-          dirNew = add(dirNew, interpolate(dir, f.dir, followFactor));
+          dirNew = add(dirNew, interpolate(dir, f.dir, interpolationSpeed*timeElapsed));
         }       
         
         if(distance < startleRadius && f.startled){
@@ -181,9 +204,15 @@ public void setSpeed(boolean startled, boolean wallAhead){
   
 //-------------------------------------------------------------------------------------------
   public void updatePos(){
-      //check for collisions?    
-      pos.x += speed*dir.x;
-      pos.y += speed*dir.y;
+      //check for wall collision    
+      PVector cv = new PVector((-this.pos.x+tank.center.x), (-this.pos.y+tank.center.y));
+      if(lengthVector(cv) < tank.radius){
+        pos.x += speed*dir.x;
+        pos.y += speed*dir.y;
+      }
+      else{
+        //reevaluate wall reflection component
+      }
   }
 
 //-------------------------------------------------------------------------------------------
@@ -193,9 +222,16 @@ public void setSpeed(boolean startled, boolean wallAhead){
     
     if(selected || startled) stroke(95, 0, 50);
     fill(color(hue(fishColor), saturation(100*energy/maxEnergy), brightness(100*energy/maxEnergy)));
-    ellipseMode(CENTER);
-    ellipse(pos.x, pos.y, 20, 20);
+    //ellipseMode(CENTER);
+    //ellipse(pos.x, pos.y, 20, 20);
     //line(pos.x, pos.y, pos.x+(10*dir.x), pos.y+(10*dir.y));  //direction vector vis
+    float s = 15.0;
+    float t = 0.75;
+    beginShape();
+    vertex(pos.x+dir.x*s , pos.y+dir.y*s);
+    vertex(pos.x-dir.x*s+dir.y*s*t , pos.y-dir.y*s-dir.x*s*t);  //cross product
+    vertex(pos.x-dir.x*s-dir.y*s*t , pos.y-dir.y*s+dir.x*s*t); 
+    endShape(CLOSE);
   }
   
 //-------------------------------------------------------------------------------------------  

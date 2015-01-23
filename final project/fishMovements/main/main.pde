@@ -1,15 +1,12 @@
-//import java.awt*;
 import java.util.LinkedList;
 
 Tank tank;
 Fish[] fish = new Fish[50];
 Fish predator;
-//PVector tankDim = new PVector(700,700);
-//PVector tankCenter = new PVector(tankDim.x*0.5,tankDim.y*0.5);
 int lastMillis = 0;
 
 void setup(){
-  size((int)(700), (int)(700));
+  size(900,900);
   
   tank = new Tank(width/2, height/2, width/2);
 
@@ -21,7 +18,7 @@ void setup(){
   predator.maxSpeed = 0.3;
   
   for(int i = 0; i < fish.length-1; ++i){
-    fish[i] = new Fish(random(100, width-100), random(100, height-100), false);
+    fish[i] = new Fish(random(100, width-150), random(100, height-150), false);
     fish[i].id = i;  
   }
   fish[fish.length-1] = predator;
@@ -32,20 +29,17 @@ void draw(){
   strokeJoin(ROUND);
   colorMode(HSB, 100);
   background(60,30,30);
-  /*stroke(0,0,0);
-  noFill();
-  ellipseMode(RADIUS);
-  ellipse(tankCenter.x+50, tankCenter.y+50, tankDim.x*0.5, tankDim.y*0.5);*/
   tank.drawTank();
   
   
   for(Fish f : fish){
     f.update(fish, millis()-lastMillis);
-    f.drawTrace();
+    //f.drawTrace();
   }
   
   for(Fish f : fish){
     f.drawBody();
+    tank.updateBackupImage(f);
   }
   
   lastMillis = millis();
@@ -61,4 +55,6 @@ void mouseClicked() {
       f.selected = false;
     }
   }
+  
+  tank.saveBackupImage();
 }
