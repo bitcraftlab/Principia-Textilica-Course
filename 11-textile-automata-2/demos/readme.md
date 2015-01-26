@@ -1,16 +1,18 @@
-Textile Automata II
-==================
+Generating Fractal Curves
+=========================
 
-## Fractal Curves ##
+A couple of sketches that show how to generate fractal curves in Processing.
 
-We already got to know L-Systems and fractal curves.
-Today we are going into more detail about space filling curves.
+### [Dragon L-System](processing/dragon_lsystem) ###
 
-There are three simple ways to generate space filling curves
+This is a simple Processing sketch that genrates the Dragon Curve using an L-System.
 
-1. Recursive Drawing
-2. Rewriting-Systems
-3. Arithmetic Approach
+![](dragon-lsystem-screenshot.png)
+
+* You can find the L-System rules for well known fractal curves on Wikipedia
+* We are using the ControlP5 library for the GUI
+* Implementation is straight forward
+* Rules are still kind of hardcoded
 
 
 
