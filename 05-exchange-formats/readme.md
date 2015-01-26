@@ -35,7 +35,7 @@ If you want to submit your Mathematica code to Version control it is generally a
 
 # Demos
 
-In this lecture I demonstrated how to create braids with *Mathematica*.
+In this lecture I demonstrated how to create braids with *Mathematica*.  
 Make sure to check out the [BraidingDemo](demos/BraidingDemo.m)!
 
 
