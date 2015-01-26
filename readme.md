@@ -47,10 +47,10 @@ Please fork it to your repo.
                    
 |  **Tools and Machines**                             |***[Assignment IV][assignment4]*** |
 |:----------------------------------------------------|:----------------------------------|                                                  
-|  [Embroidery Machine][week12]                       |                                   |
-|  [Knitting Machine][week13]                         |                                   |
-|  [Tools for Craft I][week14]                        |                                   |
-|  [Tools for Craft II][week15]                       |                                   |
+|  [Embroidery Machine I][week12]                       |                                   |
+|  [Embroidery Machine II][week13]                         |                                   |
+|  [Knitting Machine I][week14]                        |                                   |
+|  [Knitting Machine II][week15]                       |                                   |
 
 
 # ///////// Participants ///////// #
@@ -89,10 +89,10 @@ Please fork it to your repo.
 [week10]: 10-textile-automata-1
 [week11]: 11-textile-automata-2
 
-[week12]: 12-embroidery-machine
-[week13]: 13-knitting-machine
-[week14]: 14-tools-for-craft-1
-[week15]: 15-tools-for-craft-2
+[week12]: 12-embroidery-machine-1
+[week13]: 13-embroidery-machine-2
+[week14]: 14-knitting-machine-1
+[week15]: 15-knitting-machine-2
 
 [assignment1]: assignments/programming
 [assignment2]: assignments/craft-and-code
