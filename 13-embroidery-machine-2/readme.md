@@ -18,8 +18,3 @@ Workshop with With Carmen Alfaro, Leena Crasemann, Birgit Schneider and Iris Tza
 ## Sound Crafting ##
 
 Have a look at some Sound Crafting Projects [here](../tools/sound-crafting).
-
-
-
-
-
