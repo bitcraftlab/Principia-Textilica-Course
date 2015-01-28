@@ -8,9 +8,9 @@ int lastMillis = 0;
 void setup(){
   size(900,900);
   
-  tank = new Tank(width/2, height/2, width/2);
+  tank = new Tank(width/2, height/2, width/2-70);
 
-  predator = new Fish(width/2, height/2, true);
+  predator = new Fish(width/2+ random(-50,50), height/2+ random(-50,50), true);
   predator.fishColor = color(random(45,65), 0.0, 0.0);
   predator.privateRadius  = -1.0;
   predator.startleRadius  = -1.0;
@@ -18,7 +18,8 @@ void setup(){
   predator.maxSpeed = 0.3;
   
   for(int i = 0; i < fish.length-1; ++i){
-    fish[i] = new Fish(random(100, width-150), random(100, height-150), false);
+    //fish[i] = new Fish(random(100, width-150), random(100, height-150), false);
+    fish[i] = new Fish(width/2 + random(-50,50), height/2 + random(-50,50), false);
     fish[i].id = i;  
   }
   fish[fish.length-1] = predator;
@@ -55,6 +56,11 @@ void mouseClicked() {
       f.selected = false;
     }
   }
-  
-  tank.saveBackupImage();
+}
+
+void keyReleased(){
+  if(key == 's') {
+    tank.saveBackupImage();
+  }
+  //
 }

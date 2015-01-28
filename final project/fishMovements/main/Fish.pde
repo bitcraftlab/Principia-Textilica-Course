@@ -11,7 +11,7 @@ class Fish{
   public float distanceToSeeWall = 20.0;
   
   public float wallFactor     = 1.0;
-  public float neighborFactor = 0.5;
+  public float neighborFactor = 0.2;
   public float followFactor   = 1.0;
   public float avoidFactor    = 1.0;
   public float interpolationSpeed = 1.0/200.0;  // 1/how many ms to reach 100% of interpolation range
@@ -30,7 +30,7 @@ class Fish{
   private LinkedList<PVector> tracePositions = new LinkedList<PVector>();
   private int sizeTracePositions = 0;
   private PVector pos = new PVector(100.0, 100.0);
-  private PVector dir = new PVector(1.0, 1.0); 
+  private PVector dir = new PVector(random(-1,1), random(-1,1)); 
   private int timeToCalmDown   = maxTimeToCalmDown; //ms
   public int timeBetweenTraces = maxTimeBetweenTraces;
   private int energy  = 0;
@@ -44,7 +44,8 @@ class Fish{
     pos.y = y;
     isPredatory = predator;
     colorMode(HSB, 100.0, 100.0, 100.0); 
-    fishColor = color(random(45,65), 80.0, 100.0);
+    fishColor = color(random(40,70), 80.0, 100.0);
+    dir = normalize(dir);
   }
 
 //-------------------------------------------------------------------------------------------
@@ -63,14 +64,15 @@ class Fish{
   }
   
   public void startled(boolean s){
-    
-    if(!startled && s) {  // only startle if calm
-      startled = s;
-      timeToCalmDown = maxTimeToCalmDown;
-    }
-    else if(!s){  // calming always works
-      startled = s;
-      timeToCalmDown = maxTimeToCalmDown;
+    if(!isPredatory){
+      if(!startled && s) {  // only startle if calm
+        startled = s;
+        timeToCalmDown = maxTimeToCalmDown;
+      }
+      else if(!s){  // calming always works
+        startled = s;
+        timeToCalmDown = maxTimeToCalmDown;
+      }
     }
   }
   
@@ -177,6 +179,12 @@ public void setSpeed(boolean startled, boolean wallAhead){
         
         neighborIsVisible = canSeeOther(f);
         distance = distance(this.pos, f.pos);
+        /*if(distance < 10){  // directly on top
+          neighborIsVisible = true;
+          if(random(1) == 0) this.pos.x += random(-1,1)*0.5;
+          else this.pos.y += random(-1,1)*0.5;
+          distance = distance(this.pos, f.pos);
+        }*/
         
         if(neighborIsVisible && f.isPredatory && distance < companyRadius){
           //run away
@@ -186,6 +194,7 @@ public void setSpeed(boolean startled, boolean wallAhead){
         }
         else if(neighborIsVisible && distance < privateRadius){
           //too close, turn away from neighbor
+          if(selected) println(distance);
           dirNew = add(dirNew, interpolate(dir, new PVector(pos.x-f.pos.x, pos.y-f.pos.y), interpolationSpeed*timeElapsed));
         }
         else if(neighborIsVisible && distance < companyRadius){
