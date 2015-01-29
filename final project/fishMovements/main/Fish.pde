@@ -129,10 +129,11 @@ public void setSpeed(boolean startled, boolean wallAhead){
     }
     
     if(selected){
-      String wall = (wallComponent == null)? "0, 0": (wallComponent.x * wallFactor + " " + wallComponent.y * wallFactor);
+      //println(isAvoidingWall);
+      /*String wall = (wallComponent == null)? "0, 0": (wallComponent.x * wallFactor + " " + wallComponent.y * wallFactor);
       String neigh = (neighborComponent == null)? "0, 0": (neighborComponent.x * neighborFactor + " " + neighborComponent.y * neighborFactor);
       
-      println(wall + "  " + neigh);
+      println(wall + "  " + neigh);*/
     }
   }
   
@@ -148,8 +149,6 @@ public void setSpeed(boolean startled, boolean wallAhead){
       cv = normalize(cv);
       refl.x += cv.x;
       refl.y += cv.y;
-      //cv.x = -cv.x;
-      //cv.y = -cv.y;
     }
     else if(!atWall && isAvoidingWall){
       isAvoidingWall = false;
@@ -179,12 +178,13 @@ public void setSpeed(boolean startled, boolean wallAhead){
         
         neighborIsVisible = canSeeOther(f);
         distance = distance(this.pos, f.pos);
-        /*if(distance < 10){  // directly on top
+        if(distance < 10){  // very close
           neighborIsVisible = true;
-          if(random(1) == 0) this.pos.x += random(-1,1)*0.5;
-          else this.pos.y += random(-1,1)*0.5;
-          distance = distance(this.pos, f.pos);
-        }*/
+          if(distance < 0.1){  // directly on top
+            if(this.id < f.id) dir = turn(dir, -0.1*180/PI);// turn left
+            else               dir = turn(dir, 0.1*180/PI); // turn right
+          }
+        }
         
         if(neighborIsVisible && f.isPredatory && distance < companyRadius){
           //run away
