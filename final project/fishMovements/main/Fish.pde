@@ -11,7 +11,7 @@ class Fish{
   public float distanceToSeeWall = 20.0;
   
   public float wallFactor     = 1.0;
-  public float neighborFactor = 0.2;
+  public float neighborFactor = 0.1;
   public float followFactor   = 1.0;
   public float avoidFactor    = 1.0;
   public float interpolationSpeed = 1.0/200.0;  // 1/how many ms to reach 100% of interpolation range
@@ -20,7 +20,7 @@ class Fish{
   public int maxEnergy = 1500;
   public float startledSpeed  = 1.0;
   public float maxSpeed = 0.6;
-  public float minSpeed = 0.4;
+  public float minSpeed = 0.3;
   public int maxTimeBetweenTraces = 50;
   public int maxNumberOfTracedPos = 250;
   public int traceWeight          = 2;
@@ -30,12 +30,12 @@ class Fish{
   private LinkedList<PVector> tracePositions = new LinkedList<PVector>();
   private int sizeTracePositions = 0;
   private PVector pos = new PVector(100.0, 100.0);
-  private PVector dir = new PVector(random(-1,1), random(-1,1)); 
+  private PVector dir = new PVector(1, 1); 
   private int timeToCalmDown   = maxTimeToCalmDown; //ms
   public int timeBetweenTraces = maxTimeBetweenTraces;
   private int energy  = 0;
   private float fov   = 180 * 180/PI; 
-  private float speed = random(minSpeed, maxSpeed);
+  private float speed = minSpeed;
 
 //-------------------------------------------------------------------------------------------
 
@@ -101,6 +101,7 @@ public void setSpeed(boolean startled, boolean wallAhead){
     PVector neighborComponent = normalize(getDirectionRegardingNeighbors(fish, timeElapsed));
     //PVector randomComponent ?
     PVector sumComponents = new PVector();
+    
     if(wallComponent != null){
       sumComponents.x += wallComponent.x * wallFactor;
       sumComponents.y += wallComponent.y * wallFactor;
@@ -129,7 +130,7 @@ public void setSpeed(boolean startled, boolean wallAhead){
     }
     
     if(selected){
-      //println(isAvoidingWall);
+      //println(isAvoidingWall +" "+ dir.x +" "+ dir.y);
       /*String wall = (wallComponent == null)? "0, 0": (wallComponent.x * wallFactor + " " + wallComponent.y * wallFactor);
       String neigh = (neighborComponent == null)? "0, 0": (neighborComponent.x * neighborFactor + " " + neighborComponent.y * neighborFactor);
       
@@ -149,6 +150,8 @@ public void setSpeed(boolean startled, boolean wallAhead){
       cv = normalize(cv);
       refl.x += cv.x;
       refl.y += cv.y;
+      if(selected) println("refl: " + refl.x + " " + refl.y);
+      //if(abs(getAngle(cv, refl)) < 0.001) refl = turn(refl, -5*180/PI);
     }
     else if(!atWall && isAvoidingWall){
       isAvoidingWall = false;

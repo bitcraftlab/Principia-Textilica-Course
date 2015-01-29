@@ -19,7 +19,8 @@ void setup(){
   
   for(int i = 0; i < fish.length-1; ++i){
     //fish[i] = new Fish(random(100, width-150), random(100, height-150), false);
-    fish[i] = new Fish(width/2 + random(-50,50), height/2 + random(-50,50), false);
+    //fish[i] = new Fish(width/2 + random(-50,50), height/2 + random(-50,50), false);
+    fish[i] = new Fish(width/2, height/2, false);
     fish[i].id = i;  
   }
   fish[fish.length-1] = predator;
