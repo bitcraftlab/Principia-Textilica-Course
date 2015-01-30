@@ -5,15 +5,15 @@ class Fish{
   public boolean startled = false;
   public boolean isPredatory = false;
   
-  public float privateRadius  = 40.0;
+  public float privateRadius  = 35.0;
   public float startleRadius  = 40.0;
-  public float companyRadius  = 70.0;
+  public float companyRadius  = 75.0;
   public float distanceToSeeWall = 20.0;
   
   public float wallFactor     = 1.0;
   public float neighborFactor = 0.1;
   public float followFactor   = 1.0;
-  public float avoidFactor    = 1.0;
+  public float avoidFactor    = 0.5;
   public float interpolationSpeed = 1.0/200.0;  // 1/how many ms to reach 100% of interpolation range
   
   public int maxTimeToCalmDown = 1500; //ms
@@ -22,8 +22,8 @@ class Fish{
   public float maxSpeed = 0.6;
   public float minSpeed = 0.3;
   public int maxTimeBetweenTraces = 50;
-  public int maxNumberOfTracedPos = 250;
-  public int traceWeight          = 2;
+  public int maxNumberOfTracedPos = 20;
+  public int traceWeight          = 10;
   
   private boolean leaveTrace = true;
   private boolean isAvoidingWall = false;
@@ -34,7 +34,7 @@ class Fish{
   private int timeToCalmDown   = maxTimeToCalmDown; //ms
   public int timeBetweenTraces = maxTimeBetweenTraces;
   private int energy  = 0;
-  private float fov   = 180 * 180/PI; 
+  private float fov   = 360 * 180/PI; 
   private float speed = minSpeed;
 
 //-------------------------------------------------------------------------------------------
@@ -125,17 +125,19 @@ public void setSpeed(boolean startled, boolean wallAhead){
     if(!startled && energy < maxEnergy) energy += 0.5*timeElapsed;
     
     if(dir != null){
-      pos.x += speed*dir.x;
-      pos.y += speed*dir.y;
+      PVector cv = new PVector((-this.pos.x-speed*dir.x+tank.center.x), (-this.pos.y-speed*dir.y+tank.center.y));
+      if(lengthVector(cv) <= tank.radius){ // inside
+        pos.x += speed*dir.x;
+        pos.y += speed*dir.y;
+      }
+      else{
+        dir.x = -dir.x;
+        dir.y = -dir.y;
+        pos.x += speed*dir.x;
+        pos.y += speed*dir.y;      
+      }
     }
-    
-    if(selected){
-      //println(isAvoidingWall +" "+ dir.x +" "+ dir.y);
-      /*String wall = (wallComponent == null)? "0, 0": (wallComponent.x * wallFactor + " " + wallComponent.y * wallFactor);
-      String neigh = (neighborComponent == null)? "0, 0": (neighborComponent.x * neighborFactor + " " + neighborComponent.y * neighborFactor);
-      
-      println(wall + "  " + neigh);*/
-    }
+
   }
   
 //-------------------------------------------------------------------------------------------
@@ -151,7 +153,6 @@ public void setSpeed(boolean startled, boolean wallAhead){
       refl.x += cv.x;
       refl.y += cv.y;
       if(selected) println("refl: " + refl.x + " " + refl.y);
-      //if(abs(getAngle(cv, refl)) < 0.001) refl = turn(refl, -5*180/PI);
     }
     else if(!atWall && isAvoidingWall){
       isAvoidingWall = false;

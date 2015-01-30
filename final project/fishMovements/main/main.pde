@@ -36,7 +36,7 @@ void draw(){
   
   for(Fish f : fish){
     f.update(fish, millis()-lastMillis);
-    //f.drawTrace();
+    f.drawTrace();
   }
   
   for(Fish f : fish){
