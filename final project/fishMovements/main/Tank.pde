@@ -1,11 +1,11 @@
 class Tank{
   String id = String.valueOf(day()) + "-"+ String.valueOf(month())+ "-" + String.valueOf(year()) + "_" +
               String.valueOf(hour()) + "-" + String.valueOf(minute()) + "-" + String.valueOf(second());
-  PVector center;
+  public PVector center;
   float radius;
   color tankColor;
   PImage img;
-  int numberImagesSaved = 0;
+  public int numberImagesSaved = 0;
   
   public Tank(float cx, float cy, float r){
     center = new PVector(cx, cy);
@@ -28,9 +28,9 @@ class Tank{
     img.updatePixels();
   }
   
-  public void saveBackupImage(){
+  public void saveBackupImage(String sth){
     ++numberImagesSaved;
-    img.save("fishtank" + id + "_" + numberImagesSaved + ".png");
+    img.save("fishtank" + sth + "_" + id + "_" + numberImagesSaved + ".png");
     println("Image " + numberImagesSaved +" saved.");
   }
 

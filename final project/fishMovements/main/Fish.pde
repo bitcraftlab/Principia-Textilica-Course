@@ -30,7 +30,8 @@ class Fish{
   private LinkedList<PVector> tracePositions = new LinkedList<PVector>();
   private int sizeTracePositions = 0;
   private PVector pos = new PVector(100.0, 100.0);
-  private PVector dir = new PVector(1, 1); 
+  private PVector dir = new PVector(1, 1);
+  public Tank hometank; 
   private int timeToCalmDown   = maxTimeToCalmDown; //ms
   public int timeBetweenTraces = maxTimeBetweenTraces;
   private int energy  = 0;
@@ -44,8 +45,18 @@ class Fish{
     pos.y = y;
     isPredatory = predator;
     colorMode(HSB, 100.0, 100.0, 100.0); 
-    fishColor = color(random(40,70), 80.0, 100.0);
+    //fishColor = color(random(40,70), 80.0, 100.0);
     dir = normalize(dir);
+  }
+
+  public Fish copy(){
+    Fish f = new Fish(this.pos.x, this.pos.y, this.isPredatory);
+    f.fishColor = this.fishColor;
+    f.dir.x = -this.dir.x;
+    f.dir.y = -this.dir.y;
+    f.id = this.id;
+    f.hometank = this.hometank;
+    return f;
   }
 
 //-------------------------------------------------------------------------------------------
@@ -125,8 +136,8 @@ public void setSpeed(boolean startled, boolean wallAhead){
     if(!startled && energy < maxEnergy) energy += 0.5*timeElapsed;
     
     if(dir != null){
-      PVector cv = new PVector((-this.pos.x-speed*dir.x+tank.center.x), (-this.pos.y-speed*dir.y+tank.center.y));
-      if(lengthVector(cv) <= tank.radius){ // inside
+      PVector cv = new PVector((-this.pos.x-speed*dir.x+hometank.center.x), (-this.pos.y-speed*dir.y+hometank.center.y));
+      if(lengthVector(cv) <= hometank.radius){ // inside
         pos.x += speed*dir.x;
         pos.y += speed*dir.y;
       }
@@ -143,8 +154,8 @@ public void setSpeed(boolean startled, boolean wallAhead){
 //-------------------------------------------------------------------------------------------
   public PVector getDirectionRegardingCircularWalls(){
     PVector refl = new PVector(0,0);
-    PVector cv = new PVector((-this.pos.x+tank.center.x), (-this.pos.y+tank.center.y));
-    boolean atWall = lengthVector(cv)>(tank.radius-distanceToSeeWall);
+    PVector cv = new PVector((-this.pos.x+hometank.center.x), (-this.pos.y+hometank.center.y));
+    boolean atWall = lengthVector(cv)>(hometank.radius-distanceToSeeWall);
     
     if(atWall){
       isAvoidingWall = true; 
@@ -218,8 +229,8 @@ public void setSpeed(boolean startled, boolean wallAhead){
 //-------------------------------------------------------------------------------------------
   public void updatePos(){
       //check for wall collision    
-      PVector cv = new PVector((-this.pos.x+tank.center.x), (-this.pos.y+tank.center.y));
-      if(lengthVector(cv) < tank.radius){
+      PVector cv = new PVector((-this.pos.x+hometank.center.x), (-this.pos.y+hometank.center.y));
+      if(lengthVector(cv) < hometank.radius){
         pos.x += speed*dir.x;
         pos.y += speed*dir.y;
       }
@@ -234,11 +245,16 @@ public void setSpeed(boolean startled, boolean wallAhead){
     stroke(fishColor);
     
     if(selected || startled) stroke(95, 0, 50);
-    fill(color(hue(fishColor), saturation(100*energy/maxEnergy), brightness(100*energy/maxEnergy)));
+    if(!isPredatory){
+      fill(color(hue(fishColor), saturation(100*energy/maxEnergy), brightness(100*energy/maxEnergy)));
+    }
+    else{
+      fill(fishColor);
+    }
     //ellipseMode(CENTER);
     //ellipse(pos.x, pos.y, 20, 20);
     //line(pos.x, pos.y, pos.x+(10*dir.x), pos.y+(10*dir.y));  //direction vector vis
-    float s = 15.0;
+    float s = 10.0; //scale
     float t = 0.75;
     beginShape();
     vertex(pos.x+dir.x*s , pos.y+dir.y*s);
