@@ -148,7 +148,6 @@ public void setSpeed(boolean startled, boolean wallAhead){
         pos.y += speed*dir.y;      
       }
     }
-
   }
   
 //-------------------------------------------------------------------------------------------
@@ -223,6 +222,11 @@ public void setSpeed(boolean startled, boolean wallAhead){
       }
     }
     //dirNew = normalize(dirNew); //nope
+    
+    if(lengthVector(dirNew) < 0.00001){
+      dirNew.x = dir.x;
+      dirNew.y = dir.y;
+    }
     return dirNew;
   }
   
