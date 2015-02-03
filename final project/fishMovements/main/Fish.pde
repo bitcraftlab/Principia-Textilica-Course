@@ -2,6 +2,7 @@ class Fish{
   public int id;
   public color fishColor; 
   public boolean selected = false;
+  public boolean leaveTrace = true;  //for the image
   public boolean startled = false;
   public boolean isPredatory = false;
   
@@ -10,33 +11,38 @@ class Fish{
   public float companyRadius  = 75.0;
   public float distanceToSeeWall = 20.0;
   
+  //These factors describe how important the different 
+  //environment elements are for the direction change of the fish.
+  //Follow and avoid are both subparts of the neighbor part. 
   public float wallFactor     = 1.0;
   public float neighborFactor = 0.1;
   public float followFactor   = 1.0;
   public float avoidFactor    = 0.5;
-  public float interpolationSpeed = 1.0/200.0;  // 1/how many ms to reach 100% of interpolation range
   
+  // 1/how many ms to reach 100% of interpolation range 
+  // when changing current direction to target direction
+  // = speed of turns
+  public float interpolationSpeed = 1.0/200.0;
   public int maxTimeToCalmDown = 1500; //ms
   public int maxEnergy = 1500;
   public float startledSpeed  = 1.0;
   public float maxSpeed = 0.6;
   public float minSpeed = 0.3;
-  public int maxTimeBetweenTraces = 50;
+  public int maxTimeBetweenTraces = 50; //ms
   public int maxNumberOfTracedPos = 20;
-  public int traceWeight          = 10;
+  public int traceWeight          = 10; //stroke weight
   
-  private boolean leaveTrace = true;
-  private boolean isAvoidingWall = false;
-  private LinkedList<PVector> tracePositions = new LinkedList<PVector>();
-  private int sizeTracePositions = 0;
   private PVector pos = new PVector(100.0, 100.0);
   private PVector dir = new PVector(1, 1);
   public Tank hometank; 
-  private int timeToCalmDown   = maxTimeToCalmDown; //ms
-  public int timeBetweenTraces = maxTimeBetweenTraces;
   private int energy  = 0;
   private float fov   = 360 * 180/PI; 
   private float speed = minSpeed;
+  private int timeToCalmDown   = maxTimeToCalmDown; //ms
+  public int timeBetweenTraces = maxTimeBetweenTraces;
+  private boolean isAvoidingWall = false;
+  private LinkedList<PVector> tracePositions = new LinkedList<PVector>();
+  private int sizeTracePositions = 0;  // just a helper to avoid iterating over the list multiple times
 
 //-------------------------------------------------------------------------------------------
 
