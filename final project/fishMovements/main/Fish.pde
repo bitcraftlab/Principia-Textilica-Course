@@ -2,7 +2,6 @@ class Fish{
   public int id;
   public color fishColor; 
   public boolean selected = false;
-  public boolean leaveTrace = true;  //for the image
   public boolean startled = false;
   public boolean isPredatory = false;
   
@@ -31,9 +30,12 @@ class Fish{
   public int maxTimeBetweenTraces = 50; //ms
   public int maxNumberOfTracedPos = 20;
   public int traceWeight          = 10; //stroke weight
+  public int timeToSpawn = 1500;//ms
   
   private PVector pos = new PVector(100.0, 100.0);
   private PVector dir = new PVector(1, 1);
+  private int age = 0; //ms
+  private Fish child = null;
   public Tank hometank; 
   private int energy  = 0;
   private float fov   = 360 * 180/PI; 
@@ -50,12 +52,12 @@ class Fish{
     pos.x = x;
     pos.y = y;
     isPredatory = predator;
-    colorMode(HSB, 100.0, 100.0, 100.0); 
-    //fishColor = color(random(40,70), 80.0, 100.0);
+    colorMode(HSB, 100);
+    fishColor = color(random(0,100), 80.0, 100.0);
     dir = normalize(dir);
   }
 
-  public Fish copy(){
+  /*public Fish copy(){
     Fish f = new Fish(this.pos.x, this.pos.y, this.isPredatory);
     f.fishColor = this.fishColor;
     f.dir.x = this.dir.x;
@@ -63,7 +65,7 @@ class Fish{
     f.id = this.id;
     f.hometank = this.hometank;
     return f;
-  }
+  }*/
 
 //-------------------------------------------------------------------------------------------
   public void leaveTrace(boolean lt, int timeElapsed){
@@ -102,20 +104,31 @@ class Fish{
     }
   }
 
-public void setSpeed(boolean startled, boolean wallAhead){
-  if(startled)                speed = speed > startledSpeed? startledSpeed : speed*1.05;
-  else if(wallAhead)          speed = speed <= minSpeed? minSpeed : speed*0.95;
-  else speed = speed >= maxSpeed? maxSpeed : speed*1.05;
-}
+  public void setSpeed(boolean startled, boolean wallAhead){
+    if(startled)                speed = speed > startledSpeed? startledSpeed : speed*1.05;
+    else if(wallAhead)          speed = speed <= minSpeed? minSpeed : speed*0.95;
+    else speed = speed >= maxSpeed? maxSpeed : speed*1.05;
+  }
 
+  public void spawnChild(){
+    Fish f = new Fish(this.pos.x, this.pos.y, false);
+    f.dir.x = this.dir.x;
+    f.dir.y = this.dir.y;
+    f.hometank = this.hometank;
+    f.id = fish.size()+childrenQueue.size();
+    this.child = f;
+    childrenQueue.add(f);
+  }
 //-------------------------------------------------------------------------------------------
 
-  public void update(LinkedList<Fish> fish, int timeElapsed){  
+  public void update(int timeElapsed){  
+    age += timeElapsed;
+    if(child == null && age >= timeToSpawn) spawnChild();
     
-    leaveTrace(true, timeElapsed); 
+    leaveTrace(leaveTrace, timeElapsed); 
     
     PVector wallComponent = normalize(getDirectionRegardingCircularWalls());
-    PVector neighborComponent = normalize(getDirectionRegardingNeighbors(fish, timeElapsed));
+    PVector neighborComponent = normalize(getDirectionRegardingNeighbors(timeElapsed));
     //PVector randomComponent ?
     PVector sumComponents = new PVector();
     
@@ -187,7 +200,7 @@ public void setSpeed(boolean startled, boolean wallAhead){
   
 //-------------------------------------------------------------------------------------------
   
-  public PVector getDirectionRegardingNeighbors(LinkedList<Fish> fish, int timeElapsed){
+  public PVector getDirectionRegardingNeighbors(int timeElapsed){
     PVector dirNew = new PVector(0,0);
     boolean neighborIsVisible = false;
     float distance = -1.0;
@@ -200,9 +213,11 @@ public void setSpeed(boolean startled, boolean wallAhead){
         distance = distance(this.pos, f.pos);
         if(distance < 10){  // very close
           neighborIsVisible = true;
-          if(distance < 0.1){  // directly on top
-            if(this.id < f.id) dir = turn(dir, -0.1*180/PI);// turn left
-            else               dir = turn(dir, 0.1*180/PI); // turn right
+          if(distance < privateRadius/3){  // directly on top
+            PVector dir2 = new PVector();
+            if(this.id < f.id) dir2 = turn(dir, -0.0001*180/PI);// turn left
+            else               dir2 = turn(dir, 0.0001*180/PI); // turn right
+            dirNew = add(dirNew, interpolate(dir, dir2, interpolationSpeed*timeElapsed)); 
           }
         }
         
@@ -227,7 +242,6 @@ public void setSpeed(boolean startled, boolean wallAhead){
         }
       }
     }
-    //dirNew = normalize(dirNew); //nope
     
     if(lengthVector(dirNew) < 0.00001){
       dirNew.x = dir.x;
@@ -245,7 +259,7 @@ public void setSpeed(boolean startled, boolean wallAhead){
         pos.y += speed*dir.y;
       }
       else{
-        //reevaluate wall reflection component
+        //reevaluate wall reflection component ?
       }
   }
 
@@ -261,16 +275,19 @@ public void setSpeed(boolean startled, boolean wallAhead){
     else{
       fill(fishColor);
     }
-    //ellipseMode(CENTER);
-    //ellipse(pos.x, pos.y, 20, 20);
-    //line(pos.x, pos.y, pos.x+(10*dir.x), pos.y+(10*dir.y));  //direction vector vis
-    float s = 10.0; //scale
-    float t = 0.75;
-    beginShape();
-    vertex(pos.x+dir.x*s , pos.y+dir.y*s);
-    vertex(pos.x-dir.x*s+dir.y*s*t , pos.y-dir.y*s-dir.x*s*t);  //cross product
-    vertex(pos.x-dir.x*s-dir.y*s*t , pos.y-dir.y*s+dir.x*s*t); 
-    endShape(CLOSE);
+    if(drawTriangularShape){
+      float s = 10.0; //scale
+      float t = 0.75;
+      beginShape();
+      vertex(pos.x+dir.x*s , pos.y+dir.y*s);
+      vertex(pos.x-dir.x*s+dir.y*s*t , pos.y-dir.y*s-dir.x*s*t);  //cross product
+      vertex(pos.x-dir.x*s-dir.y*s*t , pos.y-dir.y*s+dir.x*s*t); 
+      endShape(CLOSE);
+    }
+    else{
+      ellipseMode(CENTER);
+      ellipse(pos.x, pos.y, 2,2);
+    }
   }
   
 //-------------------------------------------------------------------------------------------  
@@ -280,7 +297,6 @@ public void setSpeed(boolean startled, boolean wallAhead){
       strokeWeight(traceWeight);
       noFill();
       beginShape();
-      //vertex(pos.x, pos.y);
       for(PVector p : tracePositions){
         vertex(p.x, p.y);
       }
@@ -288,10 +304,22 @@ public void setSpeed(boolean startled, boolean wallAhead){
       strokeWeight(1);
     }
   }
+
+//-------------------------------------------------------------------------------------------  
+  public void drawConnection(){
+    if(drawConnection && child != null){
+      stroke(color(hue(fishColor), saturation(fishColor)*0.75, brightness(fishColor)*0.75));
+      strokeWeight(2);
+      noFill();
+      line(pos.x, pos.y, child.pos.x, child.pos.y);
+      strokeWeight(1);
+    }
+  }
   
 //-------------------------------------------------------------------------------------------  
   public void drawFish(){
     drawTrace();
+    drawConnection();
     drawBody();
   }
 }

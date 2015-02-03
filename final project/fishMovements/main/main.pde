@@ -1,11 +1,16 @@
 import java.util.LinkedList;
 
 Tank tank;
-LinkedList<Fish> fish = new LinkedList<Fish>();
+LinkedList<Fish> fish           = new LinkedList<Fish>();
+LinkedList<Fish> childrenQueue  = new LinkedList<Fish>();
 int predators = 0;
 int numberOfStarterFish = 1;
 int lastMillis = 0;
 float radius = 300;
+
+public boolean leaveTrace = false;
+public boolean drawConnection = true;
+public boolean drawTriangularShape = false;
 
 void setup(){
   size(1400,900);
@@ -14,9 +19,6 @@ void setup(){
 
   for(int i = 0; i < numberOfStarterFish; ++i){
     Fish f = new Fish(tank.center.x, tank.center.y, false);
-    
-    colorMode(HSB, 100);
-    f.fishColor = color(random(0,100), 80.0, 100.0); // test
     f.id = i;
     f.hometank = tank;
       
@@ -37,14 +39,14 @@ void draw(){
   colorMode(HSB, 100);
   background(60,30,30);
   tank.drawTank();
-  //tank2.drawTank();
   
   int time = millis();
   
   // tank 1------------------------------//
   for(Fish f : fish){
-    f.update(fish, time-lastMillis);
+    f.update(time-lastMillis);
     f.drawTrace();
+    f.drawConnection();
   }
   
   for(Fish f : fish){
@@ -52,6 +54,8 @@ void draw(){
     tank.updateBackupImage(f);
   }
 
+  fish.addAll(childrenQueue);
+  childrenQueue.clear();
   lastMillis = time;
 }
 
@@ -71,5 +75,14 @@ void mouseClicked() {
 void keyReleased(){
   if(key == 's') {
     tank.saveBackupImage("A");
+  }
+  if(key == 'c'){
+    drawConnection = !drawConnection;
+  }
+  if(key == 't'){
+    leaveTrace = !leaveTrace;
+  }
+  if(key == 'b'){
+    drawTriangularShape = !drawTriangularShape;
   }
 }
