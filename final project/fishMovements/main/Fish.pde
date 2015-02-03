@@ -104,7 +104,7 @@ public void setSpeed(boolean startled, boolean wallAhead){
 
 //-------------------------------------------------------------------------------------------
 
-  public void update(Fish[] fish, int timeElapsed){  
+  public void update(LinkedList<Fish> fish, int timeElapsed){  
     
     leaveTrace(true, timeElapsed); 
     
@@ -181,7 +181,7 @@ public void setSpeed(boolean startled, boolean wallAhead){
   
 //-------------------------------------------------------------------------------------------
   
-  public PVector getDirectionRegardingNeighbors(Fish[] fish, int timeElapsed){
+  public PVector getDirectionRegardingNeighbors(LinkedList<Fish> fish, int timeElapsed){
     PVector dirNew = new PVector(0,0);
     boolean neighborIsVisible = false;
     float distance = -1.0;
