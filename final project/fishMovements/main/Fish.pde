@@ -52,8 +52,8 @@ class Fish{
   public Fish copy(){
     Fish f = new Fish(this.pos.x, this.pos.y, this.isPredatory);
     f.fishColor = this.fishColor;
-    f.dir.x = -this.dir.x;
-    f.dir.y = -this.dir.y;
+    f.dir.x = this.dir.x;
+    f.dir.y = this.dir.y;
     f.id = this.id;
     f.hometank = this.hometank;
     return f;

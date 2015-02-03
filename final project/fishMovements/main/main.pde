@@ -6,14 +6,14 @@ int predators = 2;
 int lastMillis = 0;
 float radius = 300;
 
-/*Tank tank2;
-Fish[] fish2 = new Fish[fish.length];*/
+Tank tank2;
+Fish[] fish2 = new Fish[fish.length];
 
 void setup(){
   size(1400,900);
   
   tank  = new Tank(width/2 - radius, height/2, radius);
-  //tank2 = new Tank(width/2 - radius, height/2, radius);
+  tank2 = new Tank(width/2 + radius, height/2, radius);
   
   for(int i = 0; i < fish.length; ++i){
     fish[i] = new Fish(tank.center.x, tank.center.y, false);
@@ -44,8 +44,9 @@ void setup(){
       fish2[i].maxSpeed = 0.3;
     }
 
-    fish2[i].hometank = tank2;
-
+    fish2[i].hometank = tank;
+    //fish2[i].pos.x = fish[i].pos.x + (tank2.center.x - tank.center.x);
+    //fish2[i].pos.y = fish[i].pos.y;
   }*/
 }
 
@@ -96,7 +97,7 @@ void mouseClicked() {
     }
   }
   
-  /*for(Fish f : fish2){
+  for(Fish f : fish2){
     if(f.pos.x > mouseX-10 && f.pos.x < mouseX+10 &&
        f.pos.y > mouseY-10 && f.pos.y < mouseY+10){
        f.selected = true;
@@ -104,14 +105,14 @@ void mouseClicked() {
     else{
       f.selected = false;
     }
-  }*/
+  }
   
 }
 
 void keyReleased(){
   if(key == 's') {
     tank.saveBackupImage("A");
-    //tank2.saveBackupImage("B");
+    tank2.saveBackupImage("B");
   }
   //
 }
