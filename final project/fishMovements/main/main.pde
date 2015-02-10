@@ -7,6 +7,7 @@ int predators = 0;
 int numberOfStarterFish = 1;
 int lastMillis = 0;
 float radius = 300;
+boolean isPaused = false;
 
 public boolean leaveTrace = false;
 public boolean drawConnection = true;
@@ -35,27 +36,31 @@ void setup(){
 }
 
 void draw(){
-  strokeJoin(ROUND);
-  colorMode(HSB, 100);
-  background(60,30,30);
-  tank.drawTank();
-  
   int time = millis();
   
-  // tank 1------------------------------//
-  for(Fish f : fish){
-    f.update(time-lastMillis);
-    f.drawTrace();
-    f.drawConnection();
+  if(!isPaused){
+    strokeJoin(ROUND);
+    colorMode(HSB, 100);
+    background(60,30,30);
+    tank.drawTank();
+    
+    
+    
+    for(Fish f : fish){
+      f.update(time-lastMillis);
+      f.drawTrace();
+      f.drawConnection();
+    }
+    
+    for(Fish f : fish){
+      f.drawBody();
+      tank.updateBackupImage(f);
+    }
+  
+    fish.addAll(childrenQueue);
+    childrenQueue.clear();
   }
   
-  for(Fish f : fish){
-    f.drawBody();
-    tank.updateBackupImage(f);
-  }
-
-  fish.addAll(childrenQueue);
-  childrenQueue.clear();
   lastMillis = time;
 }
 
@@ -84,5 +89,9 @@ void keyReleased(){
   }
   if(key == 'b'){
     drawTriangularShape = !drawTriangularShape;
+  }
+  if(key == ' '){
+    isPaused = !isPaused;
+    if(isPaused) println("Fish" + fish.size());
   }
 }

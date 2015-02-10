@@ -25,17 +25,18 @@ class Fish{
   public int maxTimeToCalmDown = 1500; //ms
   public int maxEnergy = 1500;
   public float startledSpeed  = 1.0;
-  public float maxSpeed = 0.6;
+  public float maxSpeed = 0.3;
   public float minSpeed = 0.3;
   public int maxTimeBetweenTraces = 50; //ms
   public int maxNumberOfTracedPos = 20;
   public int traceWeight          = 10; //stroke weight
-  public int timeToSpawn = 1500;//ms
+  public int timeToSpawn = 2500;//ms
   
   private PVector pos = new PVector(100.0, 100.0);
   private PVector dir = new PVector(1, 1);
   private int age = 0; //ms
-  private Fish child = null;
+  private LinkedList<Fish> children = new LinkedList<Fish>();
+  public int maxChildren = 2;
   public Tank hometank; 
   private int energy  = 0;
   private float fov   = 360 * 180/PI; 
@@ -110,20 +111,20 @@ class Fish{
     else speed = speed >= maxSpeed? maxSpeed : speed*1.05;
   }
 
-  public void spawnChild(){
+  public void spawnChildren(){
     Fish f = new Fish(this.pos.x, this.pos.y, false);
     f.dir.x = this.dir.x;
     f.dir.y = this.dir.y;
     f.hometank = this.hometank;
     f.id = fish.size()+childrenQueue.size();
-    this.child = f;
+    this.children.add(f);
     childrenQueue.add(f);
   }
 //-------------------------------------------------------------------------------------------
 
   public void update(int timeElapsed){  
     age += timeElapsed;
-    if(child == null && age >= timeToSpawn) spawnChild();
+    if(children.size() < maxChildren && age >= timeToSpawn) spawnChildren();
     
     leaveTrace(leaveTrace, timeElapsed); 
     
@@ -307,11 +308,13 @@ class Fish{
 
 //-------------------------------------------------------------------------------------------  
   public void drawConnection(){
-    if(drawConnection && child != null){
+    if(drawConnection && !children.isEmpty()){
       stroke(color(hue(fishColor), saturation(fishColor)*0.75, brightness(fishColor)*0.75));
       strokeWeight(2);
       noFill();
-      line(pos.x, pos.y, child.pos.x, child.pos.y);
+      for(Fish c : children){
+        line(pos.x, pos.y, c.pos.x, c.pos.y);
+      }
       strokeWeight(1);
     }
   }
