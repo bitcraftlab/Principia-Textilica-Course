@@ -7,11 +7,16 @@ int predators = 0;
 int numberOfStarterFish = 1;
 int lastMillis = 0;
 float radius = 300;
+int fixedFrameTime = 16; //fixed "time" value used to compute the updates of the fish (instead of the actual elapsed time)
 boolean isPaused = false;
 
 public boolean leaveTrace = false;
 public boolean drawConnection = true;
 public boolean drawTriangularShape = false;
+
+// true = updates take elapsed time into account, 
+//false = updates have a fixed "time" no matter the actual elapsed time
+public boolean frameRateIndependent = true; 
 
 void setup(){
   size(1400,900);
@@ -44,10 +49,8 @@ void draw(){
     background(60,30,30);
     tank.drawTank();
     
-    
-    
     for(Fish f : fish){
-      f.update(time-lastMillis);
+      f.update(frameRateIndependent? time-lastMillis : fixedFrameTime);
       f.drawTrace();
       f.drawConnection();
     }
