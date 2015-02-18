@@ -13,8 +13,8 @@ class Fish{
   //These factors describe how important the different 
   //environment elements are for the direction change of the fish.
   //Follow and avoid are both subparts of the neighbor part. 
-  public float wallFactor     = 0.0;//1.0;
-  public float neighborFactor = 0.0;//0.1;
+  public float wallFactor     = 1.0;
+  public float neighborFactor = 0.1;
   public float followFactor   = 1.0;
   public float avoidFactor    = 0.5;
   
@@ -102,14 +102,14 @@ class Fish{
   }
 
   public void setSpeed(boolean startled, boolean wallAhead){
-    if(!isStopped){
+    //if(!isStopped){
       if(startled)                speed = speed > startledSpeed? startledSpeed : speed*1.05;
       else if(wallAhead)          speed = speed <= minSpeed? minSpeed : speed*0.95;
       else speed = speed >= maxSpeed? maxSpeed : speed*1.05;
-    }
+    /*}
     else{
       speed = 0.0;
-    }
+    }*/
   }
 
   public void spawnChildren(){
@@ -129,7 +129,7 @@ class Fish{
 
   public void update(int timeElapsed){  
     age += timeElapsed;
-    if(!isStopped || isStopped){  
+    if(!isStopped /*|| isStopped*/){  
       if(children.size() < maxChildren && age >= timeToSpawn) {
         isStopped = true;
         while(children.size() < maxChildren){
@@ -141,7 +141,6 @@ class Fish{
       
       PVector wallComponent = normalize(getDirectionRegardingCircularWalls());
       PVector neighborComponent = normalize(getDirectionRegardingNeighbors(timeElapsed));
-      //PVector randomComponent ?
       PVector sumComponents = new PVector();
       
       if(wallComponent != null){
