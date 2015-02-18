@@ -13,8 +13,8 @@ class Fish{
   //These factors describe how important the different 
   //environment elements are for the direction change of the fish.
   //Follow and avoid are both subparts of the neighbor part. 
-  public float wallFactor     = 1.0;
-  public float neighborFactor = 0.1;
+  public float wallFactor     = 0.0;//1.0;
+  public float neighborFactor = 0.0;//0.1;
   public float followFactor   = 1.0;
   public float avoidFactor    = 0.5;
   
@@ -35,8 +35,12 @@ class Fish{
   private PVector pos = new PVector(100.0, 100.0);
   private PVector dir = new PVector(1, 1);
   private int age = 0; //ms
+  //public LinkedList<Fish> neighbors = new LinkedList<Fish>();
   private LinkedList<Fish> children = new LinkedList<Fish>();
   public int maxChildren = 2;
+  private boolean isStopped = false;
+  public float[] spawnAngles = {5 * 180/PI, 5 * 180/PI};
+  
   public Tank hometank; 
   private int energy  = 0;
   private float fov   = 360 * 180/PI; 
@@ -58,15 +62,7 @@ class Fish{
     dir = normalize(dir);
   }
 
-  /*public Fish copy(){
-    Fish f = new Fish(this.pos.x, this.pos.y, this.isPredatory);
-    f.fishColor = this.fishColor;
-    f.dir.x = this.dir.x;
-    f.dir.y = this.dir.y;
-    f.id = this.id;
-    f.hometank = this.hometank;
-    return f;
-  }*/
+
 
 //-------------------------------------------------------------------------------------------
   public void leaveTrace(boolean lt, int timeElapsed){
@@ -113,8 +109,10 @@ class Fish{
 
   public void spawnChildren(){
     Fish f = new Fish(this.pos.x, this.pos.y, false);
-    f.dir.x = this.dir.x;
-    f.dir.y = this.dir.y;
+    PVector cDir = turn(this.dir, spawnAngles[children.size()]);
+    f.dir.x = cDir.x;
+    f.dir.y = cDir.y;
+    
     f.hometank = this.hometank;
     f.id = fish.size()+childrenQueue.size();
     this.children.add(f);
@@ -124,7 +122,12 @@ class Fish{
 
   public void update(int timeElapsed){  
     age += timeElapsed;
-    if(children.size() < maxChildren && age >= timeToSpawn) spawnChildren();
+    if(children.size() < maxChildren && age >= timeToSpawn) {
+      isStopped = true;
+      while(children.size() < maxChildren){
+        spawnChildren();
+      }
+    }
     
     leaveTrace(leaveTrace, timeElapsed); 
     
@@ -155,13 +158,13 @@ class Fish{
     
     if(!startled && energy < maxEnergy) energy += 0.5*timeElapsed;
     
-    if(dir != null){
+    if(dir != null && !isStopped){
       PVector cv = new PVector((-this.pos.x-speed*dir.x+hometank.center.x), (-this.pos.y-speed*dir.y+hometank.center.y));
       if(lengthVector(cv) <= hometank.radius){ // inside
         pos.x += speed*dir.x;
         pos.y += speed*dir.y;
       }
-      else{
+      else if(!isStopped){
         dir.x = -dir.x;
         dir.y = -dir.y;
         pos.x += speed*dir.x;
