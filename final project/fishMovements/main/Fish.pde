@@ -25,21 +25,21 @@ class Fish{
   public int maxTimeToCalmDown = 1500; //ms
   public int maxEnergy = 1500;
   public float startledSpeed  = 1.0;
-  public float maxSpeed = 0.3;
+  public float maxSpeed = 0.4;
   public float minSpeed = 0.3;
   public int maxTimeBetweenTraces = 50; //ms
   public int maxNumberOfTracedPos = 20;
   public int traceWeight          = 10; //stroke weight
-  public int timeToSpawn = 2500;//ms
+  public int timeToSpawn = 3500;//ms
   
   private PVector pos = new PVector(100.0, 100.0);
   private PVector dir = new PVector(1, 1);
   private int age = 0; //ms
   //public LinkedList<Fish> neighbors = new LinkedList<Fish>();
   private LinkedList<Fish> children = new LinkedList<Fish>();
-  public int maxChildren = 2;
+  public int maxChildren = 1;
   private boolean isStopped = false;
-  public float[] spawnAngles = {5 * 180/PI, 5 * 180/PI};
+  public float[] spawnAngles = {0 * 180/PI, 0 * 180/PI};
   
   public Tank hometank; 
   private int energy  = 0;
@@ -102,9 +102,14 @@ class Fish{
   }
 
   public void setSpeed(boolean startled, boolean wallAhead){
-    if(startled)                speed = speed > startledSpeed? startledSpeed : speed*1.05;
-    else if(wallAhead)          speed = speed <= minSpeed? minSpeed : speed*0.95;
-    else speed = speed >= maxSpeed? maxSpeed : speed*1.05;
+    if(!isStopped){
+      if(startled)                speed = speed > startledSpeed? startledSpeed : speed*1.05;
+      else if(wallAhead)          speed = speed <= minSpeed? minSpeed : speed*0.95;
+      else speed = speed >= maxSpeed? maxSpeed : speed*1.05;
+    }
+    else{
+      speed = 0.0;
+    }
   }
 
   public void spawnChildren(){
@@ -112,6 +117,8 @@ class Fish{
     PVector cDir = turn(this.dir, spawnAngles[children.size()]);
     f.dir.x = cDir.x;
     f.dir.y = cDir.y;
+    colorMode(HSB, 100);
+    f.fishColor = color((hue(this.fishColor)+4)%100, 80.0, 100.0);
     
     f.hometank = this.hometank;
     f.id = fish.size()+childrenQueue.size();
@@ -122,53 +129,55 @@ class Fish{
 
   public void update(int timeElapsed){  
     age += timeElapsed;
-    if(children.size() < maxChildren && age >= timeToSpawn) {
-      isStopped = true;
-      while(children.size() < maxChildren){
-        spawnChildren();
+    if(!isStopped || isStopped){  
+      if(children.size() < maxChildren && age >= timeToSpawn) {
+        isStopped = true;
+        while(children.size() < maxChildren){
+          spawnChildren();
+        }
       }
-    }
-    
-    leaveTrace(leaveTrace, timeElapsed); 
-    
-    PVector wallComponent = normalize(getDirectionRegardingCircularWalls());
-    PVector neighborComponent = normalize(getDirectionRegardingNeighbors(timeElapsed));
-    //PVector randomComponent ?
-    PVector sumComponents = new PVector();
-    
-    if(wallComponent != null){
-      sumComponents.x += wallComponent.x * wallFactor;
-      sumComponents.y += wallComponent.y * wallFactor;
-    }
-    if(neighborComponent != null){
-      sumComponents.x += neighborComponent.x * neighborFactor;
-      sumComponents.y += neighborComponent.y * neighborFactor;
-    }
-    
-    sumComponents = normalize(sumComponents);
-    if(sumComponents != null){
-      dir = normalize(interpolate(dir, sumComponents, interpolationSpeed*timeElapsed));
-    }
-    
-    if(startled){ //calm down?
-      checkCalmDown(timeElapsed);
-    }
-    
-    setSpeed(startled, isAvoidingWall);
-    
-    if(!startled && energy < maxEnergy) energy += 0.5*timeElapsed;
-    
-    if(dir != null && !isStopped){
-      PVector cv = new PVector((-this.pos.x-speed*dir.x+hometank.center.x), (-this.pos.y-speed*dir.y+hometank.center.y));
-      if(lengthVector(cv) <= hometank.radius){ // inside
-        pos.x += speed*dir.x;
-        pos.y += speed*dir.y;
+      
+      leaveTrace(leaveTrace, timeElapsed); 
+      
+      PVector wallComponent = normalize(getDirectionRegardingCircularWalls());
+      PVector neighborComponent = normalize(getDirectionRegardingNeighbors(timeElapsed));
+      //PVector randomComponent ?
+      PVector sumComponents = new PVector();
+      
+      if(wallComponent != null){
+        sumComponents.x += wallComponent.x * wallFactor;
+        sumComponents.y += wallComponent.y * wallFactor;
       }
-      else if(!isStopped){
-        dir.x = -dir.x;
-        dir.y = -dir.y;
-        pos.x += speed*dir.x;
-        pos.y += speed*dir.y;      
+      if(neighborComponent != null){
+        sumComponents.x += neighborComponent.x * neighborFactor;
+        sumComponents.y += neighborComponent.y * neighborFactor;
+      }
+      
+      sumComponents = normalize(sumComponents);
+      if(sumComponents != null){
+        dir = normalize(interpolate(dir, sumComponents, interpolationSpeed*timeElapsed));
+      }
+      
+      if(startled){ //calm down?
+        checkCalmDown(timeElapsed);
+      }
+      
+      setSpeed(startled, isAvoidingWall);
+      
+      if(!startled && energy < maxEnergy) energy += 0.5*timeElapsed;
+      
+      if(dir != null){// && !isStopped){
+        PVector cv = new PVector((-this.pos.x-speed*dir.x+hometank.center.x), (-this.pos.y-speed*dir.y+hometank.center.y));
+        if(lengthVector(cv) <= hometank.radius){ // inside
+          pos.x += speed*dir.x;
+          pos.y += speed*dir.y;
+        }
+        else{
+          dir.x = -dir.x;
+          dir.y = -dir.y;
+          pos.x += speed*dir.x;
+          pos.y += speed*dir.y;      
+        }
       }
     }
   }
