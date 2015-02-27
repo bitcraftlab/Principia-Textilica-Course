@@ -7,15 +7,12 @@ class Tank{
   PImage imgTraces;
   PImage imgFrequency;
   public int numberImagesSaved = 0;
-  PrintWriter textOutput;
   
   public Tank(float cx, float cy, float r){
     center = new PVector(cx, cy);
     radius = r;
     imgTraces    = createImage((int)(cx+r+10), (int)(cy+r+10), RGB);
-    imgFrequency = createImage((int)(cx+r+10), (int)(cy+r+10), RGB);
-    
-    textOutput = createWriter("param"+"_"+ id +".txt");
+    imgFrequency = createImage((int)(cx+r+10), (int)(cy+r+10), RGB);    
   }
   
   public void drawTank(){

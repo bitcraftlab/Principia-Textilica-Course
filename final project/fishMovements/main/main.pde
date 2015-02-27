@@ -1,11 +1,12 @@
 import java.util.LinkedList;
 
+PrintWriter textOutput;
 Tank tank;
 LinkedList<Fish> fish           = new LinkedList<Fish>();
 LinkedList<Fish> childrenQueue  = new LinkedList<Fish>();
 int predators = 0;
 int numberOfStarterFish = 1;
-int maxGenerations = 7;
+int maxGenerations = 3;
 int lastMillis = 0;
 float radius = 300;
 int fixedFrameTime = 16; //fixed "time" value used to compute the updates of the fish (instead of the actual elapsed time)
@@ -23,10 +24,13 @@ void setup(){
   size(1400,900);
   
   tank  = new Tank(width/2 - radius, height/2, radius);
+  textOutput = createWriter("param"+"_"+ tank.id +".txt");
+  textOutput.println("tank:");
+  textOutput.println("cx,cy,radius: " + tank.center.x + " " + tank.center.y + " " + tank.radius);
 
+  textOutput.println("fish:");
   for(int i = 0; i < numberOfStarterFish; ++i){
-    Fish f = new Fish(tank.center.x, tank.center.y, false);
-    f.id = i;
+    Fish f = new Fish(i, tank.center.x, tank.center.y, false);
     f.hometank = tank;
       
     if(i < predators){
@@ -37,8 +41,12 @@ void setup(){
       f.maxSpeed = 0.3;
       f.isPredatory = true;
     }
-    fish.add(f); 
+    fish.add(f);
+    f.printFish(textOutput, "born"); 
   }
+  
+
+  
 }
 
 void draw(){
@@ -66,7 +74,9 @@ void draw(){
     
     if(fish.getLast().generation >= maxGenerations) {
       isPaused = true;
-      println("Maximum generation reached");
+      println("Maximum generation reached: " + maxGenerations);
+      textOutput.flush();
+      textOutput.close();
     }
   }
   

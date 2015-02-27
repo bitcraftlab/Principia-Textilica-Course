@@ -36,7 +36,6 @@ class Fish{
   private PVector dir = new PVector(1, 1);
   private int age = 0; //ms
   private int generation = 0;
-  //public LinkedList<Fish> neighbors = new LinkedList<Fish>();
   private LinkedList<Fish> children = new LinkedList<Fish>();
   public int maxChildren = 2;
   private boolean isStopped = false;
@@ -52,15 +51,17 @@ class Fish{
   private LinkedList<PVector> tracePositions = new LinkedList<PVector>();
   private int sizeTracePositions = 0;  // just a helper to avoid iterating over the list multiple times
 
+
 //-------------------------------------------------------------------------------------------
 
-  public Fish(float x, float y, boolean predator){
+  public Fish(int id, float x, float y, boolean predator){
     pos.x = x;
     pos.y = y;
     isPredatory = predator;
     colorMode(HSB, 100);
     fishColor = color(random(0,100), 80.0, 100.0);
     dir = normalize(dir);
+    this.id = id;
   }
 
 
@@ -114,7 +115,7 @@ class Fish{
   }
 
   public void spawnChildren(){
-    Fish f = new Fish(this.pos.x, this.pos.y, false);
+    Fish f = new Fish(fish.size()+childrenQueue.size(), this.pos.x, this.pos.y, false);
     PVector cDir = turn(this.dir, spawnAngles[children.size()]);
     f.dir.x = cDir.x;
     f.dir.y = cDir.y;
@@ -122,10 +123,12 @@ class Fish{
     f.fishColor = color((hue(this.fishColor)+4)%100, 80.0, 100.0);
     
     f.hometank = this.hometank;
-    f.id = fish.size()+childrenQueue.size();
     f.generation = this.generation +1;
     this.children.add(f);
     childrenQueue.add(f);
+    
+    f.printFish(textOutput, "born");
+    
   }
 //-------------------------------------------------------------------------------------------
 
@@ -137,6 +140,7 @@ class Fish{
         while(children.size() < maxChildren){
           spawnChildren();
         }
+        printFish(textOutput, "died");
       }
       
       leaveTrace(leaveTrace, timeElapsed); 
@@ -338,6 +342,17 @@ class Fish{
     drawConnection();
     drawBody();
   }
+  
+//-------------------------------------------------------------------------------------------
+  public void printFish(PrintWriter out, String action){
+    
+    String childrenTxt = " c: ";
+    for(Fish c : children){
+      childrenTxt += (c.id + " ");
+    }
+    out.println(id + " g:" + generation + " " + action + " " + pos.x + " " + pos.y + childrenTxt);
+  }
+
 }
 
 
