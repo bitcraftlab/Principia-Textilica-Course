@@ -23,7 +23,8 @@ public boolean frameRateIndependent = false;
 void setup(){
   size(1400,900);
   
-  tank  = new Tank(width/2 - radius, height/2, radius);
+  //tank  = new Tank(width/2 - radius, height/2, radius);
+  tank  = new Tank(radius, radius, radius);
   textOutput = createWriter("param"+"_"+ tank.id +".txt");
   textOutput.println("tank:");
   textOutput.println("cx,cy,radius: " + tank.center.x + " " + tank.center.y + " " + tank.radius);

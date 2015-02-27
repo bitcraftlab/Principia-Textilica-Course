@@ -350,7 +350,7 @@ class Fish{
     for(Fish c : children){
       childrenTxt += (c.id + " ");
     }
-    out.println(id + " g:" + generation + " " + action + " " + pos.x + " " + pos.y + childrenTxt);
+    out.println(id + " g:" + generation + " " + action + " " + pos.x + " " + pos.y + " : " + round(pos.x*100/(2*radius)) + " " + round(pos.y*100/(2*radius))+ childrenTxt);
   }
 
 }
