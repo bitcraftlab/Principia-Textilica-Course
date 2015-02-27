@@ -30,16 +30,17 @@ class Fish{
   public int maxTimeBetweenTraces = 50; //ms
   public int maxNumberOfTracedPos = 20;
   public int traceWeight          = 10; //stroke weight
-  public int timeToSpawn = 3500;//ms
+  public int timeToSpawn = 4500;//ms
   
   private PVector pos = new PVector(100.0, 100.0);
   private PVector dir = new PVector(1, 1);
   private int age = 0; //ms
+  private int generation = 0;
   //public LinkedList<Fish> neighbors = new LinkedList<Fish>();
   private LinkedList<Fish> children = new LinkedList<Fish>();
-  public int maxChildren = 1;
+  public int maxChildren = 2;
   private boolean isStopped = false;
-  public float[] spawnAngles = {0 * 180/PI, 0 * 180/PI};
+  public float[] spawnAngles = {-45 * 180/PI, 45 * 180/PI};
   
   public Tank hometank; 
   private int energy  = 0;
@@ -122,6 +123,7 @@ class Fish{
     
     f.hometank = this.hometank;
     f.id = fish.size()+childrenQueue.size();
+    f.generation = this.generation +1;
     this.children.add(f);
     childrenQueue.add(f);
   }

@@ -5,6 +5,7 @@ LinkedList<Fish> fish           = new LinkedList<Fish>();
 LinkedList<Fish> childrenQueue  = new LinkedList<Fish>();
 int predators = 0;
 int numberOfStarterFish = 1;
+int maxGenerations = 7;
 int lastMillis = 0;
 float radius = 300;
 int fixedFrameTime = 16; //fixed "time" value used to compute the updates of the fish (instead of the actual elapsed time)
@@ -16,7 +17,7 @@ public boolean drawTriangularShape = false;
 
 // true = updates take elapsed time into account, 
 //false = updates have a fixed "time" no matter the actual elapsed time
-public boolean frameRateIndependent = true; 
+public boolean frameRateIndependent = false; 
 
 void setup(){
   size(1400,900);
@@ -62,6 +63,11 @@ void draw(){
   
     fish.addAll(childrenQueue);
     childrenQueue.clear();
+    
+    if(fish.getLast().generation >= maxGenerations) {
+      isPaused = true;
+      println("Maximum generation reached");
+    }
   }
   
   lastMillis = time;
