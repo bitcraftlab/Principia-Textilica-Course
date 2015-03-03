@@ -6,7 +6,7 @@ LinkedList<Fish> fish           = new LinkedList<Fish>();
 LinkedList<Fish> childrenQueue  = new LinkedList<Fish>();
 int predators = 0;
 int numberOfStarterFish = 1;
-int maxGenerations = 3;
+int maxGenerations = 7;
 int lastMillis = 0;
 float radius = 300;
 int fixedFrameTime = 16; //fixed "time" value used to compute the updates of the fish (instead of the actual elapsed time)
@@ -28,6 +28,16 @@ void setup(){
   textOutput = createWriter("param"+"_"+ tank.id +".txt");
   textOutput.println("tank:");
   textOutput.println("cx,cy,radius: " + tank.center.x + " " + tank.center.y + " " + tank.radius);
+  textOutput.println("starter fish: " + numberOfStarterFish);
+  textOutput.println("maxGenerations "+ maxGenerations);
+
+  Fish tmp = new Fish(-1, tank.center.x, tank.center.y, false);
+  textOutput.println("maxChildren " + tmp.maxChildren);
+  textOutput.println("spawnTime " + tmp.timeToSpawn + "ms");
+  textOutput.println("turnSpeed " + tmp.interpolationSpeed + "1/ms");
+  textOutput.println("follow/avoid " + tmp.followFactor + "/" + tmp.avoidFactor);
+  textOutput.println("wall/neighbor " + tmp.wallFactor + "/" + tmp.neighborFactor);
+  textOutput.println();
 
   textOutput.println("fish:");
   for(int i = 0; i < numberOfStarterFish; ++i){

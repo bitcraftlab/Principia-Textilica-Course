@@ -13,9 +13,9 @@ class Fish{
   //These factors describe how important the different 
   //environment elements are for the direction change of the fish.
   //Follow and avoid are both subparts of the neighbor part. 
-  public float wallFactor     = 1.0;
+  public float wallFactor     = 0.9;
   public float neighborFactor = 0.1;
-  public float followFactor   = 1.0;
+  public float followFactor   = 0.5;
   public float avoidFactor    = 0.5;
   
   // 1/how many ms to reach 100% of interpolation range 
