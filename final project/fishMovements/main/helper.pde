@@ -44,10 +44,13 @@ public PVector getReflectionVector(PVector v, PVector mirrorNormal){
 }
 
 public PVector turn(PVector v, float alpha){
-    float x = v.x*cos(alpha) - v.y*sin(alpha);
+    PVector result = new PVector(v.x*cos(alpha) - v.y*sin(alpha), v.x*sin(alpha) + v.y*cos(alpha));
+    result = normalize(result);
+    /*float x = v.x*cos(alpha) - v.y*sin(alpha);
     float y = v.x*sin(alpha) + v.y*cos(alpha);
     v.x = x;
     v.y = y;
     v = normalize(v);
-    return v;
+    return v;*/
+    return result;
 }

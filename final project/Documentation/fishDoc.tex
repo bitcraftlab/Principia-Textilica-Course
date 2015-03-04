@@ -1,0 +1,138 @@
+\documentclass{scrartcl}
+\usepackage[utf8]{inputenc}
+
+\title{Principia Textilica:\\ Threads of Ancestry and Community}
+\subtitle{Project Documentation}
+\author{Felicitas Höbelt}
+%\date{März 2015}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{longtable}
+%\usepackage{listings}
+%here goes the settings for the formatting code-section, I just leave Matlab in as an example
+%\lstset{language=Matlab, basicstyle=\footnotesize,
+%keywords={break,case,catch,continue,else,elseif,end,for,function,
+%global,if,otherwise,persistent,return,switch,try,while,ones,zeros}}
+\graphicspath{ {./img/} }
+
+
+\begin{document}
+
+\maketitle
+
+\section{Principia Textilica}
+
+\subsection{Context}
+
+\subsection{Motivation}
+
+Complexity:  a number of simple elements with simple behavioral rules can model a complex system.
+(My background? Finding patterns in the real world to model and solve a problem, reduce complexity. For a handcraft/artsy approach: turn it around and start from the rules to create a pattern.)
+Suitable for computational support. Applicable to a textile technique.
+
+\subsection{Ideas}
+
+For inspiration I looked at topics that have fascinated me for years: (include graphic(s))
+-	Swarm Complexity (simple rules for every part create complex behavior)
+-	Networks/Graphs
+-	"Living" things (plants/fungi/insects/animals)
+-	Macramé (Knotting), Dying, Painting on Fabric, Sewing, Felting
+
+Since I tend to put a soul into everything that even remotely displays some sort of life, I decided to limit myself to techniques/topics that would support this idea.
+Easy for the computational part: I decided to go with a simple swarm model, which means I have a number of individuals which are controlled by a set of rules concerning themselves and their environment (= the other members of the swarm).
+How I would translate that into something textile, I was not so sure at first, but I started with a thread-based idea, where each thread is seen as an individual. Macramé and Embroidery were favored candidates.
+
+\section{Code Implementation}
+\subsection{The Pond/Fish tank}
+
+I implemented a single swarm simulation very similar to the "Boids"-idea.
+The simulation is in 2D and has 2 main elements: the tank and the fish.
+The tank started out as rectangular, but I found a circle to be more aesthetically pleasing (softer, more natural shape) as well as more fitting for an embroidery hoop. The circle embodies the simple inside/outside-world that I need. The tank restricts the movement of the fish inside.
+The fish swarm consists of individual fish that – exceptions are the color and the name – start out as equal clones. There are several more, but the most important fish parameters/properties are:
+-	Size of field of view
+-	Distance for avoiding other fish (Privacy)
+-	Distance for following other fish (Company)
+-	Speed for making turns
+Each fish can be either harmless or predatory towards other fish.
+There is no randomness in my program (again, except for the generation of colors).
+-	If it is a predator or not.
+
+\subsection{Code Samples}
+
+\subsection{Parameter Variation + Observations + Images}
+
+\subsection{Unused Parameters}
+
+
+\section{Textile Implementation}
+
+\subsection{Preparation?}
+\subsection{}
+\subsection{Finished Piece}
+
+\section{}
+\section{}
+\subsection{}
+
+%\begin{figure}[h]
+%        \centering
+%        \begin{subfigure}[b]{0.31\textwidth}
+%                %\includegraphics[width=\textwidth]{dist1}
+%        \end{subfigure}
+%        \begin{subfigure}[b]{0.31\textwidth}
+%                %\includegraphics[width=\textwidth]{dist2}
+%        \end{subfigure}
+%        %\caption{Visualization of the projective distorted points}
+%\end{figure}
+
+
+
+
+
+Trial/Error runs? Unused parameters?
+References/inspiration/ideas:
+-	Boids (Flocking simulation)
+-	Pattern Generation
+-	Changing Pattern in something fix
+First (implemented) sketched out idea:
+School of fish in a tank/pond, 2D to reduce scope of work:
+-	Boids – idea for behaviour: seek companionship, avoid predators, walls and companions that get too close (company, safety, privacy)
+-	(explain some parameters to finetune behaviour, also predators no real danger, like the problems we run from – they won’t kill us, but starve us emotionally)
+-	(explain main mechanism: finding the direction vector in each step, no randomness involved)
+-	Other alterations/ playing with ideas: start with one fish that can spawn children (keep on moving or die after spawning)
+
+Intermediate result:
+-	Tracking positions in pixels : image with traces on picture (pixels, not lines)
+-	Image with connecting lines (data = lines)
+
+Role of Textiles in this?
+-	Threads/knots as small part with defined behaviour (1. idea)
+-	Errors over time, two tanks with same starting population grow apart (2. Idea, did not quite work, funny because with handcraft that happens : no identical pieces)
+-	Connections to ancestors (3. Idea, without predators)
+-	Connections to ancestors should limit the "life" of the  fish somehow (3. idea) : threads also limited, no infinite resource in real life, limited freedom?
+-	-> include death somehow? Maybe the thread becomes limited depending on how close you were when your ancestor died : shorter thread?
+-	New connections to fish you are close to for a longer time : frienships/partnerships (different color/weight?)
+Textile finished piece:
+-	Embroidery: pixelated image to threaded image (boring)
+-	Connections to threaded image(series) (better? Development of generations)
+-	Tree (knots/perls? = fish, length of edge is also determined by fish-bowl-movement) / graph : flexible
+TODO: startled spreads with a delay ("reaction time")
+
+
+%----------------------------------------------------------------------------------------------------
+
+%====================================================================================================
+\newpage
+\section*{Code}
+
+%put the code here:
+%\begin{lstlisting}
+%\end{lstlisting}
+
+%\bibliographystyle{plain}
+%\bibliography{references}
+\end{document}
+

@@ -39,7 +39,7 @@ class Fish{
   private LinkedList<Fish> children = new LinkedList<Fish>();
   public int maxChildren = 2;
   private boolean isStopped = false;
-  public float[] spawnAngles = {-45 * 180/PI, 45 * 180/PI};
+  public float[] spawnAngles = {135 * 180/PI, -135 * 180/PI};
   
   public Tank hometank; 
   private int energy  = 0;
@@ -150,12 +150,12 @@ class Fish{
       PVector sumComponents = new PVector();
       
       if(wallComponent != null){
-        sumComponents.x += wallComponent.x * wallFactor;
-        sumComponents.y += wallComponent.y * wallFactor;
+        sumComponents.x += (wallComponent.x * wallFactor);
+        sumComponents.y += (wallComponent.y * wallFactor);
       }
       if(neighborComponent != null){
-        sumComponents.x += neighborComponent.x * neighborFactor;
-        sumComponents.y += neighborComponent.y * neighborFactor;
+        sumComponents.x += (neighborComponent.x * neighborFactor);
+        sumComponents.y += (neighborComponent.y * neighborFactor);
       }
       
       sumComponents = normalize(sumComponents);
