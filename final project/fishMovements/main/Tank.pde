@@ -39,9 +39,9 @@ class Tank{
     imgTraces.save("tank" + sth + "_" + "trace" + "_" + id + "_" + numberImagesSaved + ".png");
     println("Image " + numberImagesSaved +" saved.");
     
-    ++numberImagesSaved;
+    /*++numberImagesSaved;
     stretchValues(imgFrequency).save("tank" + sth + "_" + "freq" + "_" + id + "_" + numberImagesSaved + ".png");
-    println("Image " + numberImagesSaved +" saved.");
+    println("Image " + numberImagesSaved +" saved.");*/
     
   }
 

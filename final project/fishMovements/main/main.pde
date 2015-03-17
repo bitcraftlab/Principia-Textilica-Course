@@ -1,3 +1,5 @@
+import org.philhosoft.p8g.svg.*;
+
 import java.util.LinkedList;
 
 PrintWriter textOutput;
@@ -7,6 +9,7 @@ LinkedList<Fish> childrenQueue  = new LinkedList<Fish>();
 int predators = 0;
 int numberOfStarterFish = 1;
 int maxGenerations = 7;
+int mapTo = 280; //for logging, convert coordinates to fit this maximum
 int lastMillis = 0;
 float radius = 300;
 int fixedFrameTime = 16; //fixed "time" value used to compute the updates of the fish (instead of the actual elapsed time)
@@ -15,13 +18,15 @@ boolean isPaused = false;
 public boolean leaveTrace = false;
 public boolean drawConnection = true;
 public boolean drawTriangularShape = false;
+public boolean recordSVG = false;
+public boolean drawID = true;
 
 // true = updates take elapsed time into account, 
 //false = updates have a fixed "time" no matter the actual elapsed time
 public boolean frameRateIndependent = false; 
 
 void setup(){
-  size(1400,900);
+  size(600,700);
   
   //tank  = new Tank(width/2 - radius, height/2, radius);
   tank  = new Tank(radius, radius, radius);
@@ -61,23 +66,29 @@ void setup(){
 }
 
 void draw(){
-  int time = millis();
   
-  if(!isPaused){
+  int time = millis();
+  if(recordSVG) beginRecord(P8gGraphicsSVG.SVG, ("img_" + tank.id + ".svg"));
+  
+  //if(!isPaused){
     strokeJoin(ROUND);
     colorMode(HSB, 100);
-    background(60,30,30);
+    //background(60,30,30);
+    background(60,0,100);
+    fill(0);
+    text(tank.id, 10, 650);
+    noFill();
     tank.drawTank();
     
     for(Fish f : fish){
-      f.update(frameRateIndependent? time-lastMillis : fixedFrameTime);
+      if(!isPaused){ f.update(frameRateIndependent? time-lastMillis : fixedFrameTime); }
       f.drawTrace();
       f.drawConnection();
     }
     
     for(Fish f : fish){
       f.drawBody();
-      tank.updateBackupImage(f);
+      if(!isPaused){tank.updateBackupImage(f);}
     }
   
     fish.addAll(childrenQueue);
@@ -85,11 +96,13 @@ void draw(){
     
     if(fish.getLast().generation >= maxGenerations) {
       isPaused = true;
-      println("Maximum generation reached: " + maxGenerations);
+      //println("Maximum generation reached: " + maxGenerations);
       textOutput.flush();
       textOutput.close();
     }
-  }
+  //}
+  
+  if(recordSVG) {endRecord(); recordSVG = false; println("SVG saved.");}
   
   lastMillis = time;
 }
@@ -110,6 +123,7 @@ void mouseClicked() {
 void keyReleased(){
   if(key == 's') {
     tank.saveBackupImage("A");
+    recordSVG = true;
   }
   if(key == 'c'){
     drawConnection = !drawConnection;

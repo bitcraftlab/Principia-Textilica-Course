@@ -5,7 +5,7 @@ class Fish{
   public boolean startled = false;
   public boolean isPredatory = false;
   
-  public float privateRadius  = 35.0;
+  public float privateRadius  = 40.0;
   public float startleRadius  = 40.0;
   public float companyRadius  = 75.0;
   public float distanceToSeeWall = 20.0;
@@ -15,8 +15,8 @@ class Fish{
   //Follow and avoid are both subparts of the neighbor part. 
   public float wallFactor     = 0.9;
   public float neighborFactor = 0.1;
-  public float followFactor   = 0.5;
-  public float avoidFactor    = 0.5;
+  public float followFactor   = 0.6;
+  public float avoidFactor    = 0.4;
   
   // 1/how many ms to reach 100% of interpolation range 
   // when changing current direction to target direction
@@ -25,12 +25,12 @@ class Fish{
   public int maxTimeToCalmDown = 1500; //ms
   public int maxEnergy = 1500;
   public float startledSpeed  = 1.0;
-  public float maxSpeed = 0.4;
+  public float maxSpeed = 0.5;
   public float minSpeed = 0.3;
   public int maxTimeBetweenTraces = 50; //ms
   public int maxNumberOfTracedPos = 20;
   public int traceWeight          = 10; //stroke weight
-  public int timeToSpawn = 4500;//ms
+  public int timeToSpawn = 5000;//ms
   
   private PVector pos = new PVector(100.0, 100.0);
   private PVector dir = new PVector(1, 1);
@@ -127,7 +127,7 @@ class Fish{
     this.children.add(f);
     childrenQueue.add(f);
     
-    f.printFish(textOutput, "born");
+    //f.printFish(textOutput, "born");
     
   }
 //-------------------------------------------------------------------------------------------
@@ -303,8 +303,14 @@ class Fish{
       endShape(CLOSE);
     }
     else{
+      stroke(0);
       ellipseMode(CENTER);
       ellipse(pos.x, pos.y, 2,2);
+      stroke(fishColor);
+    }
+    if(drawID && isStopped){
+      textSize(8);
+      text(id ,pos.x+1, pos.y);
     }
   }
   
@@ -327,12 +333,16 @@ class Fish{
   public void drawConnection(){
     if(drawConnection && !children.isEmpty()){
       stroke(color(hue(fishColor), saturation(fishColor)*0.75, brightness(fishColor)*0.75));
-      strokeWeight(2);
+      strokeWeight(int((maxGenerations-this.generation)*2));
       noFill();
       for(Fish c : children){
         line(pos.x, pos.y, c.pos.x, c.pos.y);
       }
-      strokeWeight(1);
+      stroke(0);
+      strokeWeight(0.5);
+      for(Fish c : children){
+        line(pos.x, pos.y, c.pos.x, c.pos.y);
+      }
     }
   }
   
@@ -350,7 +360,7 @@ class Fish{
     for(Fish c : children){
       childrenTxt += (c.id + " ");
     }
-    out.println(id + " g:" + generation + " " + action + " " + pos.x + " " + pos.y + " : " + round(pos.x*100/(2*radius)) + " " + round(pos.y*100/(2*radius))+ childrenTxt);
+    out.println(id + " g:" + generation + " " + action + " " + pos.x + " " + pos.y + " : " + round(pos.x*mapTo/(2*radius)) + " " + round(pos.y*mapTo/(2*radius))+ childrenTxt);
   }
 
 }
