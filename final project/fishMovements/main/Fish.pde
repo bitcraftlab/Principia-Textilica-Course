@@ -1,27 +1,42 @@
 class Fish{
+  
+  //variating for documentation:
+  // 1/how many ms to reach 100% of interpolation range 
+  // when changing current direction to target direction
+  // = speed of turns
+  public float interpolationSpeed = 1.0/100.0;
+  public float privateRadius  = 30.0;
+  public float companyRadius  = 70.0;
+  public int timeToSpawn = 6000;//ms
+  public float[] spawnAnglesDegree = {135, -135};
+  
+
+  public float[] spawnAngles = {spawnAnglesDegree[0] * 180/PI, spawnAnglesDegree[1] * 180/PI};    
+    
   public int id;
   public color fishColor; 
   public boolean selected = false;
   public boolean startled = false;
   public boolean isPredatory = false;
   
-  public float privateRadius  = 40.0;
+  //public float privateRadius  = 40.0;
   public float startleRadius  = 40.0;
-  public float companyRadius  = 75.0;
+  //public float companyRadius  = 75.0;
   public float distanceToSeeWall = 20.0;
   
   //These factors describe how important the different 
   //environment elements are for the direction change of the fish.
-  //Follow and avoid are both subparts of the neighbor part. 
+  //chase and imitate are both subparts of the neighbor part. 
   public float wallFactor     = 0.9;
   public float neighborFactor = 0.1;
-  public float followFactor   = 0.6;
-  public float avoidFactor    = 0.4;
+  //chase and imitate model the company-behaviour of the fish:
+  //when they seek the company of other fish they can adapt their direction to be the same as the other fish (imitate)
+  //or they can change their direction towards the position of the other fish (chase)
+  //the ratio of both factors determines the behaviour
+  //NOT USED RIGHT NOW
+  public float chaseFactor      = 0.1;
+  public float imitateFactor    = 0.9;
   
-  // 1/how many ms to reach 100% of interpolation range 
-  // when changing current direction to target direction
-  // = speed of turns
-  public float interpolationSpeed = 1.0/200.0;
   public int maxTimeToCalmDown = 1500; //ms
   public int maxEnergy = 1500;
   public float startledSpeed  = 1.0;
@@ -30,16 +45,14 @@ class Fish{
   public int maxTimeBetweenTraces = 50; //ms
   public int maxNumberOfTracedPos = 20;
   public int traceWeight          = 10; //stroke weight
-  public int timeToSpawn = 5000;//ms
   
   private PVector pos = new PVector(100.0, 100.0);
-  private PVector dir = new PVector(1, 1);
+  private PVector dir = new PVector(0, -1);
   private int age = 0; //ms
   private int generation = 0;
   private LinkedList<Fish> children = new LinkedList<Fish>();
   public int maxChildren = 2;
   private boolean isStopped = false;
-  public float[] spawnAngles = {135 * 180/PI, -135 * 180/PI};
   
   public Tank hometank; 
   private int energy  = 0;
@@ -59,7 +72,8 @@ class Fish{
     pos.y = y;
     isPredatory = predator;
     colorMode(HSB, 100);
-    fishColor = color(random(0,100), 80.0, 100.0);
+    //fishColor = color(random(0,100), 80.0, 100.0);
+    fishColor = color(50, 80.0, 100.0);
     dir = normalize(dir);
     this.id = id;
   }
@@ -210,9 +224,10 @@ class Fish{
 //-------------------------------------------------------------------------------------------
 
   public boolean canSeeOther(Fish f){
+    
     //check if f lies within field of view (fov) of this
     PVector relativePosition = new PVector(f.pos.x-this.pos.x, f.pos.y-this.pos.y);
-    boolean result = ( getScalarProduct(dir, relativePosition)>0 && (getAngle(dir, relativePosition) <= fov*0.5));
+    boolean result = ( /*getScalarProduct(dir, relativePosition)>0 &&*/ (getAngle(dir, relativePosition) <= fov*0.5));
     return result;
   }
   
@@ -231,7 +246,7 @@ class Fish{
         distance = distance(this.pos, f.pos);
         if(distance < 10){  // very close
           neighborIsVisible = true;
-          if(distance < privateRadius/3){  // directly on top
+          if(distance < privateRadius*0.2){  // directly on top
             PVector dir2 = new PVector();
             if(this.id < f.id) dir2 = turn(dir, -0.0001*180/PI);// turn left
             else               dir2 = turn(dir, 0.0001*180/PI); // turn right
@@ -249,6 +264,7 @@ class Fish{
           //too close, turn away from neighbor
           if(selected) println(distance);
           dirNew = add(dirNew, interpolate(dir, new PVector(pos.x-f.pos.x, pos.y-f.pos.y), interpolationSpeed*timeElapsed));
+          //dirNew = add(dirNew, interpolate(dir, new PVector(f.pos.x-pos.x, f.pos.y-pos.y), interpolationSpeed*timeElapsed));
         }
         else if(neighborIsVisible && distance < companyRadius){
           //follow
@@ -312,6 +328,12 @@ class Fish{
       textSize(8);
       text(id ,pos.x+1, pos.y);
     }
+    
+    
+    //test
+    /*noFill();
+    ellipseMode(CENTER);
+    ellipse(pos.x, pos.y, companyRadius,companyRadius);*/
   }
   
 //-------------------------------------------------------------------------------------------  
@@ -351,6 +373,7 @@ class Fish{
     drawTrace();
     drawConnection();
     drawBody();
+
   }
   
 //-------------------------------------------------------------------------------------------

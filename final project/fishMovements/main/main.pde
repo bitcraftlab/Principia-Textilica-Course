@@ -8,7 +8,7 @@ LinkedList<Fish> fish           = new LinkedList<Fish>();
 LinkedList<Fish> childrenQueue  = new LinkedList<Fish>();
 int predators = 0;
 int numberOfStarterFish = 1;
-int maxGenerations = 7;
+int maxGenerations = 6;
 int mapTo = 280; //for logging, convert coordinates to fit this maximum
 int lastMillis = 0;
 float radius = 300;
@@ -29,24 +29,27 @@ void setup(){
   size(600,700);
   
   //tank  = new Tank(width/2 - radius, height/2, radius);
-  tank  = new Tank(radius, radius, radius);
-  textOutput = createWriter("param"+"_"+ tank.id +".txt");
-  textOutput.println("tank:");
-  textOutput.println("cx,cy,radius: " + tank.center.x + " " + tank.center.y + " " + tank.radius);
-  textOutput.println("starter fish: " + numberOfStarterFish);
-  textOutput.println("maxGenerations "+ maxGenerations);
-
+  tank  = new Tank(radius, radius, radius, "whattovary");
   Fish tmp = new Fish(-1, tank.center.x, tank.center.y, false);
-  textOutput.println("maxChildren " + tmp.maxChildren);
-  textOutput.println("spawnTime " + tmp.timeToSpawn + "ms");
-  textOutput.println("turnSpeed " + tmp.interpolationSpeed + "1/ms");
-  textOutput.println("follow/avoid " + tmp.followFactor + "/" + tmp.avoidFactor);
+  
+  textOutput = createWriter("param"+"_"+ tank.id +".txt");
+  textOutput.println("tank cx,cy,radius: " + tank.center.x + " " + tank.center.y + " " + tank.radius);
+  textOutput.println("starter fish: " + numberOfStarterFish);
+  textOutput.println("start dir: " + tmp.dir.x + " " + tmp.dir.y);
+  textOutput.println("start pos: " + tmp.pos.x +", " + tmp.pos.y);
   textOutput.println("wall/neighbor " + tmp.wallFactor + "/" + tmp.neighborFactor);
+  textOutput.println("maxGenerations "+ maxGenerations);  
+  textOutput.println("maxChildren " + tmp.maxChildren);
+  textOutput.println();
+  textOutput.println("spawnTime " + tmp.timeToSpawn + "ms");
+  textOutput.println("spawnAnglesDegree " + tmp.spawnAnglesDegree[0] + " " + tmp.spawnAnglesDegree[1]);
+  textOutput.println("turnSpeed " + tmp.interpolationSpeed + "1/ms");
+  textOutput.println("private radius / company radius " + tmp.privateRadius + " / " + tmp.companyRadius);
   textOutput.println();
 
   textOutput.println("fish:");
   for(int i = 0; i < numberOfStarterFish; ++i){
-    Fish f = new Fish(i, tank.center.x, tank.center.y, false);
+    Fish f = new Fish(i, tank.center.x, tank.center.y+tank.radius-10, false);
     f.hometank = tank;
       
     if(i < predators){
@@ -122,7 +125,7 @@ void mouseClicked() {
 
 void keyReleased(){
   if(key == 's') {
-    tank.saveBackupImage("A");
+    tank.saveBackupImage(tank.name);
     recordSVG = true;
   }
   if(key == 'c'){

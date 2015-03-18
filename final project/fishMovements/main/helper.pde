@@ -30,6 +30,10 @@ public PVector add(PVector v1, PVector v2){
   return new PVector(v1.x+=v2.x, v1.y+=v2.y);
 }
 
+public PVector mult(PVector v1, float s){
+  return new PVector(v1.x*=s, v1.y*=s);
+}
+
 public PVector interpolate(PVector from, PVector to, float t){
   return new PVector(from.x + t*(to.x-from.x), from.y + t*(to.y-from.y));
 }

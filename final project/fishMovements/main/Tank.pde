@@ -1,6 +1,7 @@
 class Tank{
   String id = String.valueOf(day()) + "-"+ String.valueOf(month())+ "-" /*+ String.valueOf(year()) + "_"*/ +
               String.valueOf(hour()) + "-" + String.valueOf(minute()) + "-" + String.valueOf(second());
+  String name = "";
   public PVector center;
   float radius;
   color tankColor;
@@ -8,11 +9,18 @@ class Tank{
   PImage imgFrequency;
   public int numberImagesSaved = 0;
   
-  public Tank(float cx, float cy, float r){
+  public Tank(float cx, float cy, float r, String n){
+    name = n;
     center = new PVector(cx, cy);
     radius = r;
     imgTraces    = createImage((int)(cx+r+10), (int)(cy+r+10), RGB);
-    imgFrequency = createImage((int)(cx+r+10), (int)(cy+r+10), RGB);    
+    imgFrequency = createImage((int)(cx+r+10), (int)(cy+r+10), RGB);
+
+    imgTraces.loadPixels();
+    for(int i = 0; i < imgTraces.pixels.length; ++i){
+      imgTraces.pixels[i] = color(255,255,255);
+    }
+    imgTraces.updatePixels();    
   }
   
   public void drawTank(){

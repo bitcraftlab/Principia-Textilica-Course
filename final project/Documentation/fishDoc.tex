@@ -10,6 +10,7 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{multirow}
 %\usepackage{longtable}
 %\usepackage{listings}
 %here goes the settings for the formatting code-section, I just leave Matlab in as an example
@@ -59,65 +60,92 @@ The swarm rules below share some similarities with the "Boids" program by Craig 
 The behaviour of the fish is mainly determined by four principles:\\
 I Company - Each fish will follow other fish.\\
 II Privacy - Each fish needs a minimum of private space.\\
-III Security- Each (non-predatory) fish will avoid any predators.\\
-IV Boundary- Each fish will stay inside the tank.\\
+III Security - Each (non-predatory) fish will avoid any predators.\\
+IV Boundary - Each fish will stay inside the tank.\\
 
-There is no randomness in my program (except for movement-independent parameters of each fish such as the color). [TODO check for id?]
+There is no randomness in my program.
 
 \section{Implementation}
+%\subsection{Unused Parameters}
 
+For implementing my idea I chose Processing 2.0 [TODO link/ref], because I am already familiar with Java. Additionally, Processing is one of the tools we got to try out during the course, so all participants know how to look into my code and adapt it if they want to.\\
 
-\subsection{Algorithm} 
+In this section I will focus more on algorithms and data flow rather than implementation details.
+There are four ways of running the program represented by the combination of mechanisms that are used on top of the basic behavioural rules (predator/fear and birth/death):
+1. both predator/fear and birth/death
+2. only predator/fear
+3. only birth/death
+4. none of them
 
-- set up tank and starter fish swarm
-- update loop:
--- for each fish: determine new direction (depends on tank and neighbors)
--- for each fish: move in new direction
+It is worth noting that the code still includes all methods and parameters that I ended up not using for the textile piece or the parameter variations, but I will restrict the explanations to the version I actually used (3. only birth/death).
+In this version each fish will have two children when it dies. The resulting pattern is made of straight lines connecting parents with their children. The movement of the fish is influenced by all living fish as well as all dead fish. I start with one fish and stop at 6 or 7 generations.
 
-There are several more, but the most important fish parameters/properties are:
--	Size of field of view
--	Distance for avoiding other fish (Privacy)
--	Distance for following other fish (Company)
--	Speed for making turns
-Each fish can be either harmless or predatory towards other fish.
+\subsection{Algorithm}
 
--	If it is a predator or not.
+\begin{tabular}{ p{0.4\textwidth} | p{0.6\textwidth} }                    
+  Class & responsible for \\
+  \hline \hline
+  \multirow{5}{*}{class Fish}
+  		& - parameters (id, color, speed, position, direction...) \\
+  		& - updating the state (position, direction)\\
+  		& - drawing (body, connections to other fish, traces for the traces-visible-mode)\\
+  		& - computing new direction regarding tank borders and neighboring (visible) fish\\
+  		& - contribute to log file\\
+  \hline
+  \multirow{2}{*}{class Tank}
+  		& - updating and saving images (traces and frequency)\\
+  		& - drawing the tank\\
+  \hline
+  \multirow{6}{*}{public methods and variables}
+  		& - keeping track of all elements (fish, tank, variables for drawing modes)\\
+  		& - initial setup\\
+  		& - drawing, includes animation and timing\\
+	  	& - receiving key presses (for saving or pausing)\\
+	  	& - log file (.txt)\\
+	  	& - vector operations (e.g. normalizing, computing the scalar product, turning, computing a reflection vector)\\
+  
+  \hline  
+\end{tabular}
+
+\begin{figure}[h]
+        \centering
+        \includegraphics[width=\textwidth]{implementationsketch}
+        \caption{Essential structure of the program}
+        
+\end{figure}
+
+\subsection{Exporting the Values}
+How I would translate that into something textile, I was not so sure at first, but I started with a thread-based idea, where each thread is seen as an individual. Macramé and Embroidery were favored candidates.
+
+To be able to extract all important positions and values from the program I implemented several logging methods. The program produces a simple text-file, where the parameter values are noted as well as the positions of the fish (original coordinates plus coordinates scaled to fit the textile application), their id and their children. The tank class produces an image where the positions of the fish are noted pixelwise, the image shows their complete movement. I also export an SVG-file with a straight line connecting the end position of each fish with their children. This export can be done with additional text output directly within the SVG-file (the id of each fish above its "grave").
+
+[TODO examples of the 3 log files]
 
 \subsection{Parameters and Variations} % + Observations + Images}
+There are several more, but some of the most important fish parameters/properties are:
 
-\subsection{Additional Code (Samples)}
-- using Processing
-- methods for changing views (via key press)
-- methods for saving images and log file
-- method to pause
+- privateRadius
+- companyRadius
+- interpolationSpeed (speed of turns)
+- timetoSpawn
+- spawnAnglesDegree
 
-
-\subsection{Unused Parameters}
+These are the parameters I varied while observing the changes in the resulting image.
+Figure [TODO] shows the outcomes for certain values.
 
 
 \section{Textile Implementation}
 
-\subsection{Preparation?}
-How I would translate that into something textile, I was not so sure at first, but I started with a thread-based idea, where each thread is seen as an individual. Macramé and Embroidery were favored candidates.
+\subsection{Textile Piece I}
+\subsubsection{Method and Tools}
 
-\subsection{}
-tank:
-cx,cy,radius: 300.0 300.0 300.0
-starter fish: 1
-maxGenerations 7
-maxChildren 2
-spawnTime 4500ms
-turnSpeed 0.0051/ms
-follow/avoid 0.5/0.5
-wall/neighbor 0.9/0.1
-
-fish:
-0 g:0 born 300.0 300.0 : 50 50 c:
 
 In the first trial I scaled the positions down to fit a 100 by 100 grid. [foto fabric].
-For 7 generations of fish, each having 2 children I need 2^7 threads (128). I used cotton wool thread, itself already containing 8 (2^3) sub-threads, for the piece I needes 16 strings of this cotton wool - which is quite thick. I tried to fit it through one "grid point" - even when I succeeded the accuracy of the grid was physically compromised, so I decided to at least ... for the first (or even the second) generation. The start point for the fish is 50/50, after dividing the thick cord into 4 subchords à 4 strings the start points are 51/50, 49/50, 50/49, 50/51.
+For 7 generations of fish, each having 2 children I need 2 hoch 7 threads (128). I used cotton wool thread, itself already containing 8 (2hoch3) sub-threads, for the piece I needes 16 strings of this cotton wool - which is quite thick. I tried to fit it through one "grid point" - even when I succeeded the accuracy of the grid was physically compromised, so I decided to at least ... for the first (or even the second) generation. The start point for the fish is 50/50, after dividing the thick cord into 4 subchords à 4 strings the start points are 51/50, 49/50, 50/49, 50/51.
 
-\subsection{Finished Piece}
+
+\subsection{Textile Piece II}
+\subsubsection{Method and Tools}
 
 \section{}
 \section{}
