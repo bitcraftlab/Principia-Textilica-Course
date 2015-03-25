@@ -29,7 +29,7 @@ void setup(){
   size(600,700);
   
   //tank  = new Tank(width/2 - radius, height/2, radius);
-  tank  = new Tank(radius, radius, radius, "whattovary");
+  tank  = new Tank(radius, radius, radius, "_default");
   Fish tmp = new Fish(-1, tank.center.x, tank.center.y, false);
   
   textOutput = createWriter("param"+"_"+ tank.id +".txt");

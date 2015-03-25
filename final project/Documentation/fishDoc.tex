@@ -123,7 +123,7 @@ To be able to extract all important positions and values from the program I impl
 
 \subsection{Parameters and Variations} % + Observations + Images}
 There are several more, but some of the most important fish parameters/properties are:
-
+[TODO detailed description]
 - privateRadius
 - companyRadius
 - interpolationSpeed (speed of turns)
@@ -133,16 +133,40 @@ There are several more, but some of the most important fish parameters/propertie
 These are the parameters I varied while observing the changes in the resulting image.
 Figure [TODO] shows the outcomes for certain values.
 
+- 30 privateRadius: 20 30 40 50
+- 70 companyRadius: 50 70 90 120
+- 100 interpolationSpeed (speed of turns) /ms: 50 100 150 200 250 350
+- 6000 timetoSpawn: 3000 4000 5000 6000 8000 ms
+- 135 spawnAnglesDegree +/- 0 10 20 45 70 90 135 180
 
 \section{Textile Implementation}
 
 \subsection{Textile Piece I}
 \subsubsection{Method and Tools}
 
+%TODO logfile
+For 7 generations of fish, each having 2 children I need 2 hoch 7 threads (128). , for the piece I needes 16 strings of this cotton wool - which is quite thick. I tried to fit it through one "grid point" - even when I succeeded the accuracy of the grid was physically compromised, so I decided to at least ... for the first (or even the second) generation. The start point for the fish is 50/50, after dividing the thick cord into 4 subcords à 4 strings the start points are 51/50, 49/50, 50/49, 50/51.\\
 
-In the first trial I scaled the positions down to fit a 100 by 100 grid. [foto fabric].
-For 7 generations of fish, each having 2 children I need 2 hoch 7 threads (128). I used cotton wool thread, itself already containing 8 (2hoch3) sub-threads, for the piece I needes 16 strings of this cotton wool - which is quite thick. I tried to fit it through one "grid point" - even when I succeeded the accuracy of the grid was physically compromised, so I decided to at least ... for the first (or even the second) generation. The start point for the fish is 50/50, after dividing the thick cord into 4 subchords à 4 strings the start points are 51/50, 49/50, 50/49, 50/51.
+\begin{minipage}[t]{0.48\textwidth}
+    \raisebox{-0.9\totalheight}{\includegraphics[width=\textwidth]{stoffraster}}
+    \captionof{figure}{Base material as canvas}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[t]{0.48\textwidth}
+    For my first practical trial run I used evenweave with approximately 2mm per unit. To limit the size I scaled down the computed positions to fit a 100 by 100 grid (resulting in appr. 20cm by 20cm for the finished piece). The yellow thread was used as a counting help.
+\end{minipage}
+\vspace{0.5cm}
 
+\begin{minipage}[t]{0.48\textwidth}
+    \raisebox{-0.9\totalheight}{\includegraphics[width=\textwidth]{fadendetail}}
+	\captionof{figure}{Applied material}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[t]{0.48\textwidth}
+	Because my generations of fish are based on the number 2, I also need thread based on number 2. So I used cotton wool threads each already containing 8 ($=2^3$) sub-threads when feazed.\\
+	To be able to manage the threads and associate them with one fish id I simply attached some paper to the string groups.
+\end{minipage}
+\vspace{0.5cm}
 
 \subsection{Textile Piece II}
 \subsubsection{Method and Tools}
