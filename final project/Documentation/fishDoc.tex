@@ -57,13 +57,13 @@ The tank started out as rectangular, but I found a circle to be more aesthetical
 
 The swarm rules below share some similarities with the "Boids" program by Craig Reynolds [TODO ref], he developed an agent-based algorithm to simulate the flocking behaviour of birds.\\
 
-The behaviour of the fish is mainly determined by four principles:\\
-I Company - Each fish will follow other fish.\\
-II Privacy - Each fish needs a minimum of private space.\\
-III Security - Each (non-predatory) fish will avoid any predators.\\
-IV Boundary - Each fish will stay inside the tank.\\
-
-There is no randomness in my program.
+There is no randomness in my program. The behaviour of the fish is essentially determined by four principles:\\
+\begin{description}
+\item[Company] Each fish will follow other fish.
+\item[Privacy] Each fish needs a minimum of private space.
+\item[Security] Each (non-predatory) fish will avoid any predators.
+\item[Boundary] Each fish will stay inside the tank.
+\end{description}
 
 \section{Implementation}
 %\subsection{Unused Parameters}
@@ -114,30 +114,61 @@ In this version each fish will have two children when it dies. The resulting pat
         
 \end{figure}
 
+%TODO explain in detail: how the movement vectors are computed
+
 \subsection{Exporting the Values}
 How I would translate that into something textile, I was not so sure at first, but I started with a thread-based idea, where each thread is seen as an individual. Macramé and Embroidery were favored candidates.
 
 To be able to extract all important positions and values from the program I implemented several logging methods. The program produces a simple text-file, where the parameter values are noted as well as the positions of the fish (original coordinates plus coordinates scaled to fit the textile application), their id and their children. The tank class produces an image where the positions of the fish are noted pixelwise, the image shows their complete movement. I also export an SVG-file with a straight line connecting the end position of each fish with their children. This export can be done with additional text output directly within the SVG-file (the id of each fish above its "grave").
 
-[TODO examples of the 3 log files]
+%TODO examples of the 3 log files
 
 \subsection{Parameters and Variations} % + Observations + Images}
 There are several more, but some of the most important fish parameters/properties are:
-[TODO detailed description]
-- privateRadius
-- companyRadius
-- interpolationSpeed (speed of turns)
-- timetoSpawn
-- spawnAnglesDegree
+%TODO detailed description
+\begin{description}
+\item[privateRadius]
+\item[companyRadius]
+\item[interpolationSpeed (speed of turns)]
+\item[timetoSpawn]
+\item[spawnAnglesDegree]
+\end{description}
 
-These are the parameters I varied while observing the changes in the resulting image.
-Figure [TODO] shows the outcomes for certain values.
+The following images show the different outcomes for variations of the parameters. On the left you see the connections between related fish, on the right there are their movement traces (actual paths). When varying one parameter the others are set to a default value to cleanly separate the effects of the change.
+The "baseline" setting with all parameters set to default is included in each of the variation series, the natural order of the parameter sizes detemines its placement within the series (ordered by increasing values). Table \ref{table:variation} shows the used integer values.
 
-- 30 privateRadius: 20 30 40 50
-- 70 companyRadius: 50 70 90 120
-- 100 interpolationSpeed (speed of turns) /ms: 50 100 150 200 250 350
-- 6000 timetoSpawn: 3000 4000 5000 6000 8000 ms
-- 135 spawnAnglesDegree +/- 0 10 20 45 70 90 135 180
+\begin{center}
+\begin{tabular}{ l | c | c }
+  \hline                       
+  Parameters 		 & Default value 	& Variation \\
+  \hline
+  privateRadius 	 & 30 		& 20 30 40 50 \\
+  companyRadius 	 & 70 		& 50 70 90 120 \\
+  interpolationSpeed & 100 		& 50 100 150 200 250 350 \\
+  timetoSpawn 		 & 6000 	& 3000 4000 5000 6000 8000 \\
+  spawnAnglesDegree (+/-)  & 135 	& 0 10 20 45 70 90 135 180 \\
+  \hline  
+\end{tabular}
+\captionof{table}{Used parameter values}
+\label{table:variation}
+\end{center}
+
+%TODO show outcomes for certain values
+
+\subsubsection{Variations of "privateRadius"}
+
+
+
+\begin{minipage}[t]{0.48\textwidth}
+    \includegraphics[width=\textwidth]{stoffraster}
+    \captionof{figure}{Connections for default values}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[t]{0.48\textwidth}
+    \includegraphics[width=\textwidth]{stoffraster}
+    \captionof{figure}{Traces for default image}
+\end{minipage}
+\vspace{0.5cm}
 
 \section{Textile Implementation}
 
