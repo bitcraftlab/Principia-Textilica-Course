@@ -66,7 +66,6 @@ There is no randomness in my program. The behaviour of the fish is essentially d
 \end{description}
 
 \section{Implementation}
-%\subsection{Unused Parameters}
 
 For implementing my idea I chose Processing 2.0 [TODO link/ref], because I am already familiar with Java. Additionally, Processing is one of the tools we got to try out during the course, so all participants know how to look into my code and adapt it if they want to.\\
 
@@ -113,8 +112,6 @@ In this version each fish will have two children when it dies. The resulting pat
         \caption{Essential structure of the program}
         
 \end{figure}
-
-%TODO explain in detail: how the movement vectors are computed
 
 \subsection{Exporting the Values}
 How I would translate that into something textile, I was not so sure at first, but I started with a thread-based idea, where each thread is seen as an individual. Macramé and Embroidery were favored candidates.
@@ -172,6 +169,10 @@ The "baseline" setting with all parameters set to default is included in each of
 
 \section{Textile Implementation}
 
+\subsection{Thoughts on Goals}
+%TODO
+
+
 \subsection{Textile Piece I}
 \subsubsection{Method and Tools}
 
@@ -195,12 +196,25 @@ For 7 generations of fish, each having 2 children I need 2 hoch 7 threads (128).
 \hspace{0.5cm}
 \begin{minipage}[t]{0.48\textwidth}
 	Because my generations of fish are based on the number 2, I also need thread based on number 2. So I used cotton wool threads each already containing 8 ($=2^3$) sub-threads when feazed.\\
-	To be able to manage the threads and associate them with one fish id I simply attached some paper to the string groups.
+	To be able to manage the threads and associate them with one fish id I simply attached some paper to the string groups. The positions are directly read from the text in the log file.
 \end{minipage}
 \vspace{0.5cm}
 
+\begin{minipage}[t]{\textwidth}
+    \includegraphics[width=\textwidth]{frontback}
+	\captionof{figure}{Total view of the experiment and details of the back}
+	\label{trial1}
+\end{minipage}
+\vspace{0.5cm}
+
+\subsubsection{Outcome and Conclusion}
+The left of Fig. \ref{trial1} shows the state of the first experiment when I decided I was not getting anywhere near to what I wanted. One reason was a simple mistake when determining the thread count: For 7 generations I actually would only have needed $2^6$ instead of $2^7$ single threads in the end, because I forgot to start counting at $2^0$. This would have reduced the thickness of the starting thread by half and also changed the appearance. 
+A more serious problem for me was, that the visual outcome was somehow off. Maybe I chose the evenweave's units too large or the wrong color, but most importantly the intermediate result did not have the properties I expected it to have: it was neither 2D nor 3D, I did not get the threads to be stiff and straight enough for the connections of the fish nor did they show the actual movement of a fish during its life cycle.
+This first piece was an accumulation of imprecise work, so I thought about other possibilities to work with the pattern in the material world.
+
 \subsection{Textile Piece II}
 \subsubsection{Method and Tools}
+\subsubsection{Outcome and Conclusion}
 
 \section{}
 \section{}
