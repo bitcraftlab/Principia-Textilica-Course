@@ -71,10 +71,12 @@ For implementing my idea I chose Processing 2.0 [TODO link/ref], because I am al
 
 In this section I will focus more on algorithms and data flow rather than implementation details.
 There are four ways of running the program represented by the combination of mechanisms that are used on top of the basic behavioural rules (predator/fear and birth/death):
-1. both predator/fear and birth/death
-2. only predator/fear
-3. only birth/death
-4. none of them
+\begin{enumerate}
+\item both predator/fear and birth/death
+\item only predator/fear
+\item only birth/death
+\item none of them
+\end{enumerate}
 
 It is worth noting that the code still includes all methods and parameters that I ended up not using for the textile piece or the parameter variations, but I will restrict the explanations to the version I actually used (3. only birth/death).
 In this version each fish will have two children when it dies. The resulting pattern is made of straight lines connecting parents with their children. The movement of the fish is influenced by all living fish as well as all dead fish. I start with one fish and stop at 6 or 7 generations.
@@ -156,18 +158,17 @@ fish:
 \end{minipage}
 \vspace{0.5cm}
 
-\subsection{Parameters and Variations} % + Observations + Images}
-There are several more, but some of the most important fish parameters/properties are:
-%TODO detailed description
+\subsection{Parameters and Variations}
+There are several more, but some of the most important fish parameters and properties are:
 \begin{description}
-\item[privateRadius]
-\item[companyRadius]
-\item[interpolationSpeed (speed of turns)]
-\item[timetoSpawn]
-\item[spawnAnglesDegree]
+\item[privateRadius] If another fish is within this distance (in pixel) the current fish moves away from it.
+\item[companyRadius] If another fish is within this distance (in pixel) the current fish imitates the other fish's movement (linear interpolation between current direction vector and target direction vector).
+\item[interpolationSpeed (speed of turns)] This value is interpreted as the number of milliseconds which are needed to reach the target vector with linear interpolation. Since interpolation is mainly used when a fish changes its direction vector it can also be called speed of turns (in 1/milliseconds).
+\item[timetoSpawn] This is the life span of one fish (in milliseconds), in the moment of dying it will generate two new fish.
+\item[spawnAnglesDegree] This array contains the angles (in degrees) for the initial direction of each child (relative to the parent's direction).
 \end{description}
 
-The following images show the different outcomes for variations of the parameters. On the left you see the connections between related fish, on the right there are their movement traces (actual paths). When varying one parameter the others are set to a default value to cleanly separate the effects of the change.
+When varying one parameter the others are set to a default value to cleanly separate the effects of the change.
 The "baseline" setting with all parameters set to default is included in each of the variation series, the natural order of the parameter sizes detemines its placement within the series (ordered by increasing values). Table \ref{table:variation} shows the used integer values.
 
 \begin{center}
@@ -186,7 +187,7 @@ The "baseline" setting with all parameters set to default is included in each of
 \label{table:variation}
 \end{center}
 
-On the left is the image with the connection lines, on the right the image with the movement traces.
+The following images show the different outcomes for variations of the parameters. On the left you see the connections between related fish, on the right there are their movement traces (actual paths).
 
 \subsubsection{Variations of "privateRadius"}
 
@@ -589,13 +590,19 @@ fish:
 \vspace{0.5cm}
 
 \subsubsection{Outcome and Conclusion}
-The left of Fig.\ref{trial1} shows the state of the first experiment when I decided I was not getting anywhere near to what I wanted. One reason was a simple mistake when determining the thread count: For 7 generations I actually would only have needed $2^6$ instead of $2^7$ single threads in the end, because I forgot to start counting at $2^0$. This would have reduced the thickness of the starting thread by half and also changed the appearance significantly. 
+The left of Fig.\ref{trial1} shows the state of the first experiment when I decided I was not getting anywhere near to what I wanted. One reason was a simple mistake when determining the thread count: For 7 generations I actually would only have needed $2^6$ instead of $2^7$ single threads in the end, because I forgot to start counting at $2^0$. This would have reduced the thickness of the starting thread by half and also changed the appearance significantly.\\
 A more serious problem for me was that the visual outcome was somehow off. Maybe I chose the evenweave's units too large or the wrong color, but most importantly the intermediate result did not have the properties I expected it to have: it was neither 2D nor 3D, neither did I get the threads to be stiff and straight enough for the connections of the fish nor did they show the actual movement of a fish during its life cycle.
 This first piece was an unsatisfying accumulation of imprecise craftsmanship, so I thought about other possibilities to work with the pattern in the material world.
 
 \subsection{Textile Piece II}
 \subsubsection{Method and Tools}
+Unlike techniques such as stitching or weaving were the interaction between up and down movements is crucial, the destruction concept I want to explore is independent from that. That means I need a more robust canvas. I decided to use a non-textile base, namely a semi-see-through PVC sheet. Although I thought about cutting holes in the PVC to guide the threads, as said before, this would artificially add something to the concept that does not belong to it. Instead, a hot glue gun was used to fixate the splitting points and keep the strings neatly in place.
+Pieces of a series can be stacked and the viewer can easily compare the different layouts of the strings.
+
+- same cotton wool, but only 6 generations, meaning $2^5 = 32$ sub-threads which equals 4 of the normal threads. Hand-dyed to achieve a color gradient from dark blue to green to yellow to white. The gradient helps the viewer to distinguish the generations.
+
 \subsubsection{Outcome and Conclusion}
+- glue points add a subtle touch.
 
 \section{Summary}
 
