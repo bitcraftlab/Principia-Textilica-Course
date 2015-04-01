@@ -114,8 +114,6 @@ In this version each fish will have two children when it dies. The resulting pat
 \end{figure}
 
 \subsection{Exporting the Values}
-How I would translate that into something textile, I was not so sure at first, but I started with a thread-based idea, where each thread is seen as an individual. Macramé and Embroidery were favored candidates.
-
 To be able to extract all important positions and values from the program I implemented several logging methods. The program produces a simple text-file, where the parameter values are noted as well as the positions of the fish (original coordinates plus coordinates scaled to fit the textile application), their id and their children. The tank class produces an image where the positions of the fish are noted pixelwise, the image shows their complete movement. I also export an SVG-file with a straight line connecting the end position of each fish with their children. This export can be done with additional text output directly within the SVG-file (the id of each fish above its "grave").
 
 %TODO examples of the 3 log files
@@ -168,15 +166,22 @@ The "baseline" setting with all parameters set to default is included in each of
 \vspace{0.5cm}
 
 \section{Textile Implementation}
-
 \subsection{Thoughts on Goals}
-%TODO
+
+Throughout the whole development of the algorithms and parameter variations I played with several ideas on how to go from digital to textile. The basic idea was to use threads as entities or individuals. However, I was very indecisive about the details. Early ideas included just embroidering the movement of the fish or use the movements to (pseudo-) weave. I also came up with a Macramé-related knotting scheme, that resembled an RPG: each thread could win or lose in a fight against other threads. 
+
+None of those concepts was interesting enough. All of them had a building or producing element in common, so I tried to turn that element upside down.
+Working with textiles is usually constructing something, still there will be steps you have to reverse, because you made a mistake or the material was flawed. You have to untie the knot, unweave your cloth or just untangle the mess. Yet these unwanted destructive processes happen in favor of the final product.
+I wanted to exaggerate the principle of destruction for my textile piece.
+Still adhering to the thread-individuals it meant deconstructing the elements itself: one thread contains other, thinner threads.
+The parent-child-relation between the fish in my tank fits in seamlessly with the construction-by-deconstruction-concept. The parent fish contains all the material needed to form the children, which then again contain everything for their children.
+I will use a thread and split it up into subthreads, which match the connection between parent and children.
 
 
 \subsection{Textile Piece I}
 \subsubsection{Method and Tools}
 
-%TODO logfile
+%TODO logfile + digital template
 For 7 generations of fish, each having 2 children I need 2 hoch 7 threads (128). , for the piece I needes 16 strings of this cotton wool - which is quite thick. I tried to fit it through one "grid point" - even when I succeeded the accuracy of the grid was physically compromised, so I decided to at least ... for the first (or even the second) generation. The start point for the fish is 50/50, after dividing the thick cord into 4 subcords à 4 strings the start points are 51/50, 49/50, 50/49, 50/51.\\
 
 \begin{minipage}[t]{0.48\textwidth}
@@ -202,17 +207,18 @@ For 7 generations of fish, each having 2 children I need 2 hoch 7 threads (128).
 
 \begin{minipage}[t]{\textwidth}
     \includegraphics[width=\textwidth]{frontback}
-	\captionof{figure}{Total view of the experiment and details of the back}
+	\captionof{figure}{Total view of the experiment and details on the back}
 	\label{trial1}
 \end{minipage}
 \vspace{0.5cm}
 
 \subsubsection{Outcome and Conclusion}
-The left of Fig. \ref{trial1} shows the state of the first experiment when I decided I was not getting anywhere near to what I wanted. One reason was a simple mistake when determining the thread count: For 7 generations I actually would only have needed $2^6$ instead of $2^7$ single threads in the end, because I forgot to start counting at $2^0$. This would have reduced the thickness of the starting thread by half and also changed the appearance. 
+The left of Fig.\ref{trial1} shows the state of the first experiment when I decided I was not getting anywhere near to what I wanted. One reason was a simple mistake when determining the thread count: For 7 generations I actually would only have needed $2^6$ instead of $2^7$ single threads in the end, because I forgot to start counting at $2^0$. This would have reduced the thickness of the starting thread by half and also changed the appearance. 
 A more serious problem for me was, that the visual outcome was somehow off. Maybe I chose the evenweave's units too large or the wrong color, but most importantly the intermediate result did not have the properties I expected it to have: it was neither 2D nor 3D, I did not get the threads to be stiff and straight enough for the connections of the fish nor did they show the actual movement of a fish during its life cycle.
-This first piece was an accumulation of imprecise work, so I thought about other possibilities to work with the pattern in the material world.
+This first piece was an unsatisfying accumulation of imprecise work, so I thought about other possibilities to work with the pattern in the material world.
 
 \subsection{Textile Piece II}
+\subsection{Thoughts on Goals}
 \subsubsection{Method and Tools}
 \subsubsection{Outcome and Conclusion}
 
