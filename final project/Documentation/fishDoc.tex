@@ -163,7 +163,7 @@ There are several more, but some of the most important fish parameters and prope
 \begin{description}
 \item[privateRadius] If another fish is within this distance (in pixel) the current fish moves away from it.
 \item[companyRadius] If another fish is within this distance (in pixel) the current fish imitates the other fish's movement (linear interpolation between current direction vector and target direction vector).
-\item[interpolationSpeed (speed of turns)] This value is interpreted as the number of milliseconds which are needed to reach the target vector with linear interpolation. Since interpolation is mainly used when a fish changes its direction vector it can also be called speed of turns (in 1/milliseconds).
+\item[interpolationSpeed (related to speed of turns)] This value is the number of milliseconds which are needed to reach the target vector with linear interpolation. Since interpolation is mainly used when a fish changes its direction vector the interpolationSpeed is inversely related to the speed of turns.
 \item[timetoSpawn] This is the life span of one fish (in milliseconds), in the moment of dying it will generate two new fish.
 \item[spawnAnglesDegree] This array contains the angles (in degrees) for the initial direction of each child (relative to the parent's direction).
 \end{description}
@@ -599,10 +599,13 @@ This first piece was an unsatisfying accumulation of imprecise craftsmanship, so
 Unlike techniques such as stitching or weaving were the interaction between up and down movements is crucial, the destruction concept I want to explore is independent from that. That means I need a more robust canvas. I decided to use a non-textile base, namely a semi-see-through PVC sheet. Although I thought about cutting holes in the PVC to guide the threads, as said before, this would artificially add something to the concept that does not belong to it. Instead, a hot glue gun was used to fixate the splitting points and keep the strings neatly in place.
 Pieces of a series can be stacked and the viewer can easily compare the different layouts of the strings.
 
-- same cotton wool, but only 6 generations, meaning $2^5 = 32$ sub-threads which equals 4 of the normal threads. Hand-dyed to achieve a color gradient from dark blue to green to yellow to white. The gradient helps the viewer to distinguish the generations.
+- same cotton wool, but only 6 generations, meaning $2^5 = 32$ sub-threads which equals 4 of the normal threads. Hand-dyed to achieve a color gradient from dark blue to green to yellow to white. The gradient helps the viewer to distinguish the generations. The dying process made it more difficult to feaze the threads.
 
 \subsubsection{Outcome and Conclusion}
 - glue points add a subtle touch.
+- privateRadius = 50
+- ttspawn = 3000
+- interpol.= 350
 
 \section{Summary}
 
