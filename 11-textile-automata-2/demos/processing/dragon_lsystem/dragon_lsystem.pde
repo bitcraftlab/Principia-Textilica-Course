@@ -7,7 +7,7 @@ int iterations = 3;
  
 void setup()
 {
-  size(400, 400);
+  size(600, 600);
   frameRate(24);
    
   controlP5 = new ControlP5(this);
@@ -19,7 +19,6 @@ void setup()
  
 void iterations(int newIteration) {
   lsys.generate(newIteration);
-  println(frameCount);
 }
  
 void draw()

@@ -1,0 +1,58 @@
+//24 times "?" make 360°in short:
+((?),.)....
+
+//basic flower:
+
+o(|?),,..
+or
+o(|-?),.
+
+// ranke:
+         ^(?)     / p
+*i      ^^(?)...../ p
+*ii    ^^^(?)     / p
+*iii  ^^^^(?)...../ p
+*o**(|-?),.p
+
+//without using "p" -> do inverted transformations after each step, ready to be repeated
+(        ^ ?  /  (?),,,,...v
+*i      ^^(?),/  (?),,,....vv   !
+*ii    ^^^ ?  /  (?),,,,...vvv  !!
+*iii  ^^^^(?),/  (?),,,....vvvv !!!
+*o**(|-?),.      (?),,,...
+)
+
+//shift, rotate and repeat
+(        ^ ?  /  (?),,,,...v
+*i      ^^(?),/  (?),,,....vv   !
+*ii    ^^^ ?  /  (?),,,,...vvv  !!
+*iii  ^^^^(?),/  (?),,,....vvvv !!!
+*o**(|-?),.      (?),,,...
+<(?),.)....
+
+//rectangular grid:
+(^),.(<),..
+(
+(
+     (        ^ ?  /  (?),,,,...v
+     i      ^^(?),/  (?),,,....vv   !
+     ii    ^^^ ?  /  (?),,,,...vvv  !!
+     iii  ^^^^(?),/  (?),,,....vvvv !!!
+     *o(|-?),.      (?),,,...
+     <(?),.)....
+     vvvv
+)....   (^^^^)....
+>>>>),
+
+//expl:
+//starting point somewhere top left
+(
+column:
+	(four-pattern:
+		(single-pattern:
+		turn 90°
+		)repeat single-pattern to form four-pattern
+	move down
+	)repeat four-pattern to form column
+	go to top again, move to right
+)repeat column to form grid

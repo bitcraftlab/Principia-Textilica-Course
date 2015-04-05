@@ -2,12 +2,12 @@
 
 class LSystem {
 
-  String axiom = "XF";
-  String ruleX = "X+YF+";
-  String ruleY = "-FX-Y";
+  String axiom = "X";
+  String ruleX = " F-[[X]+X]+F[+FX]-X";
+  String ruleF = "FF";
 
-  float d = 3;
-  float ang = HALF_PI;
+  float d = 1;
+  float ang = TWO_PI/360.0 * 25.0;
   String seq;
 
   LSystem(int iter) {
@@ -36,8 +36,8 @@ class LSystem {
         output += ruleX;
         break;
 
-      case 'Y':
-        output += ruleY;
+      case 'F':
+        output += ruleF;
         break;
 
       default:
@@ -51,9 +51,12 @@ class LSystem {
   // interpretation
   void render() {
 
-    float x = width * 2/3;
+    float x = 20;//width * 2/3;
     float y = height * 1/2;
-    float dir = 0;
+    FloatList angles = new FloatList();
+    FloatList posX = new FloatList();
+    FloatList posY = new FloatList();
+    float currentAngle = 0.0;
     
     for (int i = 0; i < seq.length(); i++) {
 
@@ -62,17 +65,37 @@ class LSystem {
       switch(ch) {
 
       case 'F':
-        line(x, y, x += cos(ang * dir) * d , y += sin(ang * dir) * d);
+        line(x, y, x += cos(currentAngle)*d, y += sin(currentAngle)*d);
         break;
 
       case '+':
-        dir += 1;
+        currentAngle += ang;
         break;
 
       case '-':
-        dir -= 1;
+      currentAngle -= ang;
         break;
         
+      case '[':
+        angles.append(currentAngle);
+        posX.append(x);
+        posY.append(y);
+        break;
+        
+      case ']':
+        int sizeA = angles.size();
+        int sizeXY = posX.size();
+        
+        currentAngle = angles.get(sizeA-1);
+        angles.remove(sizeA-1);
+        
+        x = posX.get(sizeXY-1);
+        y = posY.get(sizeXY-1);
+        posX.remove(sizeXY-1);
+        posY.remove(sizeXY-1);
+        println(seq.length());
+        
+        break;
       }
     }
 
